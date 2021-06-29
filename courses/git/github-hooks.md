@@ -1,20 +1,20 @@
-# Git with Github
+# GitとGithub
 
-Till now all the operations we did were in our local repo while git also helps us in a collaborative environment. GitHub is one place on the internet where you can centrally host your git repos and collaborate with other developers.
+これまでの作業はすべてローカルのリポジトリで行われていましたが、gitは共同作業の環境でも役に立ちます。GitHubはインターネット上のひとつの場所で、あなたのgitリポジトリを集中的にホストして他の開発者と共同作業を行うことができます。
 
-Most of the workflow will remain the same as we discussed, with addition of couple of things:
+ワークフローの大部分はこれまで説明したものと同じですが、いくつかの点が追加されます。
 
- 1. Pull: to pull latest changes from github (the central) repo
- 2. Push: to push your changes to github repo so that it's available to all people
+ 1. Pull: 最新の変更点をGitHub（中央）のリポジトリから引き出す
+ 2. Push: 自分の変更をGitHubリポジトリに反映して、他の人が利用できるようにする
 
-GitHub has written nice guides and tutorials about this and you can refer them here:
+GitHubには、これらに関するすばらしいガイドやチュートリアルが用意されています。
 
 - [GitHub Hello World](https://guides.github.com/activities/hello-world/)
 - [Git Handbook](https://guides.github.com/introduction/git-handbook/)
 
-## Hooks
+## フック
 
-Git has another nice feature called hooks. Hooks are basically scripts which will be called when a certain event happens. Here is where hooks are located:
+Gitには、フックと呼ばれるもうひとつの優れた機能があります。フックは基本的に、あるイベントが発生したときに呼び出されるスクリプトです。フックの場所は次のとおりです。
 
 ```bash
 $ ls .git/hooks/
@@ -22,20 +22,20 @@ applypatch-msg.sample     fsmonitor-watchman.sample pre-applypatch.sample     pr
 commit-msg.sample         post-update.sample        pre-commit.sample         pre-rebase.sample         prepare-commit-msg.sample
 ```
 
-Names are self explanatory. These hooks are useful when you want to do certain things when a certain event happens. If you want to run tests before pushing code, you would want to setup `pre-push` hooks. Let's try to create a pre commit hook.
+名前を見れば一目瞭然ですね。これらのフックは、特定のイベントが発生したときに、特定の処理を行いたい場合に便利です。コードをプッシュする前にテストを実行したい場合は、`pre-push`フックを設定するとよいでしょう。コミット前のフックを作ってみましょう。
 
 ```bash
 $ echo "echo this is from pre commit hook" > .git/hooks/pre-commit
 $ chmod +x .git/hooks/pre-commit
 ```
 
-We basically create a file called `pre-commit` in hooks folder and make it executable. Now if we make a commit, we should see the message getting printed.
+基本的には、hooksフォルダの中に`pre-commit`というファイルを作成し、それを実行可能にします。これで、コミットすると次のようなメッセージが表示されるようになりました。
 
 ```bash
 $ echo "sample file" > sample.txt
 $ git add sample.txt
 $ git commit -m "adding sample file"
-this is from pre commit hook     # <===== THE MESSAGE FROM HOOK EXECUTION
+this is from pre commit hook     # <===== フック実行のメッセージ
 [master 9894e05] adding sample file
 1 file changed, 1 insertion(+)
 create mode 100644 sample.txt

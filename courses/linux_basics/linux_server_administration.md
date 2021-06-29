@@ -1,62 +1,56 @@
-# Linux Server Administration
+# Linuxサーバー管理
 
-In this course will try to cover some of the common tasks that a linux
-server administrator performs. We will first try to understand what a
-particular command does and then try to understand the commands using
-examples. Do keep in mind that it's very important to practice the Linux
-commands on your own.
+このコースでは、Linuxサーバー管理者が行う一般的なタスクをいくつか取り上げます。まず、コマンドが何をするのかを理解してから、例題を使ってコマンドを理解していきます。Linuxコマンドを自分で練習することは非常に重要であることを覚えておいてください。
 
-## Lab Environment Setup
+## ラボ環境の設定
 
-- Install docker on your system - [https://docs.docker.com/engine/install/](https://docs.docker.com/engine/install/)
+- お使いのシステムにDockerをインストールしてください - [https://docs.docker.com/engine/install/](https://docs.docker.com/engine/install/)
 
-- We will be running all the commands on Red Hat Enterprise Linux (RHEL) 8 system.
+- ここでは、Red Hat Enterprise Linux (RHEL) 8システムですべてのコマンドを実行します。
 
   ![](images/linux/admin/image19.png)
 
-- We will run most of the commands used in this module in the above Docker container.
+- このモジュールで使用するコマンドのほとんどを、上記のDockerコンテナで実行します。
 
-## Multi-User Operating Systems
+## マルチユーザーオペレーティングシステム
 
-An operating system is considered as multi-user if it allows multiple people/users to use a computer and not affect each other's files and preferences. Linux based operating systems are multi-user in nature as it allows multiple users to access the system at the same time. A typical computer will only have one keyboard and monitor but multiple users can log in via SSH if the computer is connected to the network. We will cover more about SSH later.
+オペレーティングシステムは、複数の人やユーザーがコンピュータを使用しても、互いのファイルや設定に影響を与えないようになっていれば、マルチユーザーとみなされます。Linuxベースのオペレーティングシステムは、複数のユーザーが同時にシステムにアクセスすることができるため、マルチユーザーとしての性質を持っています。一般的なコンピュータには1つのキーボードとモニターしかありませんが、コンピュータがネットワークに接続されていれば、複数のユーザーがSSHでログインすることができます。SSHについては後で詳しく説明します。
 
-As a server administrator, we are mostly concerned with the Linux servers which are physically present at a very large distance from us. We can connect to these servers with the help of remote login methods like SSH.
+サーバー管理者としては、物理的に非常に離れた場所に存在するLinuxサーバーが主な対象となります。このようなサーバにーは、SSHなどのリモートログイン方法を使って接続します。
 
-Since Linux supports multiple users, we need to have a method which can protect the users from each other. One user should not be able to access and modify files of other users
+Linuxは複数のユーザーをサポートしているので、ユーザーをお互いに保護する方法が必要です。あるユーザーが他のユーザーのファイルにアクセスしたり変更したりできないようにする必要があります。
 
 
-## User/Group Management
+## ユーザー/グループ管理
 
-- Users in Linux has an associated user ID called UID attached to them.
+- Linuxのユーザーには、UIDと呼ばれるユーザーIDが関連付けられています。
 
-- Users also has a home directory and a login shell associated with them.
+- また、ユーザーにはホームディレクトリとログインシェルが関連付けられています。
 
-- A group is a collection of one or more users. A group makes it easier to share permissions among a group of users.
+- グループは、1人または複数のユーザーの集まりです。グループを使うことで、ユーザーグループ間での権限の共有が容易になります。
 
-- Each group has a group ID called GID associated with it.
+- 各グループにはGIDと呼ばれるグループIDが関連付けられています。
 
-### id command
+### id コマンド
 
-`id` command can be used to find the uid and gid associated with an user.
-It also lists down the groups to which the user belongs to.
+`id`コマンドは、ユーザーに関連するUIDとGIDを調べることができます。
+また、そのユーザーが所属しているグループの一覧も表示されます。
 
-The uid and gid associated with the root user is 0.
+rootユーザーのUIDとGIDは0です。
 ![](images/linux/admin/image30.png)
 
-A good way to find out the current user in Linux is to use the whoami
-command.
+Linuxで現在のユーザーを調べるには、whoamiコマンドを使います。
 
 ![](images/linux/admin/image35.png)
 
-**"root" user or superuser is the most privileged user with**
-**unrestricted access to all the resources on the system. It has UID 0**
+**「root」ユーザーまたはスーパーユーザーは、最も権限のあるユーザーで、システム上のすべてのリソースに無制限にアクセスできます。UIDは0です。**
 
-### Important files associated with users/groups
-
-| /etc/passwd  |  Stores the user name, the uid, the gid, the home directory, the login shell etc |
-| -------------| ---------------------------------------------------------------------------------
-| /etc/shadow  | Stores the password associated with the users |
-| /etc/group   | Stores information about different groups on the system |
+### ユーザー/グループに関連する重要なファイル
+| ファイル名 | 説明
+| -------------| --------------------------------------------------------------------------------- |
+| /etc/passwd | ユーザー名、UID、GID、ホームディレクトリ、ログインシェルなどを格納する |
+| /etc/shadow | ユーザーに関連するパスワードを格納する |
+| /etc/group | システム上のさまざまなグループに関する情報を格納する |
 
 ![](images/linux/admin/image23.png)
 
@@ -64,524 +58,415 @@ command.
 
 ![](images/linux/admin/image9.png)
 
-If you want to understand each filed discussed in the above outputs, you can go
-through below links:
+上記の出力で説明されている各ファイルを理解したい場合は、以下のリンクを参照してください。
 
 - [https://tldp.org/LDP/lame/LAME/linux-admin-made-easy/shadow-file-formats.html](https://tldp.org/LDP/lame/LAME/linux-admin-made-easy/shadow-file-formats.html)
 
 - [https://tldp.org/HOWTO/User-Authentication-HOWTO/x71.html](https://tldp.org/HOWTO/User-Authentication-HOWTO/x71.html)
 
-## Important commands for managing users
+## ユーザー管理のための重要なコマンド
 
-Some of the commands which are used frequently to manage users/groups
-on Linux are following:
+Linux でユーザーやグループを管理するために頻繁に使用されるコマンドは以下のとおりです。
 
-- `useradd` - Creates a new user
+- `useradd` - 新しいユーザを作成する
 
-- `passwd` - Adds or modifies passwords for a user
+- `passwd` - ユーザーのパスワードを追加または変更する
 
-- `usermod` - Modifies attributes of an user
+- `usermod` - ユーザーの属性を変更する
 
-- `userdel` - Deletes an user
+- `userdel` - ユーザーを削除する
 
 ### useradd
 
-The useradd command adds a new user in Linux.
+Linuxではuseraddコマンドで新しいユーザーを追加します。
 
-We will create a new user 'shivam'. We will also verify that the user
-has been created by tailing the /etc/passwd file. The uid and gid are
-1000 for the newly created user. The home directory assigned to the user
-is /home/shivam and the login shell assigned is /bin/bash. Do note that
-the user home directory and login shell can be modified later on.
+ここでは、新しいユーザー「shivam」を作成します。また、/etc/passwdファイルをtailしてユーザーが作成されたことを 確認します。新たに作成されたユーザーのUIDとGIDには1000が割り当てられています。このユーザーに割り当てられたホームディレクトリは/home/shivam、ログインシェルは/bin/bashとなっています。ユーザーのホームディレクトリやログインシェルは後から変更することができます。
 
 ![](images/linux/admin/image41.png)
 
-If we do not specify any value for attributes like home directory or
-login shell, default values will be assigned to the user. We can also
-override these default values when creating a new user.
+ホームディレクトリやログインシェルなどの属性に値を指定しない場合は、デフォルト値がユーザーに割り当てられます。また新しいユーザーを作成する際に、これらのデフォルト値を上書きすることもできます。
 
 ![](images/linux/admin/image54.png)
 
 ### passwd
 
-The passwd command is used to create or modify passwords for a user.
+passwd コマンドは、ユーザーのパスワードを作成または変更するために使用します。
 
-In the above examples, we have not assigned any password for users
-'shivam' or 'amit' while creating them.
+上記の例では、ユーザー「shivam」「amit」にパスワードを割り当てていません。
 
-"!!" in an account entry in shadow means the account of an user has
-been created, but not yet given a password.
+shadow内のアカウントエントリの「!!」は、あるユーザーのアカウントが作成されたが、まだパスワードが与えられていないことを意味します。
 
 ![](images/linux/admin/image13.png)
 
-Let's now try to create a password for user "shivam".
+それでは、ユーザー「shivam」のパスワードを作成してみましょう。
 
 ![](images/linux/admin/image55.png)
 
-Do remember the password as we will be later using examples
-where it will be useful.
+このパスワードを覚えておいてください。
 
-Also, let's change the password for the root user now. When we switch
-from a normal user to root user, it will request you for a password.
-Also, when you login using root user, the password will be asked.
+また、今度はrootユーザーのパスワードを変更してみましょう。通常のユーザーからrootユーザーに切り替えると、パスワードの入力を求められます。
+また、rootユーザーでログインするときにも、パスワードを聞かれます。
 
 ![](images/linux/admin/image39.png)
 
 ### usermod
 
-The usermod command is used to modify the attributes of an user like the
-home directory or the shell.
+usermodコマンドは、ホームディレクトリやシェルなど、ユーザーの属性を変更するために使用します。
 
-Let's try to modify the login shell of user "amit" to "/bin/bash".
+ここでは、ユーザー「amit」のログインシェルを「/bin/bash」に変更してみます。
 
 ![](images/linux/admin/image17.png)
 
-In a similar way, you can also modify many other attributes for a user.
-Try 'usermod -h' for a list of attributes you can modify.
+同様に、ユーザーの他の多くの属性を変更することもできます。
+「usermod -h」を実行すると、変更できる属性の一覧が表示されます。
 
 ### userdel
 
-The userdel command is used to remove a user on Linux. Once we remove a
-user, all the information related to that user will be removed.
+Linux でユーザーを削除するには userdel コマンドを使用します。ユーザーを削除すると、そのユーザーに関連するすべての情報が削除されます。
 
-Let's try to delete the user "amit". After deleting the user, you will
-not find the entry for that user in "/etc/passwd" or "/etc/shadow" file.
+ここでは、ユーザー 「amit 」を削除してみます。ユーザーを削除すると、「/etc/passwd」や「/etc/shadow」ファイルにからユーザーのエントリがなくなります。
 
 ![](images/linux/admin/image34.png)
 
-## Important commands for managing groups
+## グループ管理のための重要なコマンド
 
-Commands for managing groups are quite similar to the commands used for managing users. Each command is not explained  in detail here as they are quite similar. You can try running these commands on your system.
+グループを管理するためのコマンドは、ユーザーを管理するためのコマンドとよく似ています。それぞれのコマンドはよく似ているので、ここでは詳しく説明しません。以下のコマンドを実行してみてください。
 
-
-| groupadd \<group_name\>  | Creates a new group            |
+| コマンド名 | 説明 |
 | ------------------------ | ------------------------------- |
-| groupmod \<group_name\>  | Modifies attributes of a group |
-| groupdel \<group_name\>  | Deletes a group |
-| gpasswd \<group_name\>   | Modifies password for group |
+| groupadd <グループ名\> | 新しいグループを作成する |
+| groupmod <グループ名\> | グループの属性を変更する |
+| groupdel <グループ名\> | グループを削除する |
+| gpasswd <グループ名\> | グループのパスワードを変更する |
 
 ![](images/linux/admin/image52.png)
 
-We will now try to add user "shivam" to the group we have created above.
+それでは、先ほど作成したグループにユーザー「shivam」を追加してみます。
 
 ![](images/linux/admin/image33.png)
 
-## Becoming a Superuser
+## スーパーユーザーになる
 
-**Before running the below commands, do make sure that you have set up a
-password for user "shivam" and user "root" using the passwd command
-described in the above section.**
+**以下のコマンドを実行する前に、ユーザー "shivam "にパスワードが設定されていることを確認してください。
+ユーザー "shivam "とユーザー "root "にパスワードを設定してください。
+でパスワードを設定してください。
 
-The su command can be used to switch users in Linux. Let's now try to
-switch to user "shivam".
+Linuxでは、suコマンドを使ってユーザーを切り替えることができます。ここでは
+ユーザー "shivam "に切り替えてみましょう。
 
 ![](images/linux/admin/image37.png)
 
-Let's now try to open the "/etc/shadow" file.
+それでは、「/etc/shadow」ファイルを開いてみましょう。
 
 ![](images/linux/admin/image29.png)
 
-The operating system didn't allow the user "shivam" to read the content
-of the "/etc/shadow" file. This is an important file in Linux which
-stores the passwords of users. This file can only be accessed by root or
-users who have the superuser privileges.
+オペレーティングシステムは、ユーザー「shivam」に「/etc/shadow」の内容を読むことを許可しませんでした。
+/etc/shadow」ファイルの内容を読むことができませんでした。これはユーザーのパスワードを保存するLinuxの重要なファイルです。このファイルにアクセスできるのは、rootまたはスーパーユーザーの権限を持つユーザーのみがアクセスできます。
 
+**sudoコマンドは、rootユーザーのセキュリティ権限でコマンドを実行することができます。**システム上のすべての権限を持っていることを忘れないでください。また、suコマンドを使ってrootユーザーに切り替え、上記のファイルを開くこともできます。ルートユーザーに切り替えて上記のファイルを開くこともできますが、その際にはルートユーザーのパスワードが必要になります。別の方法として、最近のオペレーティングシステムでは、sudoコマンドを使用してスーパーユーザーになる方法もあります。この方法では、ユーザーは自分のパスワードを入力する必要があり、かつsudoグループに所属している必要があります。
 
-**The sudo command allows a** **user to run commands with the security
-privileges of the root user.** Do remember that the root user has all
-the privileges on a system. We can also use su command to switch to the
-root user and open the above file but doing that will require the
-password of the root user. An alternative way which is preferred on most
-modern operating systems is to use sudo command for becoming a
-superuser. Using this way, a user has to enter his/her password and they
-need to be a part of the sudo group.
+**他のユーザーにスーパー権限を与えるには？**
 
-**How to provide superpriveleges to other users ?**
-
-Let's first switch to the root user using su command. Do note that using
-the below command will need you to enter the password for the root user.
+まず、suコマンドでルートユーザーになりましょう。以下のコマンドを使うとルートユーザーのパスワードを入力する必要があります。
 
 ![](images/linux/admin/image44.png)
 
-In case, you forgot to set a password for the root user, type "exit" and
-you will be back as the root user. Now, set up a password using the
-passwd command.
+ルートユーザーのパスワードを設定し忘れた場合は、「exit」と入力してください。rootユーザーに戻ります。パスワードを設定するにはpasswdコマンドを使います。
 
-**The file /etc/sudoers holds the names of users permitted to invoke
-sudo**. In redhat operating systems, this file is not present by
-default. We will need to install sudo.
+**ファイル /etc/sudoers には、sudo の起動を許可されたユーザーの名前が記録されています。**Red Hatのオペレーティングシステムでは、このファイルはデフォルトでは存在しません。。sudoをインストールする必要があります。
 
 ![](images/linux/admin/image3.png)
 
-We will discuss the yum command in detail in later sections.
+yumコマンドについては、後のセクションで詳しく説明します。
 
-Try to open the "/etc/sudoers" file on the system. The file has a lot of
-information. This file stores the rules that users must follow when
-running the sudo command. For example, root is allowed to run any
-commands from anywhere.
+システム上の「/etc/sudoers」ファイルを開いてみてください。このファイルにはたくさんの情報が含まれています。このファイルには、ユーザーがsudoコマンドを実行する際に従わなければならないルールが保存されています。例えば、rootはどこからでもどんなコマンドでも実行できます。
 
 ![](images/linux/admin/image8.png)
 
-One easy way of providing root access to users is to add them to a group
-which has permissions to run all the commands. "wheel" is a group in
-redhat Linux with such privileges.
+ユーザーにroot権限を与える簡単な方法の一つは、すべてのコマンドを実行する権限を持つグループに追加することです。Red Hat Linuxにおいて、「wheel」はそのような権限を持つグループです。
 
 ![](images/linux/admin/image25.png)
 
-Let's add the user "shivam" to this group so that it also has sudo
-privileges.
+ユーザー「shivam」をこのグループに追加して、sudoの権限も持つようにしてみましょう。
 
 ![](images/linux/admin/image48.png)
 
-Let's now switch back to user "shivam" and try to access the
-"/etc/shadow" file.
+ユーザー「shivam」に戻って、「/etc/shadow」ファイルにアクセスしてみましょう。
 
 ![](images/linux/admin/image56.png)
 
-We need to use sudo before running the command since it can only be
-accessed with the sudo privileges. We have already given sudo privileges
-to user “shivam” by adding him to the group “wheel”.
+sudo権限でしかアクセスできないため、コマンドを実行する前にsudoを使用する必要があります。ユーザー「shivam」にsudo権限を与えています。先ほどすでに、ユーザー「shivam」をグループ「wheel」に追加して、sudo権限を与えています。
 
+## ファイルパーミッション
 
-## File Permissions
+Linuxオペレーティングシステムでは、各ファイルやディレクトリには、ファイルの所有者、関連するユーザーのグループのメンバー、その他のすべての人のためのアクセス許可が割り当てられています。これは、あるユーザーが他のユーザーのファイルやリソースにアクセスできないようにするためです。
 
-On a Linux operating system, each file and directory is assigned access
-permissions for the owner of the file, the members of a group of related
-users and everybody else. This is to make sure that one user is not
-allowed to access the files and resources of another user.
-
-To see the permissions of a file, we can use the ls command. Let's look
-at the permissions of /etc/passwd file.
+ファイルのパーミッションを見るには、lsコマンドを使います。ここではetc/passwdファイルのパーミッションを見てみましょう。
 
 ![](images/linux/admin/image40.png)
 
-Let's go over some of the important fields in the output that are
-related to file permissions.
+ファイルのパーミッションに関連する重要なフィールドを見てみましょう。
 
 ![](images/linux/admin/image31.jpg)
 
 
 ![](images/linux/admin/image57.png)
 
-### Chmod command
+### chmodコマンド
 
-The chmod command is used to modify files and directories permissions in
-Linux.
+Linuxでは、ファイルやディレクトリのパーミッションを変更するためにchmodコマンドを使用します。
 
-The chmod command accepts permissions in as a numerical argument. We can
-think of permission as a series of bits with 1 representing True or
-allowed and 0 representing False or not allowed.
+chmodコマンドは、パーミッションを数値引数で受け取ります。パーミッションは一連のビットと考えることができ、1はTrue、つまり許可されていることを表し、0はFalse、つまり許可されていないことを表します。
 
-| Permission               | rwx     | Binary  |   Decimal |
-| -------------------------| ------- | ------- | --------- |
-| Read, write and execute  | rwx     | 111     | 7         |
-| Read and write           | rw-     | 110     | 6         |
-| Read and execute         | r-x     | 101     | 5         |
-| Read only                | r--     | 100     | 4         |
-| Write and execute        | -wx     | 011     | 3         |
-| Write only               | -w-     | 010     | 2         |
-| Execute only             | --x     | 001     | 1         |
-| None                     | ---     | 000     | 0         |
+| パーミッション         | rwx | 2進数 | 10進数 |
+| -------------------- | --- | ---- | ----- |
+| 読み取り、書き込み、実行 | rwx | 111  | 7     |
+| 読み取り、書き込み      | rw- | 110  | 6     |
+| 読み取り、実行         | r-x | 101  | 5     |
+| 読み取りのみ           | r-- | 100  | 4     |
+| 書き込み、実行         | -wx | 011  | 3     |
+| 書き込みのみ           | -w- | 010  | 2     |
+| 実行のみ              | --x | 001  | 1     |
+| なし                  | --- | 000  | 0     |
 
-We will now create a new file and check the permission of the file.
+新しいファイルを作成し、そのファイルのパーミッションを確認してみます。
 
 ![](images/linux/admin/image15.png)
 
-The group owner doesn't have the permission to write to this file. Let's
-give the group owner or root the permission to write to it using chmod
-command.
+グループオーナーには、このファイルへの書き込み権限がありません。それではchmodコマンドを使って、グループオーナーまたはrootに書き込み権限を与えましょう。
 
 ![](images/linux/admin/image26.png)
 
-Chmod command can be also used to change the permissions of a directory
-in the similar way.
+chmodコマンドは、同様の方法でディレクトリのパーミッションを変更することもできます。
+### chownコマンド
 
-### Chown command
+chownコマンドは、Linuxでファイルやディレクトリの所有者を変更するために使用します。
 
-The chown command is used to change the owner of files or
-directories in Linux.
-
-Command syntax: chown \<new_owner\> \<file_name\>
+コマンドの構文：`chown <新しい所有者> <ファイル名>`
 
 ![](images/linux/admin/image6.png)
 
-**In case, we do not have sudo privileges, we need to use sudo
-command**. Let's switch to user 'shivam' and try changing the owner. We
-have also changed the owner of the file to root before running the below
-command.
+**sudo権限を持っていない場合は、コマンドを使用する必要があります。**ユーザー「shivam」に切り替えて、オーナーを変更してみましょう。また、下記のコマンドを実行する前に、ファイルのオーナーをrootに変更しています。
 
 ![](images/linux/admin/image12.png)
 
-Chown command can also be used to change the owner of a directory in the
-similar way.
+chownコマンドは、同様の方法でディレクトリのオーナーを変更することもできます。
 
-### Chgrp command
+### chgrpコマンド
 
-The chgrp command can be used to change the group ownership of files or
-directories in Linux. The syntax is very similar to that of chown
-command.
+chgrpコマンドを使用して、ファイルやディレクトリのグループ所有権を変更することができます。構文はchownコマンドとよく似ています。
 
 ![](images/linux/admin/image27.png)
 
-Chgrp command can also be used to change the owner of a directory in the
-similar way.
+chgrpコマンドは、同様にディレクトリの所有者を変更するのにも使用できます。
 
-## SSH Command
+## SSHコマンド
 
-The ssh command is used for logging into the remote systems, transfer files between systems and for executing commands on a remote machine. SSH stands for secure shell and is used to provide an encrypted secured connection between two hosts over an insecure network like the internet.
+sshコマンドは、リモートシステムにログインしたり、システム間でファイルを転送したり、リモートマシンでコマンドを実行したりするのに使われます。SSHはsecure shellの略で、インターネットのような安全でないネットワーク上で、2つのホスト間に暗号化された安全な接続を提供するために使用されます。
 
-Reference:
+参考:
 [https://www.ssh.com/ssh/command/](https://www.ssh.com/ssh/command/)
 
-We will now discuss passwordless authentication which is secure and most
-commonly used for ssh authentication.
+ここでは、安全で最も一般的なssh認証であるパスワードレス認証について説明します。
 
-### Passwordless Authentication Using SSH
+### SSHによるパスワードレス認証
 
-Using this method, we can ssh into hosts without entering the password.
-This method is also useful when we want some scripts to perform
-ssh-related tasks.
+この方法では、パスワードを入力せずにホストにログインすることができます。また、スクリプトでssh関連の作業を行いたい場合にも便利です。
 
-Passwordless authentication requires the use of a public and private key pair. As the name implies, the public key can be shared with anyone but the private key should be kept private.
-Lets not get  into the details of how this authentication works. You can read more about it
-[here](https://www.digitalocean.com/community/tutorials/understanding-the-ssh-encryption-and-connection-process)
+パスワードレス認証では、公開鍵と秘密鍵のペアを使用する必要があります。その名が示すように、公開鍵は誰とでも共有できますが、秘密鍵は秘密にしておく必要があります。
+この認証がどのように機能するかの詳細については、ここでは触れません。詳しくは[こちら](https://www.digitalocean.com/community/tutorials/understanding-the-ssh-encryption-and-connection-process)をご覧ください。
 
-Steps for setting up a passwordless authentication with a remote host:
+リモートホストとのパスワードレス認証を設定する手順:
 
-1. Generating public-private key pair  
+1. 公開鍵と秘密鍵のペアを作成する
 
-    **If we already have a key pair stored in \~/.ssh directory, we will not need to generate keys again.**
+    **すでに鍵ペアが\~/.sshディレクトリに保存されている場合は、再度鍵を生成する必要はありません。**
 
-    Install openssh package which contains all the commands related to ssh.
+    opensshパッケージをインストールします。opensshパッケージには、sshに関するすべてのコマンドが含まれています。
 
     ![](images/linux/admin/image49.png)
 
-    Generate a key pair using the ssh-keygen command. One can choose the
-    default values for all prompts.
+    ssh-keygenコマンドを使って、鍵ペアを生成します。すべてのプロンプトでデフォルト値を選択できます。
 
     ![](images/linux/admin/image47.png)
 
-    After running the ssh-keygen command successfully, we should see two
-    keys present in the \~/.ssh directory. Id_rsa is the private key and
-    id_rsa.pub is the public key. Do note that the private key can only be
-    read and modified by you.
+    ssh-keygenコマンドが正常に実行されると、2つの鍵が\~/.sshディレクトリに存在することが確認できます。id_rsa は秘密鍵であり、id_rsa.pub は、公開鍵です。秘密鍵は、自分自身でしか読み取りや変更ができないことに注意してください。
 
     ![](images/linux/admin/image7.png)
 
-2. Transferring the public key to the remote host
+2. 公開鍵をリモートホストに転送する
 
-    There are multiple ways to transfer the public key to the remote server.
-    We will look at one of the most common ways of doing it using the
-    ssh-copy-id command.
+    公開鍵をリモートサーバーに転送するには、複数の方法があります。
+    ここでは、最も一般的な方法の一つであるssh-copy-idコマンドを使用する方法を見てみましょう。
 
     ![](images/linux/admin/image11.png)
 
-    Install the openssh-clients package to use ssh-copy-id command.
+    ssh-copy-idコマンドを使用するために、openssh-clientsパッケージをインストールします。
 
     ![](images/linux/admin/image46.png)
 
-    Use the ssh-copy-id command to copy your public key to the remote host.
+    ssh-copy-idコマンドを使って、自分の公開鍵をリモートホストにコピーします。
 
     ![](images/linux/admin/image50.png)
 
-    Now, ssh into the remote host using the password authentication.
+    今度は、パスワード認証を使ってリモートホストにsshします。
 
     ![](images/linux/admin/image51.png)
 
-    Our public key should be there in \~/.ssh/authorized_keys now.
+    これで、公開鍵が ~/.ssh/authorized_keys にあるはずです。
 
     ![](images/linux/admin/image4.png)
 
-    \~/.ssh/authorized_key contains a list of public keys. The users
-    associated with these public keys have the ssh access into the remote
-    host.
+    ~/.ssh/authorized_keyには、公開鍵のリストが入っています。この公開鍵に関連付けられているユーザーは、リモートホストへのsshアクセスが可能です。
 
+### リモートホストでコマンドを実行するには?
 
-### How to run commands on a remote host ?
-
-General syntax: ssh \<user\>@\<hostname/hostip\> \<command\>
+一般的な構文： `ssh <ユーザー名>@<ホスト名|ホストIP> <コマンド>`
 
 ![](images/linux/admin/image14.png)
 
-### How to transfer files from one host to another host ?
+### あるホストから別のホストにファイルを転送するには？
 
-General syntax: scp \<source\> \<destination\>
+一般的な構文: `scp <ソースファイル> <転送先>`
 
 ![](images/linux/admin/image32.png)
 
-## Package Management
+## パッケージ管理
 
-Package management is the process of installing and managing software on
-the system. We can install the packages which we require from the Linux
-package distributor. Different distributors use different packaging
-systems.
+パッケージ管理とは、ソフトウェアをシステムにインストールして管理するプロセスです。必要なパッケージをLinuxのパッケージディストリビュータからインストールします。ディストリビューターによって異なるパッケージシステムを使用しています。
   
-| Packaging systems      | Distributions                              |
+| パッケージングシステム | ディストリビューション |
 | ---------------------- | ------------------------------------------ |
-| Debian style (.deb)    |   Debian, Ubuntu                           |
-| Red Hat style (.rpm)   |   Fedora, CentOS, Red Hat Enterprise Linux |
+| Debian スタイル (.deb) | Debian, Ubuntu |
+| Debian style (.deb) | Debian, Ubuntu | Red Hat style (.rpm) | Fedora, CentOS, Red Hat Enterprise Linux |
 
-**Popular Packaging Systems in Linux**
+**Linuxにおける一般的なパッケージシステム**。
 
-|Command                        | Description                                         |
-| ----------------------------- | --------------------------------------------------- |
-| yum install \<package_name\>  | Installs a package on your system                   |
-| yum update \<package_name\>   | Updates a package to it's latest available version  |
-| yum remove \<package_name\>   | Removes a package from your system                  |
-| yum search \<keyword\>        | Searches for a particular keyword                   |
+|コマンド | 説明 |
+| ----------------------------- | -------------------------------- |
+| yum install <パッケージ名>      | パッケージをシステムにインストールする |
+| yum update <パッケージ名>       | パッケージを最新のバージョンに更新する |
+| yum remove <パッケージ名>       | パッケージをシステムから削除する      |
+| yum search <パッケージ名>       | 特定のキーワードで検索する           |
 
-[DNF](https://docs.fedoraproject.org/en-US/quick-docs/dnf/) is
-the successor to YUM which is now used in Fedora for installing and
-managing packages. DNF may replace YUM in the future on all RPM based
-Linux distributions.
+[DNF](https://docs.fedoraproject.org/en-US/quick-docs/dnf/)は、Fedoraでパッケージのインストールと管理に使われているYUMの後継です。DNF は、将来的にはRPMベースのすべてのLinuxディストリビューションでYUMを置き換えるかもしれません。
 
 ![](images/linux/admin/image20.png)
 
-We did find an exact match for the keyword httpd when we searched using
-yum search command. Let's now install the httpd package.
+yum searchコマンドで検索したところ、httpdというキーワードに完全に一致するものが見つかりました。それでは、httpdパッケージをインストールしてみましょう。
 
 ![](images/linux/admin/image28.png)
 
-After httpd is installed, we will use the yum remove command to remove
-httpd package.
+httpdがインストールされたら、yum removeコマンドを使ってhttpdパッケージを削除します。
 
 ![](images/linux/admin/image43.png)
 
-## Process Management
+## プロセス管理
 
-In this section, we will study about some useful commands that can be
-used to monitor the processes on Linux systems.
+このセクションでは、Linuxシステムのプロセスを監視するのに便利なコマンドをいくつか紹介します。
+このセクションでは、Linux システムのプロセスを監視するために使用できる便利なコマンドについて学びます。
 
 ### ps (process status)
 
-The ps command is used to know the information of a process or list of
-processes.
+psコマンドは、プロセスの情報やプロセスのリストを知るために使用します。
 
 ![](images/linux/admin/image24.png)
 
-If you get an error "ps command not found" while running ps command, do
-install **procps** package.
+psコマンドの実行中に「ps command not found」というエラーが発生した場合は**procps**パッケージをインストールしてください。
 
-ps without any arguments is not very useful. Let's try to list all the
-processes on the system by using the below command.
+引数なしのpsはあまり役に立ちません。システム上のすべてのプロセスをリストアップしてみましょう。
 
-Reference:
+参考:
 [https://unix.stackexchange.com/questions/106847/what-does-aux-mean-in-ps-aux](https://unix.stackexchange.com/questions/106847/what-does-aux-mean-in-ps-aux)
 
 ![](images/linux/admin/image42.png)
 
-We can use an additional argument with ps command to list the
-information about the process with a specific process ID.
+psコマンドに追加の引数を使用することで、特定のプロセスIDを指定して、そのプロセスの情報を表示することができます。
 
 ![](images/linux/admin/image2.png)
 
-We can use grep in combination with ps command to list only specific
-processes.
+psコマンドにgrepを併用することで、特定のプロセスのみをリストアップすることができます。
 
 ![](images/linux/admin/image1.png)
-
 ### top
 
-The top command is used to show information about Linux processes
-running on the system in real time. It also shows a summary of the
-system information.
+topコマンドは、システム上で実行されているLinuxプロセスの情報をリアルタイムで表示します。また、システム情報の概要を表示します。
 
 ![](images/linux/admin/image53.png)
 
-For each process, top lists down the process ID, owner, priority, state,
-cpu utilization, memory utilization and much more information. It also
-lists down the memory utilization and cpu utilization of the system as a
-whole along with system uptime and cpu load average.
+各プロセスについて、topはプロセスID、所有者、優先度、状態、CPU使用率、メモリ使用率、その他多くの情報が表示されます。また、システム全体のメモリ使用率やCPU使用率、システムの稼働時間やCPU負荷の平均値なども表示されます。
+## メモリ管理
 
-## Memory Management
-
-In this section, we will study about some useful commands that can be
-used to view information about the system memory.
+このセクションでは、システムのメモリに関する情報を表示するための便利なコマンドについて説明します。
 
 ### free
 
-The free command is used to display the memory usage of the system. The
-command displays the total free and used space available in the RAM
-along with space occupied by the caches/buffers.
+freeコマンドは、システムのメモリ使用量を表示するために使用します。このコマンドは、RAM上の空き領域と使用領域の合計と、キャッシュ／バッファが占める領域を表示します。
 
 ![](images/linux/admin/image22.png)
 
-free command by default shows the memory usage in kilobytes. We can use
-an additional argument to get the data in human-readable format.
+freeコマンドは、デフォルトではメモリ使用量をキロバイト単位で表示します。追加の引数を使用して、人間が読みやすい形式でデータを得ることができます。
 
 ![](images/linux/admin/image5.png)
 
 ### vmstat
 
-The vmstat command can be used to display the memory usage along with
-additional information about io and cpu usage.
+vmstatコマンドを使用すると、メモリ使用量に加えて、ioやcpuの使用率などの情報を表示することができます。
 
 ![](images/linux/admin/image38.png)
 
-## Checking Disk Space
+## ディスク容量の確認
 
-In this section, we will study about some useful commands that can be
-used to view disk space on Linux.
-
+このセクションでは、Linuxでディスクの空き容量を確認するのに便利なコマンドを紹介します。
 ### df (disk free)
 
-The df command is used to display the free and available space for each
-mounted file system.
+dfコマンドは、マウントされているファイルシステムごとに空き容量と利用可能容量を表示します。
 
 ![](images/linux/admin/image36.png)
 
 ### du (disk usage)
 
-The du command is used to display disk usage of files and directories on
-the system.
+duコマンドは、システム上のファイルやディレクトリのディスク使用量を表示します。
 
 ![](images/linux/admin/image10.png)
 
-The below command can be used to display the top 5 largest directories
-in the root directory.
+以下のコマンドを実行すると、ルートディレクトリ内の上位5つのディレクトリを表示します。
 
 ![](images/linux/admin/image18.png)
 
-## Daemons
+## デーモン
 
-A computer program that runs as a background process is called a daemon.
-Traditionally, the name of daemon processes ended with d - sshd, httpd
-etc. We cannot interact with a daemon process as they run in the
-background.
+バックグラウンドプロセスとして動作するコンピュータプログラムをデーモンと呼びます。伝統的に、デーモンプロセスの名前はdで終わります（sshd、httpdなど）。デーモンプロセスはバックグラウンドで実行されるため、ユーザーはデーモンプロセスと対話することはできません。
 
-Services and daemons are used interchangeably most of the time.
+サービスとデーモンは、ほとんどの場合同じ意味で使用されます。
 
-## Systemd
+## systemd
 
-Systemd is a system and service manager for Linux operating systems.
-Systemd units are the building blocks of systemd. These units are
-represented by unit configuration files.
+systemdは、Linux オペレーティングシステムのシステムおよびサービスマネージャです。
+ユニットはsystemdの構成要素です。これらのユニットはユニット設定ファイルで表されます。
 
-The below examples shows the unit configuration files available at
-/usr/lib/systemd/system which are distributed by installed RPM packages.
-We are more interested in the configuration file that ends with service
-as these are service units.
+以下の例は、RPMで配布されている/usr/lib/systemd/systemにあるユニット設定ファイルを示しています。これらはインストールされたRPMパッケージによって配布されています。
+ここでは、serviceで終わる設定ファイルがサービスユニットであることに注目します。
 
 ![](images/linux/admin/image16.png)
 
-### Managing System Services
+### システムサービスの管理
 
-Service units end with .service file extension. Systemctl command can be
-used to start/stop/restart the services managed by systemd.
+サービスユニットのファイル拡張子は.serviceです。systemdが管理しているサービスの起動、停止、再起動には、systemctlコマンドを使用します。
 
-| Command                         | Description                            |
+| コマンド | 説明 |
 | ------------------------------- | -------------------------------------- |
-| systemctl start name.service    | Starts a service                       |
-| systemctl stop name.service     | Stops a service                        |
-| systemctl restart name.service  | Restarts a service                     |
-| systemctl status name.service   | Check the status of a service          |
-| systemctl reload name.service   | Reload the configuration of a service  |
+| systemctl start name.service | サービスを開始する |
+| systemctl stop name.service | サービスを停止する |
+| systemctl restart name.service | サービスを再起動する |
+| systemctl status name.service | サービスの状態を確認する |
+| systemctl reload name.service | サービスの設定を再読み込みする |
 
-## Logs 
+## ログ 
 
-In this section, we will talk about some important files and directories
-which can be very useful for viewing system logs and applications logs
-in Linux. These logs can be very useful when you are troubleshooting on
-the system.
+このセクションでは、Linuxのシステムログやアプリケーションログの閲覧に役立つ重要なファイルやディレクトリについて説明します。これらのログは、システムのトラブルシューティングを行う際に非常に役立ちます。
 
-![](images/linux/admin/image58.png)
+| ファイル／ディレクトリ | 説明 |
+| ------------------------------- | -------------------------------------- |
+| /var/log/* | システムログに加えて、デーモンプロセスに関連するログを格納します。<br>var/logディレクトリにある重要なログファイルは以下の通りです。<br> ・var/log/messages - システムエラー、システムの起動と終了、システム構成の変更などに関するログが含まれます。<br>・/var/log/authlog - システムの認証に関するログが含まれています。 <br> ・/var/log/lastlog - 全ユーザーの最近のログイン情報が含まれています |
+| dmesg | カーネルのログを表示します https://ja.wikipedia.org/wiki/Dmesg |

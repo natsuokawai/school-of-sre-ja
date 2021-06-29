@@ -1,10 +1,9 @@
-## What next from here?
+## ここから先は？
 
-There are a lot of git commands and features which we have not explored here. But with the base built-up, be sure to explore concepts like
+gitのコマンドや機能はたくさんありますが、ここではまだ説明していません。しかし基礎ができたので、次のような概念を探ってみましょう。
 
-- Cherrypick
-- Squash
-- Amend
-- Stash
-- Reset
-
+- cherry-pick
+- squash
+- amend
+- stash
+- reset

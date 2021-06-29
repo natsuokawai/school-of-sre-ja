@@ -1,25 +1,25 @@
-# Conclusion
+# まとめ
 
-We have covered the basics of Linux operating systems and basic commands used in linux.
-We have also covered the Linux server administration commands.
+Linuxオペレーティングシステムの基本と、Linuxで使用される基本的なコマンドについて説明しました。
+また、Linuxサーバーの管理コマンドについても説明しました。
 
-We hope that this course will make it easier for you to operate on the command line.
+このコースを受講したことで、コマンドラインでの操作が容易になることを願っています。
 
-## Applications in SRE Role
+## SREの役割における応用
 
-1. As a SRE, you will be required to perform some general tasks on these Linux servers. You will also be using the command line when you are troubleshooting issues.
-2. Moving from one location to another in the filesystem will require the help of `ls`, `pwd` and `cd` commands.
-3. You may need to search some specific information in the log files. `grep` command would be very useful here. I/O redirection will become handy if you want to store the output in a file or pass it as an input to another command.
-4. `tail` command is very useful to view the latest data in the log file.
-5. Different users will have different permissions depending on their roles. We will also not want everyone in the company to access our servers for security reasons. Users permissions can be restricted with `chown`, `chmod` and `chgrp` commands.
-6. `ssh` is one of the most frequently used commands for a SRE. Logging into servers and troubleshooting along with performing basic administration tasks will only be possible if we are able to login into the server.
-7. What if we want to run an apache server or nginx on a server? We will first install it using the package manager. Package management commands become important here.
-8. Managing services on servers is another critical responsibility of a SRE. Systemd related commands can help in troubleshooting issues. If a service goes down, we can start it using `systemctl start` command. We can also stop a service in case it is not needed.
-9. Monitoring is another core responsibility of a SRE. Memory and CPU are two important system level metrics which should be monitored. Commands like `top` and `free` are quite helpful here.
-10. If a service is throwing an error, how do we find out the root cause of the error ? We will certainly need to check logs to find out the whole stack trace of the error. The log file will also tell us the number of times the error has occurred along with time when it started.
+1. SREとして、Linuxサーバー上でいくつかの一般的なタスクを実行することが求められます。また、トラブルシューティングの際には、コマンドラインを使用することになります。
+2. ファイルシステム内のある場所から別の場所に移動するには、`ls`、`pwd`、`cd`コマンドの助けが必要です。
+3. ログファイルの中の特定の情報を検索する必要があるかもしれません。ここでは`grep`コマンドが非常に役に立ちます。I/Oリダイレクトは、出力をファイルに保存したり、別のコマンドの入力として渡したい場合に便利です。
+4. `tail`コマンドは、ログファイルの最新データを表示するのに非常に便利です。
+5. それぞれのユーザーは、役割に応じて異なるパーミッションを持つことになります。また、セキュリティ上の理由から、会社の全員がサーバにアクセスできるようにはしたくありません。ユーザーの権限は`chown`、 `chmod`、`chgrp`コマンドで制限できます。
+6. `ssh`は、SRE が最も頻繁に使用するコマンドのひとつです。トラブルシューティングを行ったり、基本的な管理タスクを実行したりすることは、サーバにログインできて初めて可能になります。
+7. サーバー上でapacheサーバーやnginxを実行したい場合は？まず、パッケージマネージャーを使ってそれをインストールします。ここではパッケージ管理のコマンドが重要になります。
+8. サーバー上のサービスを管理することもSREの重要な仕事です。systemd関連のコマンドは、問題のトラブルシューティングに役立ちます。サービスが停止した場合、「systemctl start」コマンドを使ってサービスを開始することができます。また、不要な場合はサービスを停止することもできます。
+9. 監視は、SREのもうひとつの中核的な責務です。メモリとCPUは、監視すべき2つの重要なシステムレベルメトリクスです。「top」や「free」のようなコマンドが非常に役に立ちます。
+10. サービスがエラーを出している場合、エラーの根本原因をどのようにして見つけますか？エラーの全スタックトレースを見つけるために、ログをチェックする必要があるでしょう。ログファイルには、エラーが発生した回数や発生した時間などが記録されています。
 
-## Useful Courses and tutorials
+## 役立つコースやチュートリアル
 
-* [Edx basic linux commands course](https://courses.edx.org/courses/course-v1:LinuxFoundationX+LFS101x+1T2020/course/)
-* [Edx Red Hat Enterprise Linux Course](https://courses.edx.org/courses/course-v1:RedHat+RH066x+2T2017/course/)
-* [https://linuxcommand.org/lc3_learning_the_shell.php](https://linuxcommand.org/lc3_learning_the_shell.php)
+* [Edx Linux基本コマンドコース](https://www.edx.org/course/linux-basics-the-command-line-interface)
+* [Edx Red Hat Enterprise Linuxコース](https://www.edx.org/course/fundamentals-of-red-hat-enterprise-linux)
+* [Learning the Shell](https://linuxcommand.org/lc3_learning_the_shell.php)

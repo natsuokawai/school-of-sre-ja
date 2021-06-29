@@ -1,59 +1,59 @@
 # Git
 
-## Prerequisites
+## 前提条件
 
-1. Have Git installed [https://git-scm.com/downloads](https://git-scm.com/downloads)
-2. Have taken any git high level tutorial or following LinkedIn learning courses
+1. Gitがインストールされていること [https://git-scm.com/downloads](https://git-scm.com/downloads)
+2. gitの上級のチュートリアルまたは以下のLinkedInの学習コースを受講したこと
       - [https://www.linkedin.com/learning/git-essential-training-the-basics/](https://www.linkedin.com/learning/git-essential-training-the-basics/)
       - [https://www.linkedin.com/learning/git-branches-merges-and-remotes/](https://www.linkedin.com/learning/git-branches-merges-and-remotes/)
       - [The Official Git Docs](https://git-scm.com/doc)
 
-## What to expect from this course
+## このコースで扱うこと
 
-As an engineer in the field of computer science, having knowledge of version control tools becomes almost a requirement. While there are a lot of version control tools that exist today like SVN, Mercurial, etc, Git perhaps is the most used one and this course we will be working with Git. While this course does not start with Git 101 and expects basic knowledge of git as a prerequisite, it will reintroduce the git concepts known by you with details covering what is happening under the hood as you execute various git commands. So that next time you run a git command, you will be able to press enter more confidently!
+コンピュータサイエンス分野のエンジニアとして、バージョン管理ツールの知識を持つことはほぼ必須となります。現在、SVNやMercurialなど多くのバージョン管理ツールが存在しますが、Gitはおそらく最も使用されているツールであり、本コースではGitを扱います。このコースはGit 101から始まるわけではなく、前提条件としてGitの基本的な知識を求めていますが、様々なGitコマンドを実行する際に内部で何が起こっているかを詳細に説明しながら、皆さんが知っているGitの概念を再導入します。次回、gitコマンドを実行する際には、より自信を持ってエンターキーを押せるようになるでしょう。
 
-## What is not covered under this course
+## このコースでは扱わないこと
 
-Advanced usage and specifics of internal implementation details of Git.
+Gitの高度な使い方や内部実装の詳細について。
 
-## Course Contents
+## コース内容
 
- 1. [Git Basics](https://linkedin.github.io/school-of-sre/git/git-basics/#git-basics)
- 2. [Working with Branches](https://linkedin.github.io/school-of-sre/git/branches/)
- 3. [Git with Github](https://linkedin.github.io/school-of-sre/git/github-hooks/#git-with-github)
- 4. [Hooks](https://linkedin.github.io/school-of-sre/git/github-hooks/#hooks)
+ 1. [Gitの基本](https://linkedin.github.io/school-of-sre/git/git-basics/#git-basics)
+ 2. [ブランチの扱い方](https://linkedin.github.io/school-of-sre/git/branches/)
+ 3. [GithubとGit](https://linkedin.github.io/school-of-sre/git/github-hooks/#git-with-github)
+ 4. [フック](https://linkedin.github.io/school-of-sre/git/github-hooks/#hooks)
 
-## Git Basics
+## Gitの基本
 
-Though you might be aware already, let's revisit why we need a version control system. As the project grows and multiple developers start working on it, an efficient method for collaboration is warranted. Git helps the team collaborate easily and also maintains the history of the changes happening with the codebase.
+すでにご存知かもしれませんが、なぜバージョン管理システムが必要なのかを再確認してみましょう。プロジェクトが大きくなり、複数の開発者が作業するようになると、効率的なコラボレーションのための方法が必要になります。Git は、チームの共同作業を容易にし、コードベースの変更履歴を管理します。
 
-### Creating a Git Repo
+### Gitリポジトリの作成
 
-Any folder can be converted into a git repository. After executing the following command, we will see a `.git` folder within the folder, which makes our folder a git repository. **All the magic that git does, `.git` folder is the enabler for the same.**
+任意のフォルダをgitリポジトリに変換できます。以下のコマンドを実行すると、フォルダ内に`.git`フォルダが作成され、これがあることでフォルダはgitリポジトリになります。**gitのすべての魔法は、`.git`フォルダによって実現しています。**
 
 ```bash
-# creating an empty folder and changing current dir to it
+# 空のフォルダを作成し、現在のディレクトリをそこに変更します。
 $ cd /tmp
 $ mkdir school-of-sre
 $ cd school-of-sre/
 
-# initialize a git repo
+# git repo の初期化
 $ git init
 Initialized empty Git repository in /private/tmp/school-of-sre/.git/
 ```
 
-As the output says, an empty git repo has been initialized in our folder. Let's take a look at what is there.
+出力にあるように、空のgitリポジトリが私たちのフォルダに初期化されました。何が入っているのか見てみましょう。
 
 ```bash
 $ ls .git/
 HEAD        config      description hooks       info        objects     refs
 ```
 
-There are a bunch of folders and files in the `.git` folder. As I said, all these enables git to do its magic. We will look into some of these folders and files. But for now, what we have is an empty git repository.
+`.git`フォルダの中にはたくさんのフォルダやファイルがあります。先ほど言ったように、これらがあるからこそ gitは魔法を使えるのです。これらのフォルダやファイルのいくつかを見ていきましょう。しかし今のところ、私たちが持っているのは空のgitリポジトリです。
 
-### Tracking a File
+### ファイルの追跡
 
-Now as you might already know, let us create a new file in our repo (we will refer to the folder as _repo_ now.) And see git status
+もう知っているかもしれませんが、リポジトリに新しいファイルを作成してみましょう (ここではフォルダを _リポジトリ_ と呼びます)。そしてgitの状態を見てみましょう。
 
 ```bash
 $ echo "I am file 1" > file1.txt
@@ -70,10 +70,10 @@ Untracked files:
 nothing added to commit but untracked files present (use "git add" to track)
 ```
 
-The current git status says `No commits yet` and there is one untracked file. Since we just created the file, git is not tracking that file. We explicitly need to ask git to track files and folders. (also checkout [gitignore](https://git-scm.com/docs/gitignore)) And how we do that is via `git add` command as suggested in the above output. Then we go ahead and create a  commit.
+現在のgitステータスは`No commits yet`で、追跡されていないファイルがひとつあります。ファイルを作成したばかりなので、gitはそのファイルを追跡していません。ファイルやフォルダを追跡するようにgitに明示的に指示する必要があります。([gitignore](https://git-scm.com/docs/gitignore) も確認しましょう)。そのためには、上の出力にあるように`git add`コマンドを使います。続いて、コミットを作成します。
 
 ```bash
-$ git add file1.txt
+$ git add ファイル1.txt
 $ git status
 On branch master
 
@@ -90,15 +90,15 @@ $ git commit -m "adding file 1"
 create mode 100644 file1.txt
 ```
 
-Notice how after adding the file, git status says `Changes to be committed:`. What it means is whatever is listed there, will be included in the next commit. Then we go ahead and create a commit, with an attached messaged via `-m`.
+ファイルを追加した後、gitステータスが`Changes to be committed:`と表示されていることに注目しましょう。これが意味するところは、ここに表示されているものはすべて次のコミットに含まれるということです。次に、コミットを作成して`-m`でメッセージを添付します。
 
-### More About a Commit
+### コミットの詳細
 
-Commit is a snapshot of the repo. Whenever a commit is made, a snapshot of the current state of repo (the folder) is taken and saved. Each commit has a unique ID. (`df2fb7a` for the commit we made in the previous step). As we keep adding/changing more and more contents and keep making commits, all those snapshots are stored by git. Again, all this magic happens inside the `.git` folder. This is where all this snapshot or versions are stored _in an efficient manner._
+コミットはリポジトリのスナップショットです。コミットが行われるたびに、現在のリポジトリの状態（フォルダ）のスナップショットが取られ、保存されます。各コミットには固有のIDがあります。(前のステップで行ったコミットは`df2fb7a`)。中身をどんどん追加・変更し、コミットを繰り返していくと、それらのスナップショットがすべてgitに保存されていきます。繰り返しになりますが、これらの魔法はすべて`.git`フォルダの中で行われます。このようにして、すべてのスナップショットやバージョンが効率的な方法で保存されるのです。
 
-### Adding More Changes
+### 変更の追加
 
-Let us create one more file and commit the change. It would look the same as the previous commit we made.
+もうひとつファイルを作成して、変更をコミットしてみましょう。先ほどのコミットと同じようになります。
 
 ```bash
 $ echo "I am file 2" > file2.txt
@@ -109,11 +109,11 @@ $ git commit -m "adding file 2"
 create mode 100644 file2.txt
 ```
 
-A new commit with ID `7f3b00e` has been created. You can issue `git status` at any time to see the state of the repository.
+IDが`7f3b00e`の新しいコミットが作成されました。リポジトリの状態を確認するには、いつでも`git status`を発行することができます。
 
-       **IMPORTANT: Note that commit IDs are long string (SHA) but we can refer to a commit by its initial few (8 or more) characters too. We will interchangeably using shorter and longer commit IDs.**
+**重要: コミットIDは長い文字列(SHA)ですが、最初の数文字(8文字以上)でもコミットを参照することができることに注意してください。ここでは、短いコミットIDと長いコミットIDを同じ意味で使用します。**
 
-Now that we have two commits, let's visualize them:
+さて、2つのコミットがあるので、それらを視覚化してみましょう。
 
 ```bash
 $ git log --oneline --graph
@@ -121,17 +121,17 @@ $ git log --oneline --graph
 * df2fb7a adding file 1
 ```
 
-`git log`, as the name suggests, prints the log of all the git commits. Here you see two additional arguments, `--oneline` prints the shorter version of the log, ie: the commit message only and not the person who made the commit and when. `--graph` prints it in graph format.
+`git log`はその名のとおり、すべてのgitコミットのログを表示します。ここでは2つの追加の引数があります。`--oneline`はログの短いバージョン、つまりコミットメッセージのみを表示し、誰がいつコミットしたのかは表示しません。--graph` は、ログをグラフ形式で表示します。
 
-**Now at this moment the commits might look like just one in each line but all commits are stored as a tree like data structure internally by git. That means there can be two or more children commits of a given commit. And not just a single line of commits. We will look more into this part when we get to the Branches section. For now this is our commit history:**
+**さて、この時点ではコミットが一行にひとつずつ並んでいるように見えるかもしれませんが、すべてのコミットはgitの内部でツリー状のデータ構造として保存されています。つまり、あるコミットには2つ以上の子コミットが存在する可能性があるということです。一行だけのコミットではありません。この部分については、ブランチのセクションで詳しく説明します。今のところ、これが私たちのコミット履歴です。**
 
 ```bash
    df2fb7a ===> 7f3b00e
 ```
 
-### Are commits really linked?
+### コミットは本当にリンクされているの？
 
-As I just said, the two commits we just made are linked via tree like data structure and we saw how they are linked. But let's actually verify it. Everything in git is an object. Newly created files are stored as an object. Changes to file are stored as an objects and even commits are objects. To view contents of an object we can use the following command with the object's ID. We will take a look at the contents of the second commit
+先ほどの2つのコミットは、木のようなデータ構造でリンクされていて、リンクされている様子もわかりました。実際にそれを検証してみましょう。gitではすべてがオブジェクトです。新しく作成されたファイルはオブジェクトとして保存されます。ファイルへの変更はオブジェクトとして保存され、コミットもオブジェクトです。オブジェクトの内容を見るには、オブジェクトのIDを指定して次のコマンドを実行します。ここでは、2つ目のコミットの内容を見てみましょう。
 
 ```bash
 $ git cat-file -p 7f3b00e
@@ -143,95 +143,92 @@ committer Sanket Patel <spatel1@linkedin.com> 1603273316 -0700
 adding file 2
 ```
 
-Take a note of `parent` attribute in the above output. It points to the commit id of the first commit we made. So this proves that they are linked! Additionally you can see the second commit's message in this object. As I said all this magic is enabled by `.git` folder and the object to which we are looking at also is in that folder.
+上の出力では、`parent`属性に注目してください。これは、私たちが最初に行ったコミットのコミットIDを指しています。つまり、この2つのコミットがリンクしていることを示しています。さらに、このオブジェクトには2つ目のコミットのメッセージが表示されています。先ほど言ったように、これらの魔法はすべて`.git`フォルダによって有効になり、今見ているオブジェクトもそのフォルダの中にあります。
 
 ```bash
 $ ls .git/objects/7f/3b00eaa957815884198e2fdfec29361108d6a9
 .git/objects/7f/3b00eaa957815884198e2fdfec29361108d6a9
 ```
 
-It is stored in `.git/objects/` folder. All the files and changes to them as well are stored in this folder.
+`.git/objects/`フォルダに格納されています。すべてのファイルとそれらへの変更もこのフォルダに格納されます。
 
-### The Version Control part of Git
+### Git のバージョン管理の部分
 
-We already can see two commits (versions) in our git log. One thing a version control tool gives you is ability to browse back and forth in history. For example: some of your users are running an old version of code and they are reporting an issue. In order to debug the issue, you need access to the old code. The one in your current repo is the latest code. In this example, you are working on the second commit (7f3b00e) and someone reported an issue with the code snapshot at commit (df2fb7a). This is how you would get access to the code at any older commit
+すでにgitのログには2つのコミット（バージョン）が表示されています。バージョン管理ツールには、履歴をさかのぼって参照できる機能があります。たとえば、あるユーザーが古いバージョンのコードを使っていて問題を報告してきたとしましょう。その問題をデバッグするためには、古いコードにアクセスする必要があります。現在のリポジトリにあるのは最新のコードです。この例では、あなたは2つ目のコミット（7f3b00e）で作業していて、誰かがコミット（df2fb7a）のコードスナップショットに問題を報告しました。古いコミットのコードにアクセスするには、このようにします。
 
 ```bash
-# Current contents, two files present
+# 現在の状態、2つのファイルが存在
 $ ls
 file1.txt file2.txt
 
-# checking out to (an older) commit
+# (古い) コミットへのチェックアウト
 $ git checkout df2fb7a
 Note: checking out 'df2fb7a'.
 
-You are in 'detached HEAD' state. You can look around, make experimental
-changes and commit them, and you can discard any commits you make in this
-state without impacting any branches by performing another checkout.
+# ここは'detached HEAD'の状態です。いろいろ見て回ったり、実験的な変更をしたり、それをコミットしたりすることができます。
+# また、この状態でコミットした内容を破棄することもできます。この状態で行ったコミットは、別のチェックアウトを行うことで、どのブランチにも影響を与えることなく破棄することができます。
 
-If you want to create a new branch to retain commits you create, you may
-do so (now or later) by using -b with the checkout command again. Example:
+# 作成したコミットを保持するために新しいブランチを作成したい場合は、次のようにします。checkoutコマンドで-bを再度使用することで、（今でも後でも）そうすることができます。例:
 
- git checkout -b <new-branch-name>
+ git checkout -b <新しいブランチ名>
 
 HEAD is now at df2fb7a adding file 1
 
-# checking contents, can verify it has old contents
+# 内容を確認すると、古い状態であることがわかります。
 $ ls
 file1.txt
 ```
 
-So this is how we would get access to old versions/snapshots. All we need is a _reference_ to that snapshot. Upon executing `git checkout ...`, what git does for you is use the `.git` folder, see what was the state of things (files and folders) at that version/reference and replace the contents of current directory with those contents. The then-existing content will no longer be present in the local dir (repo) but we can and will still get access to them because they are tracked via git commit and `.git` folder has them stored/tracked.
+このようにして、古いバージョンやスナップショットにアクセスすることができます。必要なのは、そのスナップショットへの _参照_ だけです。`git checkout ...`を実行すると、gitは`.git`フォルダを使用して、そのバージョン/参照での状態 (ファイルやフォルダ) を確認し、カレントディレクトリの内容をその内容で置き換えます。その時点での内容はローカルディレクトリ(リポジトリ)には存在しなくなりますが、それでもそのファイルにはアクセスすることができます。なぜなら、それらはgit commitによって追跡され、`.git`フォルダに保存されているからです。
 
-### Reference
+### 参照
 
-I mention in the previous section that we need a _reference_ to the version. By default, git repo is made of tree of commits. And each commit has a unique IDs. But the unique ID is not the only thing we can reference commits via. There are multiple ways to reference commits. For example: `HEAD` is a reference to current commit. _Whatever commit your repo is checked out at, `HEAD` will point to that._ `HEAD~1` is reference to previous commit. So while checking out previous version in section above, we could have done `git checkout HEAD~1`.
+前のセクションで、バージョンの _参照_ が必要だと言いました。デフォルトでは、gitリポジトリはコミットのツリー構造になっています。そして、それぞれのコミットは一意のIDを持っています。しかし、ユニークなIDを通してコミットを参照する方法はそれだけではありません。コミットを参照する方法は複数あります。例えば、`HEAD`は現在のコミットを参照しています。`HEAD~1`は前のコミットへの参照です。ですから、上のセクションで前のバージョンをチェックアウトするときに、`git checkout HEAD~1`と実行できたはずです。
 
-Similarly, master is also a reference (to a branch). Since git uses tree like structure to store commits, there of course will be branches. And the default branch is called `master`. Master (or any branch reference) will point to the latest commit in the branch. Even though we have checked out to the previous commit in out repo, `master` still points to the latest commit. And we can get back to the latest version by checkout at `master` reference
+同じように、masterも（ブランチへの）参照となります。gitは木のような構造でコミットを保存するので、当然ながらブランチが存在します。そして、デフォルトのブランチは`master`と呼ばれます。（訳者注: デフォルトのブランチ名は将来的に変更される可能性があります。）master（あるいは他のブランチの参照）は、そのブランチの最新のコミットを指します。外のリポジトリで前のコミットにチェックアウトしたとしても、`master`は最新のコミットを指します。そして、`master`を参照してチェックアウトすれば、最新のバージョンに戻ることができます。
 
 ```bash
-$ git checkout master
 Previous HEAD position was df2fb7a adding file 1
 Switched to branch 'master'
 
-# now we will see latest code, with two files
+# これで、2つのファイルを含む最新のコードを見ることができます。
 $ ls
 file1.txt file2.txt
 ```
 
-Note, instead of `master` in above command, we could have used commit's ID as well.
+なお、上のコマンドでは、`master`の代わりに、コミットIDを使うこともできます。
 
-### References and The Magic
+### 参考文献と魔法
 
-Let's look at the state of things. Two commits, `master` and `HEAD` references are pointing to the latest commit
+状況を見てみましょう。2つのコミット、`master`と`HEAD`の参照が最新のコミットを指しています。
 
 ```bash
 $ git log --oneline --graph
-* 7f3b00e (HEAD -> master) adding file 2
-* df2fb7a adding file 1
+* 7f3b00e (HEAD -> master) add file 2
+* df2fb7a ファイル1の追加
 ```
 
-The magic? Let's examine these files:
+魔法？これらのファイルを見てみましょう。
 
 ```bash
 $ cat .git/refs/heads/master
 7f3b00eaa957815884198e2fdfec29361108d6a9
 ```
 
-Viola! Where master is pointing to is stored in a file. **Whenever git needs to know where master reference is pointing to, or if git needs to update where master points, it just needs to update the file above.** So when you create a new commit, a new commit is created on top of the current commit and the master file is updated with the new commit's ID.
+masterが指している場所はファイルに保存されています。**gitがmasterの参照先を知りたくなったとき、あるいはgitがmasterの参照先を更新したくなったときには、上のファイルを更新すればよいのです。**したがって、新しいコミットを作成すると、現在のコミットの上に新しいコミットが作成され、マスターファイルが新しいコミットのIDで更新されます。
 
-Similary, for `HEAD` reference:
+同様に、`HEAD`を参照してください。
 
 ```bash
 $ cat .git/HEAD
 ref: refs/heads/master
 ```
 
-We can see `HEAD` is pointing to a reference called `refs/heads/master`. So `HEAD` will point where ever the `master` points.
+`HEAD`が`refs/heads/master`という名前のリファレンスを指していることがわかります。つまり、`HEAD`は `master`が指している場所を指すことになります。
 
-### Little Adventure
+### 小さな冒険
 
-We discussed how git will update the files as we execute commands. But let's try to do it ourselves, by hand, and see what happens.
+コマンドを実行したとき、gitがどのようにファイルを更新するのかを説明しました。しかし、実際に自分でやってみてどうなるかを見てみましょう。
 
 ```bash
 $ git log --oneline --graph
@@ -239,18 +236,18 @@ $ git log --oneline --graph
 * df2fb7a adding file 1
 ```
 
-Now let's change master to point to the previous/first commit.
+では、masterを前の/最初のコミットを指すように変更しましょう。
 
 ```bash
 $ echo df2fb7a61f5d40c1191e0fdeb0fc5d6e7969685a > .git/refs/heads/master
 $ git log --oneline --graph
 * df2fb7a (HEAD -> master) adding file 1
 
-# RESETTING TO ORIGINAL
+# 最初の状態に戻す
 $ echo 7f3b00eaa957815884198e2fdfec29361108d6a9 > .git/refs/heads/master
 $ git log --oneline --graph
 * 7f3b00e (HEAD -> master) adding file 2
 * df2fb7a adding file 1
 ```
 
-We just edited the `master` reference file and now we can see only the first commit in git log. Undoing the change to the file brings the state back to original. Not so much of magic, is it?
+`master`の参照ファイルを編集したところ、git logには最初のコミットだけが表示されるようになりました。ファイルへの変更を元に戻すと、元の状態に戻ります。魔法というほどのものではありませんが、いかがでしょうか？

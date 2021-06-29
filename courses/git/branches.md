@@ -1,10 +1,10 @@
-# Working With Branches
+# ブランチでの作業
 
-Coming back to our local repo which has two commits. So far, what we have is a single line of history. Commits are chained in a single line. But sometimes you may have a need to work on two different features in parallel in the same repo. Now one option here could be making a new folder/repo with the same code and use that for another feature development. But there's a better way. Use _branches._ Since git follows tree like structure for commits, we can use branches to work on different sets of features. From a commit, two or more branches can be created and branches can also be merged.
+2つのコミットがあるローカルリポジトリに戻りましょう。これまでのところ、一本の履歴だけがあります。コミットは一本の線でつながっています。しかし、ときには同じリポジトリで二つの異なる機能を並行して作業する必要があるかもしれません。ここで、同じコードで新しいフォルダ／リポジトリを作成し、それを別の機能の開発に使用するという選択肢があります。しかし、もっと良い方法があります。gitはコミットを木のような構造にしているので、ブランチを使って異なる機能に取り組むことができます。ひとつのコミットから2つ以上のブランチを作成したり、ブランチをマージしたりすることができます。
 
-Using branches, there can exist multiple lines of histories and we can checkout to any of them and work on it. Checking out, as we discussed earlier, would simply mean replacing contents of the directory (repo) with the snapshot at the checked out version.
+ブランチを使うと、複数の履歴が存在することになり、そのうちのどれかにチェックアウトして作業を進めることができます。チェックアウトとは、先ほど説明したように、ディレクトリ（リポジトリ）の内容を、チェックアウトしたバージョンのスナップショットで置き換えることです。
 
-Let's create a branch and see how it looks like:
+ブランチを作成して、どうなるか見てみましょう。
 
 ```bash
 $ git branch b1
@@ -13,7 +13,7 @@ $ git log --oneline --graph
 * df2fb7a adding file 1
 ```
 
-We create a branch called `b1`. Git log tells us that b1 also points to the last commit (7f3b00e) but the `HEAD` is still pointing to master. If you remember, HEAD points to the commit/reference wherever you are checkout to. So if we checkout to `b1`, HEAD should point to that. Let's confirm:
+`b1`というブランチを作成しました。git logによると、b1は最後のコミット (7f3b00e) も指していますが、`HEAD`はまだmasterを指しています。覚えておいてほしいのですが、HEAD はチェックアウト先のコミット/参照を指しています。つまり、`b1`にチェックアウトした場合、HEADは`b1`を指しているはずです。確認してみましょう。
 
 ```bash
 $ git checkout b1
@@ -23,12 +23,12 @@ $ git log --oneline --graph
 * df2fb7a adding file 1
 ```
 
-`b1` still points to the same commit but HEAD now points to `b1`. Since we create a branch at commit `7f3b00e`, there will be two lines of histories starting this commit. Depending on which branch you are checked out on, the line of history will progress.
+`b1`はまだ同じコミットを指していますが、HEADは`b1` を指すようになりました。コミット`7f3b00e`でブランチを作成しているので、このコミットの最初には2つの履歴が存在します。どちらのブランチでチェックアウトされたかによって、履歴の行が進みます。
 
-At this moment, we are checked out on branch `b1`, so making a new commit will advance branch reference `b1` to that commit and current `b1` commit will become its parent. Let's do that.
+現時点では、ブランチ`b1`でチェックアウトされているので、新しいコミットを作成すると、ブランチ参照`b1`がそのコミットに進み、現在の`b1`のコミットがその親になります。これを実行してみましょう。
 
 ```bash
-# Creating a file and making a commit
+# ファイルの作成とコミットの実行
 $ echo "I am a file in b1 branch" > b1.txt
 $ git add b1.txt
 $ git commit -m "adding b1 file"
@@ -36,7 +36,7 @@ $ git commit -m "adding b1 file"
 1 file changed, 1 insertion(+)
 create mode 100644 b1.txt
 
-# The new line of history
+# 履歴の新しい行
 $ git log --oneline --graph
 * 872a38f (HEAD -> b1) adding b1 file
 * 7f3b00e (master) adding file 2
@@ -44,14 +44,14 @@ $ git log --oneline --graph
 $
 ```
 
-Do note that master is still pointing to the old commit it was pointing to. We can now checkout to master branch and make commits there. This will result in another line of history starting from commit 7f3b00e.
+masterはまだ古いコミットを指していることに注意しましょう。これで、masterブランチにチェックアウトして、そこにコミットすることができます。この結果、コミット7f3b00eから始まる別の履歴が表示されます。
 
 ```bash
-# checkout to master branch
+# master ブランチへのチェックアウト
 $ git checkout master
 Switched to branch 'master'
 
-# Creating a new commit on master branch
+# master ブランチに新しいコミットを作成
 $ echo "new file in master branch" > master.txt
 $ git add master.txt
 $ git commit -m "adding master.txt file"
@@ -59,14 +59,14 @@ $ git commit -m "adding master.txt file"
 1 file changed, 1 insertion(+)
 create mode 100644 master.txt
 
-# The history line
+# 履歴
 $ git log --oneline --graph
 * 60dc441 (HEAD -> master) adding master.txt file
 * 7f3b00e adding file 2
 * df2fb7a adding file 1
 ```
 
-Notice how branch b1 is not visible here since we are on the master. Let's try to visualize both to get the whole picture:
+ここではmasterにいるので、ブランチ`b1`が見えていないことに注目してください。全体像を把握するために、両方を視覚化してみましょう。
 
 ```bash
 $ git log --oneline --graph --all
@@ -77,15 +77,15 @@ $ git log --oneline --graph --all
 * df2fb7a adding file 1
 ```
 
-Above tree structure should make things clear. Notice a clear branch/fork on commit 7f3b00e. This is how we create branches. Now they both are two separate lines of history on which feature development can be done independently.
+上記のツリー構造により、状況が明確になります。コミット7f3b00eから明確に分岐していることに注目してください。これがブランチを作る方法です。このようにして、2つのブランチはそれぞれ独立した機能開発を行うことができます。
 
-**To reiterate, internally, git is just a tree of commits. Branch names (human readable) are pointers to those commits in the tree. We use various git commands to work with the tree structure and references. Git accordingly modifies contents of our repo.**
+**繰り返しになりますが、gitは内部的にはコミットのツリーにすぎません。ブランチの名前 (人間が読める名前) は、ツリー内のコミットへのポインターです。私たちはさまざまなgitコマンドを使って、ツリーの構造や参照を操作します。それに応じて、gitはそれに従ってリポジトリの内容を変更します。**
 
-## Merges
+## マージ
 
-Now say the feature you were working on branch `b1` is complete and you need to merge it on master branch, where all the final version of code goes. So first you will checkout to branch master and then you pull the latest code from upstream (eg: GitHub). Then you need to merge your code from `b1` into master. There could be two ways this can be done.
+ブランチ`b1`で作業していた機能が完成したので、それをmasterブランチにマージする必要があるとしましょう。そこで、まずmasterブランチにチェックアウトし、上流ブランチ（GitHubなど）から最新のコードを取得します。次に、`b1`のコードをmasterにマージする必要があります。この作業には2つの方法があります。
 
-Here is the current history:
+現在の履歴は以下の通りです。
 
 ```bash
 $ git log --oneline --graph --all
@@ -96,7 +96,7 @@ $ git log --oneline --graph --all
 * df2fb7a adding file 1
 ```
 
-**Option 1: Directly merge the branch.** Merging the branch b1 into master will result in a new merge commit. This will merge changes from two different lines of history and create a new commit of the result.
+**選択肢1: ブランチを直接マージする。** ブランチb1をmasterにマージすると、新しいマージコミットが発生します。これは、2つの異なる行の履歴からの変更をマージし、その結果の新しいコミットを作成します。
 
 ```bash
 $ git merge b1
@@ -114,9 +114,9 @@ $ git log --oneline --graph --all
 * df2fb7a adding file 1
 ```
 
-You can see a new merge commit created (8fc28f9). You will be prompted for the commit message. If there are a lot of branches in the repo, this result will end-up with a lot of merge commits. Which looks ugly compared to a single line of history of development. So let's look at an alternative approach
+新しいマージコミットが作成されているのがわかります（8fc28f9）。コミットメッセージの入力が促されます。リポジトリにたくさんのブランチがある場合、この結果はたくさんのマージコミットになってしまいます。これは、一本の開発履歴に比べて見づらいです。そこで、別のアプローチを考えてみましょう。
 
-First let's [reset](https://git-scm.com/docs/git-reset) our last merge and go to the previous state.
+まず、最後のマージを[リセット](https://git-scm.com/docs/git-reset)して、以前の状態に戻しましょう。
 
 ```bash
 $ git reset --hard 60dc441
@@ -129,19 +129,19 @@ $ git log --oneline --graph --all
 * df2fb7a adding file 1
 ```
 
-**Option 2: Rebase.** Now, instead of merging two branches which has a similar base (commit: 7f3b00e), let us rebase branch b1 on to current master. **What this means is take branch `b1` (from commit 7f3b00e to commit 872a38f) and rebase (put them on top of) master (60dc441).**
+**選択肢2：リベース** ここで、ベースが似ている2つのブランチをマージする（コミット: 7f3b00e）のではなく、ブランチb1を現在のマスターにリベースしてみましょう。**これは、ブランチ`b1`（コミット7f3b00eからコミット872a38fまで）をリベースして、マスター（60dc441）の上に置くことを意味しています**。
 
 ```bash
-# Switch to b1
+# b1 に切り替える
 $ git checkout b1
 Switched to branch 'b1'
 
-# Rebase (b1 which is current branch) on master
+# (現在のブランチであるb1を）masterにリベースする
 $ git rebase master
 First, rewinding head to replay your work on top of it...
 Applying: adding b1 file
 
-# The result
+# 結果
 $ git log --oneline --graph --all
 * 5372c8f (HEAD -> b1) adding b1 file
 * 60dc441 (master) adding master.txt file
@@ -149,14 +149,14 @@ $ git log --oneline --graph --all
 * df2fb7a adding file 1
 ```
 
-You can see `b1` which had 1 commit. That commit's parent was `7f3b00e`. But since we rebase it on master (`60dc441`). That becomes the parent now. As a side effect, you also see it has become a single line of history. Now if we were to merge `b1` into `master`, it would simply mean change `master` to point to `5372c8f` which is `b1`. Let's try it:
+1つのコミットがあった`b1`がわかります。このコミットの親は`7f3b00e` です。しかし、master(`60dc441`)にリベースしたので、このコミットが親になりました。副次的な効果として、1行の履歴になったこともわかります。`b1`を`master`にマージするとしたら、単純に`master`が`b1`である`5372c8f`を指すように変更するだけです。試してみましょう。
 
 ```bash
-# checkout to master since we want to merge code into master
+# コードをmasterにマージしたいので、masterにチェックアウトします。
 $ git checkout master
 Switched to branch 'master'
 
-# the current history, where b1 is based on master
+# 現在の履歴。b1はmasterをベースにしています。
 $ git log --oneline --graph --all
 * 5372c8f (b1) adding b1 file
 * 60dc441 (HEAD -> master) adding master.txt file
@@ -164,7 +164,7 @@ $ git log --oneline --graph --all
 * df2fb7a adding file 1
 
 
-# Performing the merge, notice the "fast-forward" message
+# マージを実行します。"fast-forward"のメッセージに注目してください。
 $ git merge b1
 Updating 60dc441..5372c8f
 Fast-forward
@@ -172,7 +172,7 @@ b1.txt | 1 +
 1 file changed, 1 insertion(+)
 create mode 100644 b1.txt
 
-# The Result
+# 結果
 $ git log --oneline --graph --all
 * 5372c8f (HEAD -> master, b1) adding b1 file
 * 60dc441 adding master.txt file
@@ -180,4 +180,4 @@ $ git log --oneline --graph --all
 * df2fb7a adding file 1
 ```
 
-Now you see both `b1` and `master` are pointing to the same commit. Your code has been merged to the master branch and it can be pushed. Also we have clean line of history! :D
+これで、`b1`と`master`が同じコミットを指していることがわかります。これで、あなたのコードはmasterブランチにマージされ、プッシュできるようになりました。また、履歴もきれいに残っていますね！:D
