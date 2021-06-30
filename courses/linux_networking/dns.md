@@ -1,36 +1,36 @@
 # DNS
-Domain Names are the simple human-readable names for websites. The Internet understands only IP addresses, but since memorizing incoherent numbers is not practical, domain names are used instead. These domain names are translated into IP addresses by the DNS infrastructure. When somebody tries to open [www.linkedin.com](https://www.linkedin.com) in the browser, the browser tries to convert [www.linkedin.com](https://www.linkedin.com) to an IP Address. This process is called DNS resolution. A simple pseudocode depicting this process looks this
+ドメイン名とは、ウェブサイトの名前を人間が読めるようにしたものです。インターネットはIPアドレスしか理解できませんが、支離滅裂な数字を覚えるのは現実的ではないため、代わりにドメイン名が使われます。これらのドメイン名は、DNSのインフラによってIPアドレスに変換されます。誰かがブラウザで[www.linkedin.com](https://www.linkedin.com)を開こうとすると、ブラウザは[www.linkedin.com](https://www.linkedin.com)をIPアドレスに変換しようとします。この処理をDNS解決といいます。このプロセスを描いた簡単な疑似コードは次のようになります。
 
 ```python
 ip, err = getIPAddress(domainName)
 if err:
-  print(“unknown Host Exception while trying to resolve:%s”.format(domainName))
+    print("unknown Host Exception while trying to resolve:%s".format(domainName))
 ```
 
-Now let’s try to understand what happens inside the getIPAddress function. The browser would have a DNS cache of its own where it checks if there is a mapping for the domainName to an IP Address already available, in which case the browser uses that IP address. If no such mapping exists, the browser calls gethostbyname syscall to ask the operating system to find the IP address for the given domainName
+では、getIPAddress関数の中で何が起こっているのかを理解してみましょう。ブラウザは自分自身のDNSキャッシュを持っていて、ドメイン名とIPアドレスのマッピングがすでに存在するかどうかをチェックします。そのようなマッピングが存在しない場合、ブラウザはgethostbynameシステムコールを呼び出して、与えられたドメイン名に対応するIPアドレスを見つけるようにオペレーティングシステムに依頼します。
 
 ```python
 def getIPAddress(domainName):
     resp, fail = lookupCache(domainName)
     If not fail:
-       return resp
+        return resp
     else:
-       resp, err = gethostbyname(domainName)
-       if err:
-         return null, err
-       else:
-          return resp
+        resp, err = gethostbyname(domainName)
+        if err:
+            return null, err
+        else:
+            return resp
 ```
 
-Now lets understand what operating system kernel does when the [gethostbyname](https://man7.org/linux/man-pages/man3/gethostbyname.3.html) function is called. The Linux operating system looks at the file [/etc/nsswitch.conf](https://man7.org/linux/man-pages/man5/nsswitch.conf.5.html) file which usually has a line
+ここで、[gethostbyname](https://man7.org/linux/man-pages/man3/gethostbyname.3.html)関数が呼び出されたときに、オペレーティングシステムのカーネルが何をするかを理解しましょう。Linuxのオペレーティングシステムは、[/etc/nsswitch.conf](https://man7.org/linux/man-pages/man5/nsswitch.conf.5.html)というファイルを見ます。
 
 ```bash
 hosts:      files dns
 ```
 
-This line means the OS has to look up first in file (/etc/hosts) and then use DNS protocol to do the resolution if there is no match in /etc/hosts. 
+この行は、OSが最初にファイル（/etc/hosts）を検索し、/etc/hostsに一致するものがない場合にDNSプロトコルを使用して解決することを意味します。
 
-The file /etc/hosts is of format
+ファイル/etc/hostsは次のような形式になっています。
 
 
 IPAddress FQDN [FQDN].*
@@ -40,13 +40,13 @@ IPAddress FQDN [FQDN].*
 ::1 localhost.localdomain localhost
 ```
 
-If a match exists for a domain in this file then that IP address is returned by the OS. Lets add a line to this file
+このファイルの中のドメインにマッチするものがあれば、そのIPアドレスがOSから返されます。このファイルに一行追加してみましょう。
 
 ```bash
 127.0.0.1 test.linkedin.com
 ```
 
-And then do ping test.linkedin.com
+そして、test.linkedin.comにpingを実行します。
 
 ```bash
 ping test.linkedin.com -n
@@ -60,13 +60,13 @@ PING test.linkedin.com (127.0.0.1) 56(84) bytes of data.
 
 ```
 
-As mentioned earlier, if no match exists in /etc/hosts, the OS tries to do a DNS resolution using the DNS protocol. The linux system makes a DNS request to the first IP in /etc/resolv.conf. If there is no response, requests are sent to subsequent servers in resolv.conf. These servers in resolv.conf are called DNS resolvers. The DNS resolvers are populated by [DHCP](https://en.wikipedia.org/wiki/Dynamic_Host_Configuration_Protocol) or statically configured by an administrator. 
-[Dig](https://linux.die.net/man/1/dig) is a userspace DNS system which creates and sends request to DNS resolvers and prints the response it receives to the console.
+前述のように、/etc/hostsにマッチするものがない場合、OSはDNSプロトコルを使ってDNS解決を試みます。Linuxシステムは、/etc/resolv.confに記載されている最初のIPに対してDNSリクエストを行います。応答がない場合は、resolv.conf内の後続のサーバーに要求が送られます。これらのresolv.conf内のサーバーをDNSリゾルバと呼びます。DNSリゾルバは、[DHCP](https://en.wikipedia.org/wiki/Dynamic_Host_Configuration_Protocol)によって設定されるか、管理者によって静的に設定されます。
+[Dig](https://linux.die.net/man/1/dig)はユーザー空間のDNSシステムで、DNSリゾルバを作成してリクエストを送り、受け取ったレスポンスをコンソールに表示します。
 
 ```bash
-#run this command in one shell to capture all DNS requests
+# DNSリクエストを取得するには、次のコマンドをシェルで実行します
 sudo tcpdump -s 0 -A -i any port 53
-#make a dig request from another shell
+# 別のシェルからdigリクエストを行います
 dig linkedin.com
 ```
 
@@ -80,9 +80,9 @@ dig linkedin.com
 ```
 
 
-The packet capture shows a request is made to 172.23.195.101:53 (this is the resolver in /etc/resolv.conf) for linkedin.com and a response is received from 172.23.195.101 with the IP address of linkedin.com 108.174.10.10
+パケットキャプチャを見ると、172.23.195.101:53（これは/etc/resolv.confのリゾルバ）にlinkedin.comのリクエストが行われ、172.23.195.101からlinkedin.comのIPアドレス108.174.10.10のレスポンスを受信していることがわかります。
 
-Now let's try to understand how DNS resolver tries to find the IP address of linkedin.com. DNS resolver first looks at its cache. Since many devices in the network can query for the domain name linkedin.com, the name resolution result may already exist in the cache. If there is a cache miss, it starts the DNS resolution process. The DNS server breaks “linkedin.com” to “.”, “com.” and “linkedin.com.” and starts DNS resolution from “.”. The “.” is called root domain and those IPs are known to the DNS resolver software. DNS resolver queries the root domain Nameservers to find the right nameservers which could respond regarding details for "com.". The address of the authoritative nameserver of “com.” is returned. Now the DNS resolution service contacts the authoritative nameserver for “com.” to fetch the authoritative nameserver for “linkedin.com”. Once an authoritative nameserver of “linkedin.com” is known, the resolver contacts Linkedin’s nameserver to provide the IP address of “linkedin.com”. This whole process can be visualized by running 
+それでは、DNSリゾルバがどのようにlinkedin.comのIPアドレスを見つけようとするのかを理解してみましょう。DNSリゾルバはまずキャッシュを調べます。ネットワーク上の多くのデバイスがlinkedin.comというドメイン名を照会できるため、名前解決の結果がすでにキャッシュに存在している可能性があります。キャッシュミスがあれば、DNS解決処理を開始します。DNSサーバーは「linkedin.com」を「.」、「com.」、「linkedin.com.」に分解し、「.」からDNS解決を開始します。「.」はルートドメインと呼ばれ、これらのIPはDNSリゾルバソフトウェアに知られています。DNSリゾルバは、ルートドメインのネームサーバに問い合わせて、「com.」の詳細について応答できる適切なネームサーバを探します。「com.」の権威DNSサーバーのアドレスが返されます。ここでDNS解決サービスは、「com.」の権威DNSサーバーに連絡して、「linkedin.com」の権威DNSサーバーを取得します。「linkedin.com」の権威DNSサーバーが判明すると、リゾルバはLinkedinのネームサーバーに連絡して「linkedin.com」のIPアドレスを提供します。このプロセスの全体像は、次のように実行するとわかります。
 
 ```bash
 dig +trace linkedin.com
@@ -92,14 +92,14 @@ dig +trace linkedin.com
 ```bash
 linkedin.com.		3600	IN	A	108.174.10.10
 ```
-This DNS response has 5 fields where the first field is the request and the last field is the response. The second field is the Time to Live which says how long the DNS response is valid in seconds. In this case this mapping of linkedin.com is valid for 1 hour. This is how the resolvers and application(browser) maintain their cache. Any request for linkedin.com beyond 1 hour will be treated as a cache miss as the mapping has expired its TTL and the whole process has to be redone.
-The 4th field says the type of DNS response/request. Some of the various DNS query types are
-A, AAAA, NS, TXT, PTR, MX and CNAME. 
-- A record returns IPV4 address of the domain name 
-- AAAA record returns the IPV6 address of the domain Name
-- NS record returns the authoritative nameserver for the domain name
-- CNAME records are aliases to the domain names. Some domains point to other domain names and resolving the latter domain name gives an IP which is used as an IP for the former domain name as well. Example www.linkedin.com’s IP address is the same as 2-01-2c3e-005a.cdx.cedexis.net. 
-- For the brevity we are not discussing other DNS record types, the RFC of each of these records are available [here](https://en.wikipedia.org/wiki/List_of_DNS_record_types).
+このDNSレスポンスには5つのフィールドがあり、最初のフィールドがリクエストで、最後のフィールドがレスポンスです。2番目のフィールドはTime to Liveで、DNSレスポンスがどれくらい有効かを秒単位で表しています。このケースでは、linkedin.comのマッピングは1時間有効です。このようにして、リゾルバとアプリケーション（ブラウザ）はキャッシュを維持しています。1時間を超えてlinkedin.comへのリクエストがあった場合、マッピングのTTLが切れているため、キャッシュミスとして扱われ、すべての処理をやり直さなければなりません。
+4番目のフィールドは、DNSレスポンス/リクエストのタイプを示します。DNSクエリの種類には次のようなものがあります。
+A, AAAA, NS, TXT, PTR, MX, CNAME
+- Aレコードは、ドメイン名のIPV4アドレスを返します。
+- AAAAレコードは、ドメイン名のIPV6アドレスを返します。
+- NSレコードは、ドメイン名の権威DNSサーバーを返します。
+- CNAMEレコードは、ドメイン名のエイリアスです。一部のドメインは他のドメイン名を指しており、後者のドメイン名を解決すると、前者のドメイン名のIPとしても使用されるIPが得られます。例: www.linkedin.comのIPアドレスは、2-01-2c3e-005a.cdx.cedexis.netと同じです。
+- 簡潔にするために、他のDNSレコードタイプについては説明しませんが、これらのレコードのRFCは[こちら][(https://en.wikipedia.org/wiki/List_of_DNS_record_types](https://ja.wikipedia.org/wiki/DNS%E3%83%AC%E3%82%B3%E3%83%BC%E3%83%89%E3%82%BF%E3%82%A4%E3%83%97%E3%81%AE%E4%B8%80%E8%A6%A7))にあります。
 
 ```bash
 dig A linkedin.com +short
@@ -123,21 +123,16 @@ dns1.p09.nsone.net.
 dig www.linkedin.com CNAME +short
 2-01-2c3e-005a.cdx.cedexis.net.
 ```
-Armed with these fundamentals of DNS lets see usecases where DNS is used by SREs.
+このようなDNSの基礎知識をもとに、SREがDNSを使用するケースを見てみましょう。
 
-## Applications in SRE role
+## SREの役割における応用
 
-This section covers some of the common solutions SRE can derive from DNS
+このセクションでは、SREがDNSから得られる一般的なソリューションのいくつかを取り上げます。
 
-1. Every company has to have its internal DNS infrastructure for intranet sites and internal services like databases and other internal applications like wiki. So there has to be a DNS infrastructure maintained for those domain names by the infrastructure team. This DNS infrastructure has to be optimized and scaled so that it doesn’t become a single point of failure. Failure of the internal DNS infrastructure can cause API calls of microservices to fail and other cascading effects.
-2. DNS can also be used for discovering services. For example the hostname serviceb.internal.example.com could list instances which run service b internally in example.com company. Cloud providers provide options to enable DNS discovery([example](https://docs.aws.amazon.com/whitepapers/latest/microservices-on-aws/service-discovery.html#dns-based-service-discovery))
-3. DNS is used by cloud provides and CDN providers to scale their services. In Azure/AWS, Load Balancers are given a CNAME instead of IPAddress. They update the IPAddress of the Loadbalancers as they scale by changing the IP Address of alias domain names. This is one of the reasons why A records of such alias domains are short lived like 1 minute.
-4. DNS can also be used to make clients get IP addresses closer to their location so that their HTTP calls can be responded faster if the company has a presence geographically distributed. 
-5. SRE also has to understand since there is no verification in DNS infrastructure, these responses can be spoofed. This is safeguarded by other protocols like HTTPS(dealt later). DNSSEC protects from forged or manipulated DNS responses.
-6. Stale DNS cache can be a problem. Some [apps](https://stackoverflow.com/questions/1256556/how-to-make-java-honor-the-dns-caching-timeout) might still be using expired DNS records for their api calls. This is something SRE has to be wary of when doing maintenance.
-7. DNS Loadbalancing and service discovery also has to understand TTL and the servers can be removed from the pool only after waiting till TTL post the changes are made to DNS records. If this is not done, a certain portion of the traffic will fail as the server is removed before the TTL.
-
-
-
-
-
+1. すべての企業は、イントラネットやデータベースなどの内部サービス、wikiなどの内部アプリケーションのために、内部DNSインフラを持たなければなりません。そのため、インフラチームがこれらのドメイン名のためにDNSインフラを維持する必要があります。このDNSインフラは、単一障害点にならないよう、最適化されスケールしなければなりません。内部DNSインフラの障害は、マイクロサービスのAPIコールの障害やその他の連鎖的な影響を引き起こす可能性があります。
+2. DNSは、サービスを発見するためにも使用できます。例えば、ホスト名serviceb.internal.example.comは、example.com社の内部でservicebを実行しているインスタンスをリストアップすることができます。クラウドプロバイダーは、DNSディスカバリーを有効にするオプションを提供しています（[例](https://docs.aws.amazon.com/whitepapers/latest/microservices-on-aws/service-discovery.html#dns-based-service-discovery)）。
+3. DNSは、クラウド事業者やCDN事業者がサービスを拡張するために使用します。Azure/AWSでは、ロードバランサーにIPアドレスではなくCNAMEが与えられます。エイリアスドメイン名のIPアドレスを変更することにより、スケーリング時にロードバランサーのIPアドレスを更新します。これが、このようなエイリアスドメインのAレコードが1分程度の短命である理由の一つです。
+4. DNSは、企業が地理的に分散している場合に、クライアントが自分の所在地に近いIPアドレスを取得して、HTTP コールをより迅速に応答できるようにするためにも使用できます。
+5. SREは、DNSインフラには検証がないため、これらの応答が偽装される可能性があることを理解する必要があります。DNS、HTTPS（後述）のような他のプロトコルによって保護されています。DNSSECは、偽造または操作された DNSレスポンスから保護します。
+6. 古くなったDNSキャッシュは問題となりえます。一部の[アプリ](https://stackoverflow.com/questions/1256556/how-to-make-java-honor-the-dns-caching-timeout)では、APIの呼び出しに期限切れのDNSレコードを使用している場合があります。これは、SREがメンテナンスを行う際に注意しなければならないことです。
+7. DNSロードバランシングとサービスディスカバリーはTTLを理解する必要があり、 DNSレコードに変更が加えられた後、TTLまで待って初めてサーバーをプールから削除することができます。これが行われないと、TTL前にサーバーが削除され、トラフィックの一部が失敗します。
