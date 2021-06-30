@@ -1,0 +1,1756 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="shortcut icon" href="../../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.2.8">
+    
+    
+      
+        <title>Gitの基礎 - School Of SRE</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.cb6bc1d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.39b8e14a.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/custom.css">
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+      
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#git" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+   <script async defer data-domain="linkedin.github.io" src="https://tracking.eskratch.com/js/plausible.js"></script>
+
+
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="../.." title="School Of SRE" class="md-header-nav__button md-logo" aria-label="School Of SRE">
+      
+  <img src="../../img/sos.png" alt="logo">
+
+    </a>
+    <!-- Button to open drawer -->
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            <a href="../.." title="School Of SRE" >
+              School Of SRE
+            </a>
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Gitの基礎
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        ホーム
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+      
+      <label class="md-nav__link" for="nav-2">
+        基礎
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="基礎" data-md-level="1">
+        <label class="md-nav__title" for="nav-2">
+          <span class="md-nav__icon md-icon"></span>
+          基礎
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2-1" type="checkbox" id="nav-2-1" >
+      
+      <label class="md-nav__link" for="nav-2-1">
+        Linuxの基礎
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Linuxの基礎" data-md-level="2">
+        <label class="md-nav__title" for="nav-2-1">
+          <span class="md-nav__icon md-icon"></span>
+          Linuxの基礎
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux_basics/intro/" class="md-nav__link">
+        はじめに
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux_basics/command_line_basics/" class="md-nav__link">
+        コマンドラインの基礎
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux_basics/linux_server_administration/" class="md-nav__link">
+        サーバー管理
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux_basics/conclusion/" class="md-nav__link">
+        まとめ
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2-2" type="checkbox" id="nav-2-2" checked>
+      
+      <label class="md-nav__link" for="nav-2-2">
+        Git
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Git" data-md-level="2">
+        <label class="md-nav__title" for="nav-2-2">
+          <span class="md-nav__icon md-icon"></span>
+          Git
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Gitの基礎
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Gitの基礎
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    前提条件
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    このコースで扱うこと
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    このコースでは扱わないこと
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    コース内容
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#git_1" class="md-nav__link">
+    Gitの基本
+  </a>
+  
+    <nav class="md-nav" aria-label="Gitの基本">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#git_2" class="md-nav__link">
+    Gitリポジトリの作成
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    ファイルの追跡
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    コミットの詳細
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    変更の追加
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    コミットは本当にリンクされているの？
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#git_3" class="md-nav__link">
+    Git のバージョン管理の部分
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    参照
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    参考文献と魔法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    小さな冒険
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../branches/" class="md-nav__link">
+        ブランチを使った作業
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../github-hooks/" class="md-nav__link">
+        Githubとフック
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../conclusion/" class="md-nav__link">
+        まとめ
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2-3" type="checkbox" id="nav-2-3" >
+      
+      <label class="md-nav__link" for="nav-2-3">
+        Linuxネットワーキング
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Linuxネットワーキング" data-md-level="2">
+        <label class="md-nav__title" for="nav-2-3">
+          <span class="md-nav__icon md-icon"></span>
+          Linuxネットワーキング
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux_networking/intro/" class="md-nav__link">
+        はじめに
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux_networking/dns/" class="md-nav__link">
+        DNS
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux_networking/udp/" class="md-nav__link">
+        UDP
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux_networking/http/" class="md-nav__link">
+        HTTP
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux_networking/tcp/" class="md-nav__link">
+        TCP
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux_networking/ipr/" class="md-nav__link">
+        ルーティング
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux_networking/conclusion/" class="md-nav__link">
+        まとめ
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" >
+      
+      <label class="md-nav__link" for="nav-3">
+        PythonとWeb
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="PythonとWeb" data-md-level="1">
+        <label class="md-nav__title" for="nav-3">
+          <span class="md-nav__icon md-icon"></span>
+          PythonとWeb
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python_web/intro/" class="md-nav__link">
+        はじめに
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python_web/python-concepts/" class="md-nav__link">
+        Pythonの概念
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python_web/python-web-flask/" class="md-nav__link">
+        PythonとWebとFlask
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python_web/url-shorten-app/" class="md-nav__link">
+        URL短縮アプリ
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python_web/sre-conclusion/" class="md-nav__link">
+        まとめ
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" >
+      
+      <label class="md-nav__link" for="nav-4">
+        データ
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="データ" data-md-level="1">
+        <label class="md-nav__title" for="nav-4">
+          <span class="md-nav__icon md-icon"></span>
+          データ
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-1" type="checkbox" id="nav-4-1" >
+      
+      <label class="md-nav__link" for="nav-4-1">
+        リレーショナルデータベース
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="リレーショナルデータベース" data-md-level="2">
+        <label class="md-nav__title" for="nav-4-1">
+          <span class="md-nav__icon md-icon"></span>
+          リレーショナルデータベース
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../databases_sql/intro/" class="md-nav__link">
+        はじめに
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../databases_sql/concepts/" class="md-nav__link">
+        キーコンセプト
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../databases_sql/mysql/" class="md-nav__link">
+        MySQL
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../databases_sql/innodb/" class="md-nav__link">
+        InnoDB
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../databases_sql/operations/" class="md-nav__link">
+        運用上の概念
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../databases_sql/lab/" class="md-nav__link">
+        ラボ
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../databases_sql/conclusion/" class="md-nav__link">
+        まとめ
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-2" type="checkbox" id="nav-4-2" >
+      
+      <label class="md-nav__link" for="nav-4-2">
+        NoSQL
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="NoSQL" data-md-level="2">
+        <label class="md-nav__title" for="nav-4-2">
+          <span class="md-nav__icon md-icon"></span>
+          NoSQL
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../databases_nosql/intro/" class="md-nav__link">
+        はじめに
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../databases_nosql/key_concepts/" class="md-nav__link">
+        キーコンセプト
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../databases_nosql/further_reading/" class="md-nav__link">
+        まとめ
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-3" type="checkbox" id="nav-4-3" >
+      
+      <label class="md-nav__link" for="nav-4-3">
+        ビッグデータ
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="ビッグデータ" data-md-level="2">
+        <label class="md-nav__title" for="nav-4-3">
+          <span class="md-nav__icon md-icon"></span>
+          ビッグデータ
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../big_data/intro/" class="md-nav__link">
+        はじめに
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../big_data/evolution/" class="md-nav__link">
+        Hadoopの進化とアーキテクチャ
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../big_data/tasks/" class="md-nav__link">
+        まとめ
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" >
+      
+      <label class="md-nav__link" for="nav-5">
+        システム設計
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="システム設計" data-md-level="1">
+        <label class="md-nav__title" for="nav-5">
+          <span class="md-nav__icon md-icon"></span>
+          システム設計
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems_design/intro/" class="md-nav__link">
+        はじめに
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems_design/scalability/" class="md-nav__link">
+        スケーラビリティ
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems_design/availability/" class="md-nav__link">
+        可用性
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems_design/fault-tolerance/" class="md-nav__link">
+        フォールトトレランス
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems_design/conclusion/" class="md-nav__link">
+        まとめ
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6" >
+      
+      <label class="md-nav__link" for="nav-6">
+        メトリクスとモニタリング
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="メトリクスとモニタリング" data-md-level="1">
+        <label class="md-nav__title" for="nav-6">
+          <span class="md-nav__icon md-icon"></span>
+          メトリクスとモニタリング
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../metrics_and_monitoring/introduction/" class="md-nav__link">
+        はじめに
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../metrics_and_monitoring/command-line_tools/" class="md-nav__link">
+        コマンドラインツール
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../metrics_and_monitoring/third-party_monitoring/" class="md-nav__link">
+        サードパーティモニタリング
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../metrics_and_monitoring/alerts/" class="md-nav__link">
+        アラートによるプロアクティブモニタリング
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../metrics_and_monitoring/best_practices/" class="md-nav__link">
+        モニタリングのベストプラクティス
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../metrics_and_monitoring/observability/" class="md-nav__link">
+        可観測性
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../metrics_and_monitoring/conclusion/" class="md-nav__link">
+        まとめ
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7" >
+      
+      <label class="md-nav__link" for="nav-7">
+        セキュリティ
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="セキュリティ" data-md-level="1">
+        <label class="md-nav__title" for="nav-7">
+          <span class="md-nav__icon md-icon"></span>
+          セキュリティ
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/intro/" class="md-nav__link">
+        はじめに
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/fundamentals/" class="md-nav__link">
+        セキュリティの基礎知識
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/network_security/" class="md-nav__link">
+        ネットワークセキュリティ
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/threats_attacks_defences/" class="md-nav__link">
+        脅威、攻撃、防御
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/writing_secure_code/" class="md-nav__link">
+        セキュアなコードを書く
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/conclusion/" class="md-nav__link">
+        まとめ
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CONTRIBUTING/" class="md-nav__link">
+        貢献する
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CODE_OF_CONDUCT/" class="md-nav__link">
+        Code of Conduct
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sre_community/" class="md-nav__link">
+        SREコミュニティ
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about_translation/" class="md-nav__link">
+        翻訳について
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    前提条件
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    このコースで扱うこと
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    このコースでは扱わないこと
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    コース内容
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#git_1" class="md-nav__link">
+    Gitの基本
+  </a>
+  
+    <nav class="md-nav" aria-label="Gitの基本">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#git_2" class="md-nav__link">
+    Gitリポジトリの作成
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    ファイルの追跡
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    コミットの詳細
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    変更の追加
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    コミットは本当にリンクされているの？
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#git_3" class="md-nav__link">
+    Git のバージョン管理の部分
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    参照
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    参考文献と魔法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    小さな冒険
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="git">Git</h1>
+<h2 id="_1">前提条件</h2>
+<ol>
+<li>Gitがインストールされていること <a href="https://git-scm.com/downloads">https://git-scm.com/downloads</a></li>
+<li>gitの上級のチュートリアルまたは以下のLinkedInの学習コースを受講したこと<ul>
+<li><a href="https://www.linkedin.com/learning/git-essential-training-the-basics/">https://www.linkedin.com/learning/git-essential-training-the-basics/</a></li>
+<li><a href="https://www.linkedin.com/learning/git-branches-merges-and-remotes/">https://www.linkedin.com/learning/git-branches-merges-and-remotes/</a></li>
+<li><a href="https://git-scm.com/doc">The Official Git Docs</a></li>
+</ul>
+</li>
+</ol>
+<h2 id="_2">このコースで扱うこと</h2>
+<p>コンピュータサイエンス分野のエンジニアとして、バージョン管理ツールの知識を持つことはほぼ必須となります。現在、SVNやMercurialなど多くのバージョン管理ツールが存在しますが、Gitはおそらく最も使用されているツールであり、本コースではGitを扱います。このコースはGit 101から始まるわけではなく、前提条件としてGitの基本的な知識を求めていますが、様々なGitコマンドを実行する際に内部で何が起こっているかを詳細に説明しながら、皆さんが知っているGitの概念を再導入します。次回、gitコマンドを実行する際には、より自信を持ってエンターキーを押せるようになるでしょう。</p>
+<h2 id="_3">このコースでは扱わないこと</h2>
+<p>Gitの高度な使い方や内部実装の詳細について。</p>
+<h2 id="_4">コース内容</h2>
+<ol>
+<li><a href="https://linkedin.github.io/school-of-sre/git/git-basics/#git-basics">Gitの基本</a></li>
+<li><a href="https://linkedin.github.io/school-of-sre/git/branches/">ブランチの扱い方</a></li>
+<li><a href="https://linkedin.github.io/school-of-sre/git/github-hooks/#git-with-github">GithubとGit</a></li>
+<li><a href="https://linkedin.github.io/school-of-sre/git/github-hooks/#hooks">フック</a></li>
+</ol>
+<h2 id="git_1">Gitの基本</h2>
+<p>すでにご存知かもしれませんが、なぜバージョン管理システムが必要なのかを再確認してみましょう。プロジェクトが大きくなり、複数の開発者が作業するようになると、効率的なコラボレーションのための方法が必要になります。Git は、チームの共同作業を容易にし、コードベースの変更履歴を管理します。</p>
+<h3 id="git_2">Gitリポジトリの作成</h3>
+<p>任意のフォルダをgitリポジトリに変換できます。以下のコマンドを実行すると、フォルダ内に<code>.git</code>フォルダが作成され、これがあることでフォルダはgitリポジトリになります。<strong>gitのすべての魔法は、<code>.git</code>フォルダによって実現しています。</strong></p>
+<pre><code class="language-bash"># 空のフォルダを作成し、現在のディレクトリをそこに変更します。
+$ cd /tmp
+$ mkdir school-of-sre
+$ cd school-of-sre/
+
+# git repo の初期化
+$ git init
+Initialized empty Git repository in /private/tmp/school-of-sre/.git/
+</code></pre>
+<p>出力にあるように、空のgitリポジトリが私たちのフォルダに初期化されました。何が入っているのか見てみましょう。</p>
+<pre><code class="language-bash">$ ls .git/
+HEAD        config      description hooks       info        objects     refs
+</code></pre>
+<p><code>.git</code>フォルダの中にはたくさんのフォルダやファイルがあります。先ほど言ったように、これらがあるからこそ gitは魔法を使えるのです。これらのフォルダやファイルのいくつかを見ていきましょう。しかし今のところ、私たちが持っているのは空のgitリポジトリです。</p>
+<h3 id="_5">ファイルの追跡</h3>
+<p>もう知っているかもしれませんが、リポジトリに新しいファイルを作成してみましょう (ここではフォルダを <em>リポジトリ</em> と呼びます)。そしてgitの状態を見てみましょう。</p>
+<pre><code class="language-bash">$ echo &quot;I am file 1&quot; &gt; file1.txt
+$ git status
+On branch master
+
+No commits yet
+
+Untracked files:
+ (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
+
+       file1.txt
+
+nothing added to commit but untracked files present (use &quot;git add&quot; to track)
+</code></pre>
+<p>現在のgitステータスは<code>No commits yet</code>で、追跡されていないファイルがひとつあります。ファイルを作成したばかりなので、gitはそのファイルを追跡していません。ファイルやフォルダを追跡するようにgitに明示的に指示する必要があります。(<a href="https://git-scm.com/docs/gitignore">gitignore</a> も確認しましょう)。そのためには、上の出力にあるように<code>git add</code>コマンドを使います。続いて、コミットを作成します。</p>
+<pre><code class="language-bash">$ git add ファイル1.txt
+$ git status
+On branch master
+
+No commits yet
+
+Changes to be committed:
+ (use &quot;git rm --cached &lt;file&gt;...&quot; to unstage)
+
+       new file:   file1.txt
+
+$ git commit -m &quot;adding file 1&quot;
+[master (root-commit) df2fb7a] adding file 1
+1 file changed, 1 insertion(+)
+create mode 100644 file1.txt
+</code></pre>
+<p>ファイルを追加した後、gitステータスが<code>Changes to be committed:</code>と表示されていることに注目しましょう。これが意味するところは、ここに表示されているものはすべて次のコミットに含まれるということです。次に、コミットを作成して<code>-m</code>でメッセージを添付します。</p>
+<h3 id="_6">コミットの詳細</h3>
+<p>コミットはリポジトリのスナップショットです。コミットが行われるたびに、現在のリポジトリの状態（フォルダ）のスナップショットが取られ、保存されます。各コミットには固有のIDがあります。(前のステップで行ったコミットは<code>df2fb7a</code>)。中身をどんどん追加・変更し、コミットを繰り返していくと、それらのスナップショットがすべてgitに保存されていきます。繰り返しになりますが、これらの魔法はすべて<code>.git</code>フォルダの中で行われます。このようにして、すべてのスナップショットやバージョンが効率的な方法で保存されるのです。</p>
+<h3 id="_7">変更の追加</h3>
+<p>もうひとつファイルを作成して、変更をコミットしてみましょう。先ほどのコミットと同じようになります。</p>
+<pre><code class="language-bash">$ echo &quot;I am file 2&quot; &gt; file2.txt
+$ git add file2.txt
+$ git commit -m &quot;adding file 2&quot;
+[master 7f3b00e] adding file 2
+1 file changed, 1 insertion(+)
+create mode 100644 file2.txt
+</code></pre>
+<p>IDが<code>7f3b00e</code>の新しいコミットが作成されました。リポジトリの状態を確認するには、いつでも<code>git status</code>を発行することができます。</p>
+<p><strong>重要: コミットIDは長い文字列(SHA)ですが、最初の数文字(8文字以上)でもコミットを参照することができることに注意してください。ここでは、短いコミットIDと長いコミットIDを同じ意味で使用します。</strong></p>
+<p>さて、2つのコミットがあるので、それらを視覚化してみましょう。</p>
+<pre><code class="language-bash">$ git log --oneline --graph
+* 7f3b00e (HEAD -&gt; master) adding file 2
+* df2fb7a adding file 1
+</code></pre>
+<p><code>git log</code>はその名のとおり、すべてのgitコミットのログを表示します。ここでは2つの追加の引数があります。<code>--oneline</code>はログの短いバージョン、つまりコミットメッセージのみを表示し、誰がいつコミットしたのかは表示しません。--graph` は、ログをグラフ形式で表示します。</p>
+<p><strong>さて、この時点ではコミットが一行にひとつずつ並んでいるように見えるかもしれませんが、すべてのコミットはgitの内部でツリー状のデータ構造として保存されています。つまり、あるコミットには2つ以上の子コミットが存在する可能性があるということです。一行だけのコミットではありません。この部分については、ブランチのセクションで詳しく説明します。今のところ、これが私たちのコミット履歴です。</strong></p>
+<pre><code class="language-bash">   df2fb7a ===&gt; 7f3b00e
+</code></pre>
+<h3 id="_8">コミットは本当にリンクされているの？</h3>
+<p>先ほどの2つのコミットは、木のようなデータ構造でリンクされていて、リンクされている様子もわかりました。実際にそれを検証してみましょう。gitではすべてがオブジェクトです。新しく作成されたファイルはオブジェクトとして保存されます。ファイルへの変更はオブジェクトとして保存され、コミットもオブジェクトです。オブジェクトの内容を見るには、オブジェクトのIDを指定して次のコマンドを実行します。ここでは、2つ目のコミットの内容を見てみましょう。</p>
+<pre><code class="language-bash">$ git cat-file -p 7f3b00e
+tree ebf3af44d253e5328340026e45a9fa9ae3ea1982
+parent df2fb7a61f5d40c1191e0fdeb0fc5d6e7969685a
+author Sanket Patel &lt;spatel1@linkedin.com&gt; 1603273316 -0700
+committer Sanket Patel &lt;spatel1@linkedin.com&gt; 1603273316 -0700
+
+adding file 2
+</code></pre>
+<p>上の出力では、<code>parent</code>属性に注目してください。これは、私たちが最初に行ったコミットのコミットIDを指しています。つまり、この2つのコミットがリンクしていることを示しています。さらに、このオブジェクトには2つ目のコミットのメッセージが表示されています。先ほど言ったように、これらの魔法はすべて<code>.git</code>フォルダによって有効になり、今見ているオブジェクトもそのフォルダの中にあります。</p>
+<pre><code class="language-bash">$ ls .git/objects/7f/3b00eaa957815884198e2fdfec29361108d6a9
+.git/objects/7f/3b00eaa957815884198e2fdfec29361108d6a9
+</code></pre>
+<p><code>.git/objects/</code>フォルダに格納されています。すべてのファイルとそれらへの変更もこのフォルダに格納されます。</p>
+<h3 id="git_3">Git のバージョン管理の部分</h3>
+<p>すでにgitのログには2つのコミット（バージョン）が表示されています。バージョン管理ツールには、履歴をさかのぼって参照できる機能があります。たとえば、あるユーザーが古いバージョンのコードを使っていて問題を報告してきたとしましょう。その問題をデバッグするためには、古いコードにアクセスする必要があります。現在のリポジトリにあるのは最新のコードです。この例では、あなたは2つ目のコミット（7f3b00e）で作業していて、誰かがコミット（df2fb7a）のコードスナップショットに問題を報告しました。古いコミットのコードにアクセスするには、このようにします。</p>
+<pre><code class="language-bash"># 現在の状態、2つのファイルが存在
+$ ls
+file1.txt file2.txt
+
+# (古い) コミットへのチェックアウト
+$ git checkout df2fb7a
+Note: checking out 'df2fb7a'.
+
+# ここは'detached HEAD'の状態です。いろいろ見て回ったり、実験的な変更をしたり、それをコミットしたりすることができます。
+# また、この状態でコミットした内容を破棄することもできます。この状態で行ったコミットは、別のチェックアウトを行うことで、どのブランチにも影響を与えることなく破棄することができます。
+
+# 作成したコミットを保持するために新しいブランチを作成したい場合は、次のようにします。checkoutコマンドで-bを再度使用することで、（今でも後でも）そうすることができます。例:
+
+ git checkout -b &lt;新しいブランチ名&gt;
+
+HEAD is now at df2fb7a adding file 1
+
+# 内容を確認すると、古い状態であることがわかります。
+$ ls
+file1.txt
+</code></pre>
+<p>このようにして、古いバージョンやスナップショットにアクセスすることができます。必要なのは、そのスナップショットへの <em>参照</em> だけです。<code>git checkout ...</code>を実行すると、gitは<code>.git</code>フォルダを使用して、そのバージョン/参照での状態 (ファイルやフォルダ) を確認し、カレントディレクトリの内容をその内容で置き換えます。その時点での内容はローカルディレクトリ(リポジトリ)には存在しなくなりますが、それでもそのファイルにはアクセスすることができます。なぜなら、それらはgit commitによって追跡され、<code>.git</code>フォルダに保存されているからです。</p>
+<h3 id="_9">参照</h3>
+<p>前のセクションで、バージョンの <em>参照</em> が必要だと言いました。デフォルトでは、gitリポジトリはコミットのツリー構造になっています。そして、それぞれのコミットは一意のIDを持っています。しかし、ユニークなIDを通してコミットを参照する方法はそれだけではありません。コミットを参照する方法は複数あります。例えば、<code>HEAD</code>は現在のコミットを参照しています。<code>HEAD~1</code>は前のコミットへの参照です。ですから、上のセクションで前のバージョンをチェックアウトするときに、<code>git checkout HEAD~1</code>と実行できたはずです。</p>
+<p>同じように、masterも（ブランチへの）参照となります。gitは木のような構造でコミットを保存するので、当然ながらブランチが存在します。そして、デフォルトのブランチは<code>master</code>と呼ばれます。（訳者注: デフォルトのブランチ名は将来的に変更される可能性があります。）master（あるいは他のブランチの参照）は、そのブランチの最新のコミットを指します。外のリポジトリで前のコミットにチェックアウトしたとしても、<code>master</code>は最新のコミットを指します。そして、<code>master</code>を参照してチェックアウトすれば、最新のバージョンに戻ることができます。</p>
+<pre><code class="language-bash">Previous HEAD position was df2fb7a adding file 1
+Switched to branch 'master'
+
+# これで、2つのファイルを含む最新のコードを見ることができます。
+$ ls
+file1.txt file2.txt
+</code></pre>
+<p>なお、上のコマンドでは、<code>master</code>の代わりに、コミットIDを使うこともできます。</p>
+<h3 id="_10">参考文献と魔法</h3>
+<p>状況を見てみましょう。2つのコミット、<code>master</code>と<code>HEAD</code>の参照が最新のコミットを指しています。</p>
+<pre><code class="language-bash">$ git log --oneline --graph
+* 7f3b00e (HEAD -&gt; master) add file 2
+* df2fb7a ファイル1の追加
+</code></pre>
+<p>魔法？これらのファイルを見てみましょう。</p>
+<pre><code class="language-bash">$ cat .git/refs/heads/master
+7f3b00eaa957815884198e2fdfec29361108d6a9
+</code></pre>
+<p>masterが指している場所はファイルに保存されています。<strong>gitがmasterの参照先を知りたくなったとき、あるいはgitがmasterの参照先を更新したくなったときには、上のファイルを更新すればよいのです。</strong>したがって、新しいコミットを作成すると、現在のコミットの上に新しいコミットが作成され、マスターファイルが新しいコミットのIDで更新されます。</p>
+<p>同様に、<code>HEAD</code>を参照してください。</p>
+<pre><code class="language-bash">$ cat .git/HEAD
+ref: refs/heads/master
+</code></pre>
+<p><code>HEAD</code>が<code>refs/heads/master</code>という名前のリファレンスを指していることがわかります。つまり、<code>HEAD</code>は <code>master</code>が指している場所を指すことになります。</p>
+<h3 id="_11">小さな冒険</h3>
+<p>コマンドを実行したとき、gitがどのようにファイルを更新するのかを説明しました。しかし、実際に自分でやってみてどうなるかを見てみましょう。</p>
+<pre><code class="language-bash">$ git log --oneline --graph
+* 7f3b00e (HEAD -&gt; master) adding file 2
+* df2fb7a adding file 1
+</code></pre>
+<p>では、masterを前の/最初のコミットを指すように変更しましょう。</p>
+<pre><code class="language-bash">$ echo df2fb7a61f5d40c1191e0fdeb0fc5d6e7969685a &gt; .git/refs/heads/master
+$ git log --oneline --graph
+* df2fb7a (HEAD -&gt; master) adding file 1
+
+# 最初の状態に戻す
+$ echo 7f3b00eaa957815884198e2fdfec29361108d6a9 &gt; .git/refs/heads/master
+$ git log --oneline --graph
+* 7f3b00e (HEAD -&gt; master) adding file 2
+* df2fb7a adding file 1
+</code></pre>
+<p><code>master</code>の参照ファイルを編集したところ、git logには最初のコミットだけが表示されるようになりました。ファイルへの変更を元に戻すと、元の状態に戻ります。魔法というほどのものではありませんが、いかがでしょうか？</p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../../linux_basics/conclusion/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                まとめ
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../branches/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                ブランチを使った作業
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright 2020 LinkedIn Corporation. All Rights Reserved. Licensed under the Creative Commons Attribution 4.0 International Public License
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+  <div class="md-footer-social">
+    
+      
+      
+        
+        
+      
+      <a href="https://github.com/linkedin/school-of-sre" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+      </a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/vendor.18f0862e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.994580cf.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      
+      <script>
+        app = initialize({
+          base: "../..",
+          features: [],
+          search: Object.assign({
+            worker: "../../assets/javascripts/worker/search.9c0e82ba.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+    
+  </body>
+</html>

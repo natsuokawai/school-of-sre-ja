@@ -1,0 +1,2402 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="shortcut icon" href="../../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.2.8">
+    
+    
+      
+        <title>サーバー管理 - School Of SRE</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.cb6bc1d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.39b8e14a.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/custom.css">
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+      
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#linux" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+   <script async defer data-domain="linkedin.github.io" src="https://tracking.eskratch.com/js/plausible.js"></script>
+
+
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="../.." title="School Of SRE" class="md-header-nav__button md-logo" aria-label="School Of SRE">
+      
+  <img src="../../img/sos.png" alt="logo">
+
+    </a>
+    <!-- Button to open drawer -->
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            <a href="../.." title="School Of SRE" >
+              School Of SRE
+            </a>
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              サーバー管理
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        ホーム
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+      
+      <label class="md-nav__link" for="nav-2">
+        基礎
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="基礎" data-md-level="1">
+        <label class="md-nav__title" for="nav-2">
+          <span class="md-nav__icon md-icon"></span>
+          基礎
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2-1" type="checkbox" id="nav-2-1" checked>
+      
+      <label class="md-nav__link" for="nav-2-1">
+        Linuxの基礎
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Linuxの基礎" data-md-level="2">
+        <label class="md-nav__title" for="nav-2-1">
+          <span class="md-nav__icon md-icon"></span>
+          Linuxの基礎
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../intro/" class="md-nav__link">
+        はじめに
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../command_line_basics/" class="md-nav__link">
+        コマンドラインの基礎
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          サーバー管理
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        サーバー管理
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    ラボ環境の設定
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    マルチユーザーオペレーティングシステム
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    ユーザー/グループ管理
+  </a>
+  
+    <nav class="md-nav" aria-label="ユーザー/グループ管理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#id" class="md-nav__link">
+    id コマンド
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    ユーザー/グループに関連する重要なファイル
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    ユーザー管理のための重要なコマンド
+  </a>
+  
+    <nav class="md-nav" aria-label="ユーザー管理のための重要なコマンド">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#useradd" class="md-nav__link">
+    useradd
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#passwd" class="md-nav__link">
+    passwd
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usermod" class="md-nav__link">
+    usermod
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#userdel" class="md-nav__link">
+    userdel
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    グループ管理のための重要なコマンド
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    スーパーユーザーになる
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    ファイルパーミッション
+  </a>
+  
+    <nav class="md-nav" aria-label="ファイルパーミッション">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#chmod" class="md-nav__link">
+    chmodコマンド
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chown" class="md-nav__link">
+    chownコマンド
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chgrp" class="md-nav__link">
+    chgrpコマンド
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ssh" class="md-nav__link">
+    SSHコマンド
+  </a>
+  
+    <nav class="md-nav" aria-label="SSHコマンド">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ssh_1" class="md-nav__link">
+    SSHによるパスワードレス認証
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    リモートホストでコマンドを実行するには?
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    あるホストから別のホストにファイルを転送するには？
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    パッケージ管理
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    プロセス管理
+  </a>
+  
+    <nav class="md-nav" aria-label="プロセス管理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ps-process-status" class="md-nav__link">
+    ps (process status)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#top" class="md-nav__link">
+    top
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    メモリ管理
+  </a>
+  
+    <nav class="md-nav" aria-label="メモリ管理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#free" class="md-nav__link">
+    free
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vmstat" class="md-nav__link">
+    vmstat
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    ディスク容量の確認
+  </a>
+  
+    <nav class="md-nav" aria-label="ディスク容量の確認">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#df-disk-free" class="md-nav__link">
+    df (disk free)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#du-disk-usage" class="md-nav__link">
+    du (disk usage)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    デーモン
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#systemd" class="md-nav__link">
+    systemd
+  </a>
+  
+    <nav class="md-nav" aria-label="systemd">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    システムサービスの管理
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    ログ
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../conclusion/" class="md-nav__link">
+        まとめ
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2-2" type="checkbox" id="nav-2-2" >
+      
+      <label class="md-nav__link" for="nav-2-2">
+        Git
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Git" data-md-level="2">
+        <label class="md-nav__title" for="nav-2-2">
+          <span class="md-nav__icon md-icon"></span>
+          Git
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../git/git-basics/" class="md-nav__link">
+        Gitの基礎
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../git/branches/" class="md-nav__link">
+        ブランチを使った作業
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../git/github-hooks/" class="md-nav__link">
+        Githubとフック
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../git/conclusion/" class="md-nav__link">
+        まとめ
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2-3" type="checkbox" id="nav-2-3" >
+      
+      <label class="md-nav__link" for="nav-2-3">
+        Linuxネットワーキング
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Linuxネットワーキング" data-md-level="2">
+        <label class="md-nav__title" for="nav-2-3">
+          <span class="md-nav__icon md-icon"></span>
+          Linuxネットワーキング
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux_networking/intro/" class="md-nav__link">
+        はじめに
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux_networking/dns/" class="md-nav__link">
+        DNS
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux_networking/udp/" class="md-nav__link">
+        UDP
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux_networking/http/" class="md-nav__link">
+        HTTP
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux_networking/tcp/" class="md-nav__link">
+        TCP
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux_networking/ipr/" class="md-nav__link">
+        ルーティング
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux_networking/conclusion/" class="md-nav__link">
+        まとめ
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" >
+      
+      <label class="md-nav__link" for="nav-3">
+        PythonとWeb
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="PythonとWeb" data-md-level="1">
+        <label class="md-nav__title" for="nav-3">
+          <span class="md-nav__icon md-icon"></span>
+          PythonとWeb
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python_web/intro/" class="md-nav__link">
+        はじめに
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python_web/python-concepts/" class="md-nav__link">
+        Pythonの概念
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python_web/python-web-flask/" class="md-nav__link">
+        PythonとWebとFlask
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python_web/url-shorten-app/" class="md-nav__link">
+        URL短縮アプリ
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python_web/sre-conclusion/" class="md-nav__link">
+        まとめ
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" >
+      
+      <label class="md-nav__link" for="nav-4">
+        データ
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="データ" data-md-level="1">
+        <label class="md-nav__title" for="nav-4">
+          <span class="md-nav__icon md-icon"></span>
+          データ
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-1" type="checkbox" id="nav-4-1" >
+      
+      <label class="md-nav__link" for="nav-4-1">
+        リレーショナルデータベース
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="リレーショナルデータベース" data-md-level="2">
+        <label class="md-nav__title" for="nav-4-1">
+          <span class="md-nav__icon md-icon"></span>
+          リレーショナルデータベース
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../databases_sql/intro/" class="md-nav__link">
+        はじめに
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../databases_sql/concepts/" class="md-nav__link">
+        キーコンセプト
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../databases_sql/mysql/" class="md-nav__link">
+        MySQL
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../databases_sql/innodb/" class="md-nav__link">
+        InnoDB
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../databases_sql/operations/" class="md-nav__link">
+        運用上の概念
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../databases_sql/lab/" class="md-nav__link">
+        ラボ
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../databases_sql/conclusion/" class="md-nav__link">
+        まとめ
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-2" type="checkbox" id="nav-4-2" >
+      
+      <label class="md-nav__link" for="nav-4-2">
+        NoSQL
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="NoSQL" data-md-level="2">
+        <label class="md-nav__title" for="nav-4-2">
+          <span class="md-nav__icon md-icon"></span>
+          NoSQL
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../databases_nosql/intro/" class="md-nav__link">
+        はじめに
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../databases_nosql/key_concepts/" class="md-nav__link">
+        キーコンセプト
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../databases_nosql/further_reading/" class="md-nav__link">
+        まとめ
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-3" type="checkbox" id="nav-4-3" >
+      
+      <label class="md-nav__link" for="nav-4-3">
+        ビッグデータ
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="ビッグデータ" data-md-level="2">
+        <label class="md-nav__title" for="nav-4-3">
+          <span class="md-nav__icon md-icon"></span>
+          ビッグデータ
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../big_data/intro/" class="md-nav__link">
+        はじめに
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../big_data/evolution/" class="md-nav__link">
+        Hadoopの進化とアーキテクチャ
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../big_data/tasks/" class="md-nav__link">
+        まとめ
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" >
+      
+      <label class="md-nav__link" for="nav-5">
+        システム設計
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="システム設計" data-md-level="1">
+        <label class="md-nav__title" for="nav-5">
+          <span class="md-nav__icon md-icon"></span>
+          システム設計
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems_design/intro/" class="md-nav__link">
+        はじめに
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems_design/scalability/" class="md-nav__link">
+        スケーラビリティ
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems_design/availability/" class="md-nav__link">
+        可用性
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems_design/fault-tolerance/" class="md-nav__link">
+        フォールトトレランス
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems_design/conclusion/" class="md-nav__link">
+        まとめ
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6" >
+      
+      <label class="md-nav__link" for="nav-6">
+        メトリクスとモニタリング
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="メトリクスとモニタリング" data-md-level="1">
+        <label class="md-nav__title" for="nav-6">
+          <span class="md-nav__icon md-icon"></span>
+          メトリクスとモニタリング
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../metrics_and_monitoring/introduction/" class="md-nav__link">
+        はじめに
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../metrics_and_monitoring/command-line_tools/" class="md-nav__link">
+        コマンドラインツール
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../metrics_and_monitoring/third-party_monitoring/" class="md-nav__link">
+        サードパーティモニタリング
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../metrics_and_monitoring/alerts/" class="md-nav__link">
+        アラートによるプロアクティブモニタリング
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../metrics_and_monitoring/best_practices/" class="md-nav__link">
+        モニタリングのベストプラクティス
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../metrics_and_monitoring/observability/" class="md-nav__link">
+        可観測性
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../metrics_and_monitoring/conclusion/" class="md-nav__link">
+        まとめ
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7" >
+      
+      <label class="md-nav__link" for="nav-7">
+        セキュリティ
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="セキュリティ" data-md-level="1">
+        <label class="md-nav__title" for="nav-7">
+          <span class="md-nav__icon md-icon"></span>
+          セキュリティ
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/intro/" class="md-nav__link">
+        はじめに
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/fundamentals/" class="md-nav__link">
+        セキュリティの基礎知識
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/network_security/" class="md-nav__link">
+        ネットワークセキュリティ
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/threats_attacks_defences/" class="md-nav__link">
+        脅威、攻撃、防御
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/writing_secure_code/" class="md-nav__link">
+        セキュアなコードを書く
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/conclusion/" class="md-nav__link">
+        まとめ
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CONTRIBUTING/" class="md-nav__link">
+        貢献する
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CODE_OF_CONDUCT/" class="md-nav__link">
+        Code of Conduct
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sre_community/" class="md-nav__link">
+        SREコミュニティ
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about_translation/" class="md-nav__link">
+        翻訳について
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    ラボ環境の設定
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    マルチユーザーオペレーティングシステム
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    ユーザー/グループ管理
+  </a>
+  
+    <nav class="md-nav" aria-label="ユーザー/グループ管理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#id" class="md-nav__link">
+    id コマンド
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    ユーザー/グループに関連する重要なファイル
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    ユーザー管理のための重要なコマンド
+  </a>
+  
+    <nav class="md-nav" aria-label="ユーザー管理のための重要なコマンド">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#useradd" class="md-nav__link">
+    useradd
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#passwd" class="md-nav__link">
+    passwd
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usermod" class="md-nav__link">
+    usermod
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#userdel" class="md-nav__link">
+    userdel
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    グループ管理のための重要なコマンド
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    スーパーユーザーになる
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    ファイルパーミッション
+  </a>
+  
+    <nav class="md-nav" aria-label="ファイルパーミッション">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#chmod" class="md-nav__link">
+    chmodコマンド
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chown" class="md-nav__link">
+    chownコマンド
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chgrp" class="md-nav__link">
+    chgrpコマンド
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ssh" class="md-nav__link">
+    SSHコマンド
+  </a>
+  
+    <nav class="md-nav" aria-label="SSHコマンド">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ssh_1" class="md-nav__link">
+    SSHによるパスワードレス認証
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    リモートホストでコマンドを実行するには?
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    あるホストから別のホストにファイルを転送するには？
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    パッケージ管理
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    プロセス管理
+  </a>
+  
+    <nav class="md-nav" aria-label="プロセス管理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ps-process-status" class="md-nav__link">
+    ps (process status)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#top" class="md-nav__link">
+    top
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    メモリ管理
+  </a>
+  
+    <nav class="md-nav" aria-label="メモリ管理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#free" class="md-nav__link">
+    free
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vmstat" class="md-nav__link">
+    vmstat
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    ディスク容量の確認
+  </a>
+  
+    <nav class="md-nav" aria-label="ディスク容量の確認">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#df-disk-free" class="md-nav__link">
+    df (disk free)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#du-disk-usage" class="md-nav__link">
+    du (disk usage)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    デーモン
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#systemd" class="md-nav__link">
+    systemd
+  </a>
+  
+    <nav class="md-nav" aria-label="systemd">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    システムサービスの管理
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    ログ
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="linux">Linuxサーバー管理</h1>
+<p>このコースでは、Linuxサーバー管理者が行う一般的なタスクをいくつか取り上げます。まず、コマンドが何をするのかを理解してから、例題を使ってコマンドを理解していきます。Linuxコマンドを自分で練習することは非常に重要であることを覚えておいてください。</p>
+<h2 id="_1">ラボ環境の設定</h2>
+<ul>
+<li>
+<p>お使いのシステムにDockerをインストールしてください - <a href="https://docs.docker.com/engine/install/">https://docs.docker.com/engine/install/</a></p>
+</li>
+<li>
+<p>ここでは、Red Hat Enterprise Linux (RHEL) 8システムですべてのコマンドを実行します。</p>
+</li>
+</ul>
+<p><img alt="" src="../images/linux/admin/image19.png" /></p>
+<ul>
+<li>このモジュールで使用するコマンドのほとんどを、上記のDockerコンテナで実行します。</li>
+</ul>
+<h2 id="_2">マルチユーザーオペレーティングシステム</h2>
+<p>オペレーティングシステムは、複数の人やユーザーがコンピュータを使用しても、互いのファイルや設定に影響を与えないようになっていれば、マルチユーザーとみなされます。Linuxベースのオペレーティングシステムは、複数のユーザーが同時にシステムにアクセスすることができるため、マルチユーザーとしての性質を持っています。一般的なコンピュータには1つのキーボードとモニターしかありませんが、コンピュータがネットワークに接続されていれば、複数のユーザーがSSHでログインすることができます。SSHについては後で詳しく説明します。</p>
+<p>サーバー管理者としては、物理的に非常に離れた場所に存在するLinuxサーバーが主な対象となります。このようなサーバにーは、SSHなどのリモートログイン方法を使って接続します。</p>
+<p>Linuxは複数のユーザーをサポートしているので、ユーザーをお互いに保護する方法が必要です。あるユーザーが他のユーザーのファイルにアクセスしたり変更したりできないようにする必要があります。</p>
+<h2 id="_3">ユーザー/グループ管理</h2>
+<ul>
+<li>
+<p>Linuxのユーザーには、UIDと呼ばれるユーザーIDが関連付けられています。</p>
+</li>
+<li>
+<p>また、ユーザーにはホームディレクトリとログインシェルが関連付けられています。</p>
+</li>
+<li>
+<p>グループは、1人または複数のユーザーの集まりです。グループを使うことで、ユーザーグループ間での権限の共有が容易になります。</p>
+</li>
+<li>
+<p>各グループにはGIDと呼ばれるグループIDが関連付けられています。</p>
+</li>
+</ul>
+<h3 id="id">id コマンド</h3>
+<p><code>id</code>コマンドは、ユーザーに関連するUIDとGIDを調べることができます。
+また、そのユーザーが所属しているグループの一覧も表示されます。</p>
+<p>rootユーザーのUIDとGIDは0です。
+<img alt="" src="../images/linux/admin/image30.png" /></p>
+<p>Linuxで現在のユーザーを調べるには、whoamiコマンドを使います。</p>
+<p><img alt="" src="../images/linux/admin/image35.png" /></p>
+<p><strong>「root」ユーザーまたはスーパーユーザーは、最も権限のあるユーザーで、システム上のすべてのリソースに無制限にアクセスできます。UIDは0です。</strong></p>
+<h3 id="_4">ユーザー/グループに関連する重要なファイル</h3>
+<table>
+<thead>
+<tr>
+<th>ファイル名</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/etc/passwd</td>
+<td>ユーザー名、UID、GID、ホームディレクトリ、ログインシェルなどを格納する</td>
+</tr>
+<tr>
+<td>/etc/shadow</td>
+<td>ユーザーに関連するパスワードを格納する</td>
+</tr>
+<tr>
+<td>/etc/group</td>
+<td>システム上のさまざまなグループに関する情報を格納する</td>
+</tr>
+</tbody>
+</table>
+<p><img alt="" src="../images/linux/admin/image23.png" /></p>
+<p><img alt="" src="../images/linux/admin/image21.png" /></p>
+<p><img alt="" src="../images/linux/admin/image9.png" /></p>
+<p>上記の出力で説明されている各ファイルを理解したい場合は、以下のリンクを参照してください。</p>
+<ul>
+<li>
+<p><a href="https://tldp.org/LDP/lame/LAME/linux-admin-made-easy/shadow-file-formats.html">https://tldp.org/LDP/lame/LAME/linux-admin-made-easy/shadow-file-formats.html</a></p>
+</li>
+<li>
+<p><a href="https://tldp.org/HOWTO/User-Authentication-HOWTO/x71.html">https://tldp.org/HOWTO/User-Authentication-HOWTO/x71.html</a></p>
+</li>
+</ul>
+<h2 id="_5">ユーザー管理のための重要なコマンド</h2>
+<p>Linux でユーザーやグループを管理するために頻繁に使用されるコマンドは以下のとおりです。</p>
+<ul>
+<li>
+<p><code>useradd</code> - 新しいユーザを作成する</p>
+</li>
+<li>
+<p><code>passwd</code> - ユーザーのパスワードを追加または変更する</p>
+</li>
+<li>
+<p><code>usermod</code> - ユーザーの属性を変更する</p>
+</li>
+<li>
+<p><code>userdel</code> - ユーザーを削除する</p>
+</li>
+</ul>
+<h3 id="useradd">useradd</h3>
+<p>Linuxではuseraddコマンドで新しいユーザーを追加します。</p>
+<p>ここでは、新しいユーザー「shivam」を作成します。また、/etc/passwdファイルをtailしてユーザーが作成されたことを 確認します。新たに作成されたユーザーのUIDとGIDには1000が割り当てられています。このユーザーに割り当てられたホームディレクトリは/home/shivam、ログインシェルは/bin/bashとなっています。ユーザーのホームディレクトリやログインシェルは後から変更することができます。</p>
+<p><img alt="" src="../images/linux/admin/image41.png" /></p>
+<p>ホームディレクトリやログインシェルなどの属性に値を指定しない場合は、デフォルト値がユーザーに割り当てられます。また新しいユーザーを作成する際に、これらのデフォルト値を上書きすることもできます。</p>
+<p><img alt="" src="../images/linux/admin/image54.png" /></p>
+<h3 id="passwd">passwd</h3>
+<p>passwd コマンドは、ユーザーのパスワードを作成または変更するために使用します。</p>
+<p>上記の例では、ユーザー「shivam」「amit」にパスワードを割り当てていません。</p>
+<p>shadow内のアカウントエントリの「!!」は、あるユーザーのアカウントが作成されたが、まだパスワードが与えられていないことを意味します。</p>
+<p><img alt="" src="../images/linux/admin/image13.png" /></p>
+<p>それでは、ユーザー「shivam」のパスワードを作成してみましょう。</p>
+<p><img alt="" src="../images/linux/admin/image55.png" /></p>
+<p>このパスワードを覚えておいてください。</p>
+<p>また、今度はrootユーザーのパスワードを変更してみましょう。通常のユーザーからrootユーザーに切り替えると、パスワードの入力を求められます。
+また、rootユーザーでログインするときにも、パスワードを聞かれます。</p>
+<p><img alt="" src="../images/linux/admin/image39.png" /></p>
+<h3 id="usermod">usermod</h3>
+<p>usermodコマンドは、ホームディレクトリやシェルなど、ユーザーの属性を変更するために使用します。</p>
+<p>ここでは、ユーザー「amit」のログインシェルを「/bin/bash」に変更してみます。</p>
+<p><img alt="" src="../images/linux/admin/image17.png" /></p>
+<p>同様に、ユーザーの他の多くの属性を変更することもできます。
+「usermod -h」を実行すると、変更できる属性の一覧が表示されます。</p>
+<h3 id="userdel">userdel</h3>
+<p>Linux でユーザーを削除するには userdel コマンドを使用します。ユーザーを削除すると、そのユーザーに関連するすべての情報が削除されます。</p>
+<p>ここでは、ユーザー 「amit 」を削除してみます。ユーザーを削除すると、「/etc/passwd」や「/etc/shadow」ファイルにからユーザーのエントリがなくなります。</p>
+<p><img alt="" src="../images/linux/admin/image34.png" /></p>
+<h2 id="_6">グループ管理のための重要なコマンド</h2>
+<p>グループを管理するためのコマンドは、ユーザーを管理するためのコマンドとよく似ています。それぞれのコマンドはよく似ているので、ここでは詳しく説明しません。以下のコマンドを実行してみてください。</p>
+<table>
+<thead>
+<tr>
+<th>コマンド名</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>groupadd &lt;グループ名></td>
+<td>新しいグループを作成する</td>
+</tr>
+<tr>
+<td>groupmod &lt;グループ名></td>
+<td>グループの属性を変更する</td>
+</tr>
+<tr>
+<td>groupdel &lt;グループ名></td>
+<td>グループを削除する</td>
+</tr>
+<tr>
+<td>gpasswd &lt;グループ名></td>
+<td>グループのパスワードを変更する</td>
+</tr>
+</tbody>
+</table>
+<p><img alt="" src="../images/linux/admin/image52.png" /></p>
+<p>それでは、先ほど作成したグループにユーザー「shivam」を追加してみます。</p>
+<p><img alt="" src="../images/linux/admin/image33.png" /></p>
+<h2 id="_7">スーパーユーザーになる</h2>
+<p>**以下のコマンドを実行する前に、ユーザー "shivam "にパスワードが設定されていることを確認してください。
+ユーザー "shivam "とユーザー "root "にパスワードを設定してください。
+でパスワードを設定してください。</p>
+<p>Linuxでは、suコマンドを使ってユーザーを切り替えることができます。ここでは
+ユーザー "shivam "に切り替えてみましょう。</p>
+<p><img alt="" src="../images/linux/admin/image37.png" /></p>
+<p>それでは、「/etc/shadow」ファイルを開いてみましょう。</p>
+<p><img alt="" src="../images/linux/admin/image29.png" /></p>
+<p>オペレーティングシステムは、ユーザー「shivam」に「/etc/shadow」の内容を読むことを許可しませんでした。
+/etc/shadow」ファイルの内容を読むことができませんでした。これはユーザーのパスワードを保存するLinuxの重要なファイルです。このファイルにアクセスできるのは、rootまたはスーパーユーザーの権限を持つユーザーのみがアクセスできます。</p>
+<p><strong>sudoコマンドは、rootユーザーのセキュリティ権限でコマンドを実行することができます。</strong>システム上のすべての権限を持っていることを忘れないでください。また、suコマンドを使ってrootユーザーに切り替え、上記のファイルを開くこともできます。ルートユーザーに切り替えて上記のファイルを開くこともできますが、その際にはルートユーザーのパスワードが必要になります。別の方法として、最近のオペレーティングシステムでは、sudoコマンドを使用してスーパーユーザーになる方法もあります。この方法では、ユーザーは自分のパスワードを入力する必要があり、かつsudoグループに所属している必要があります。</p>
+<p><strong>他のユーザーにスーパー権限を与えるには？</strong></p>
+<p>まず、suコマンドでルートユーザーになりましょう。以下のコマンドを使うとルートユーザーのパスワードを入力する必要があります。</p>
+<p><img alt="" src="../images/linux/admin/image44.png" /></p>
+<p>ルートユーザーのパスワードを設定し忘れた場合は、「exit」と入力してください。rootユーザーに戻ります。パスワードを設定するにはpasswdコマンドを使います。</p>
+<p><strong>ファイル /etc/sudoers には、sudo の起動を許可されたユーザーの名前が記録されています。</strong>Red Hatのオペレーティングシステムでは、このファイルはデフォルトでは存在しません。。sudoをインストールする必要があります。</p>
+<p><img alt="" src="../images/linux/admin/image3.png" /></p>
+<p>yumコマンドについては、後のセクションで詳しく説明します。</p>
+<p>システム上の「/etc/sudoers」ファイルを開いてみてください。このファイルにはたくさんの情報が含まれています。このファイルには、ユーザーがsudoコマンドを実行する際に従わなければならないルールが保存されています。例えば、rootはどこからでもどんなコマンドでも実行できます。</p>
+<p><img alt="" src="../images/linux/admin/image8.png" /></p>
+<p>ユーザーにroot権限を与える簡単な方法の一つは、すべてのコマンドを実行する権限を持つグループに追加することです。Red Hat Linuxにおいて、「wheel」はそのような権限を持つグループです。</p>
+<p><img alt="" src="../images/linux/admin/image25.png" /></p>
+<p>ユーザー「shivam」をこのグループに追加して、sudoの権限も持つようにしてみましょう。</p>
+<p><img alt="" src="../images/linux/admin/image48.png" /></p>
+<p>ユーザー「shivam」に戻って、「/etc/shadow」ファイルにアクセスしてみましょう。</p>
+<p><img alt="" src="../images/linux/admin/image56.png" /></p>
+<p>sudo権限でしかアクセスできないため、コマンドを実行する前にsudoを使用する必要があります。ユーザー「shivam」にsudo権限を与えています。先ほどすでに、ユーザー「shivam」をグループ「wheel」に追加して、sudo権限を与えています。</p>
+<h2 id="_8">ファイルパーミッション</h2>
+<p>Linuxオペレーティングシステムでは、各ファイルやディレクトリには、ファイルの所有者、関連するユーザーのグループのメンバー、その他のすべての人のためのアクセス許可が割り当てられています。これは、あるユーザーが他のユーザーのファイルやリソースにアクセスできないようにするためです。</p>
+<p>ファイルのパーミッションを見るには、lsコマンドを使います。ここではetc/passwdファイルのパーミッションを見てみましょう。</p>
+<p><img alt="" src="../images/linux/admin/image40.png" /></p>
+<p>ファイルのパーミッションに関連する重要なフィールドを見てみましょう。</p>
+<p><img alt="" src="../images/linux/admin/image31.jpg" /></p>
+<p><img alt="" src="../images/linux/admin/image57.png" /></p>
+<h3 id="chmod">chmodコマンド</h3>
+<p>Linuxでは、ファイルやディレクトリのパーミッションを変更するためにchmodコマンドを使用します。</p>
+<p>chmodコマンドは、パーミッションを数値引数で受け取ります。パーミッションは一連のビットと考えることができ、1はTrue、つまり許可されていることを表し、0はFalse、つまり許可されていないことを表します。</p>
+<table>
+<thead>
+<tr>
+<th>パーミッション</th>
+<th>rwx</th>
+<th>2進数</th>
+<th>10進数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>読み取り、書き込み、実行</td>
+<td>rwx</td>
+<td>111</td>
+<td>7</td>
+</tr>
+<tr>
+<td>読み取り、書き込み</td>
+<td>rw-</td>
+<td>110</td>
+<td>6</td>
+</tr>
+<tr>
+<td>読み取り、実行</td>
+<td>r-x</td>
+<td>101</td>
+<td>5</td>
+</tr>
+<tr>
+<td>読み取りのみ</td>
+<td>r--</td>
+<td>100</td>
+<td>4</td>
+</tr>
+<tr>
+<td>書き込み、実行</td>
+<td>-wx</td>
+<td>011</td>
+<td>3</td>
+</tr>
+<tr>
+<td>書き込みのみ</td>
+<td>-w-</td>
+<td>010</td>
+<td>2</td>
+</tr>
+<tr>
+<td>実行のみ</td>
+<td>--x</td>
+<td>001</td>
+<td>1</td>
+</tr>
+<tr>
+<td>なし</td>
+<td>---</td>
+<td>000</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>新しいファイルを作成し、そのファイルのパーミッションを確認してみます。</p>
+<p><img alt="" src="../images/linux/admin/image15.png" /></p>
+<p>グループオーナーには、このファイルへの書き込み権限がありません。それではchmodコマンドを使って、グループオーナーまたはrootに書き込み権限を与えましょう。</p>
+<p><img alt="" src="../images/linux/admin/image26.png" /></p>
+<p>chmodコマンドは、同様の方法でディレクトリのパーミッションを変更することもできます。</p>
+<h3 id="chown">chownコマンド</h3>
+<p>chownコマンドは、Linuxでファイルやディレクトリの所有者を変更するために使用します。</p>
+<p>コマンドの構文：<code>chown &lt;新しい所有者&gt; &lt;ファイル名&gt;</code></p>
+<p><img alt="" src="../images/linux/admin/image6.png" /></p>
+<p><strong>sudo権限を持っていない場合は、コマンドを使用する必要があります。</strong>ユーザー「shivam」に切り替えて、オーナーを変更してみましょう。また、下記のコマンドを実行する前に、ファイルのオーナーをrootに変更しています。</p>
+<p><img alt="" src="../images/linux/admin/image12.png" /></p>
+<p>chownコマンドは、同様の方法でディレクトリのオーナーを変更することもできます。</p>
+<h3 id="chgrp">chgrpコマンド</h3>
+<p>chgrpコマンドを使用して、ファイルやディレクトリのグループ所有権を変更することができます。構文はchownコマンドとよく似ています。</p>
+<p><img alt="" src="../images/linux/admin/image27.png" /></p>
+<p>chgrpコマンドは、同様にディレクトリの所有者を変更するのにも使用できます。</p>
+<h2 id="ssh">SSHコマンド</h2>
+<p>sshコマンドは、リモートシステムにログインしたり、システム間でファイルを転送したり、リモートマシンでコマンドを実行したりするのに使われます。SSHはsecure shellの略で、インターネットのような安全でないネットワーク上で、2つのホスト間に暗号化された安全な接続を提供するために使用されます。</p>
+<p>参考:
+<a href="https://www.ssh.com/ssh/command/">https://www.ssh.com/ssh/command/</a></p>
+<p>ここでは、安全で最も一般的なssh認証であるパスワードレス認証について説明します。</p>
+<h3 id="ssh_1">SSHによるパスワードレス認証</h3>
+<p>この方法では、パスワードを入力せずにホストにログインすることができます。また、スクリプトでssh関連の作業を行いたい場合にも便利です。</p>
+<p>パスワードレス認証では、公開鍵と秘密鍵のペアを使用する必要があります。その名が示すように、公開鍵は誰とでも共有できますが、秘密鍵は秘密にしておく必要があります。
+この認証がどのように機能するかの詳細については、ここでは触れません。詳しくは<a href="https://www.digitalocean.com/community/tutorials/understanding-the-ssh-encryption-and-connection-process">こちら</a>をご覧ください。</p>
+<p>リモートホストとのパスワードレス認証を設定する手順:</p>
+<ol>
+<li>
+<p>公開鍵と秘密鍵のペアを作成する</p>
+<p><strong>すでに鍵ペアが\~/.sshディレクトリに保存されている場合は、再度鍵を生成する必要はありません。</strong></p>
+<p>opensshパッケージをインストールします。opensshパッケージには、sshに関するすべてのコマンドが含まれています。</p>
+<p><img alt="" src="../images/linux/admin/image49.png" /></p>
+<p>ssh-keygenコマンドを使って、鍵ペアを生成します。すべてのプロンプトでデフォルト値を選択できます。</p>
+<p><img alt="" src="../images/linux/admin/image47.png" /></p>
+<p>ssh-keygenコマンドが正常に実行されると、2つの鍵が\~/.sshディレクトリに存在することが確認できます。id_rsa は秘密鍵であり、id_rsa.pub は、公開鍵です。秘密鍵は、自分自身でしか読み取りや変更ができないことに注意してください。</p>
+<p><img alt="" src="../images/linux/admin/image7.png" /></p>
+</li>
+<li>
+<p>公開鍵をリモートホストに転送する</p>
+<p>公開鍵をリモートサーバーに転送するには、複数の方法があります。
+ここでは、最も一般的な方法の一つであるssh-copy-idコマンドを使用する方法を見てみましょう。</p>
+<p><img alt="" src="../images/linux/admin/image11.png" /></p>
+<p>ssh-copy-idコマンドを使用するために、openssh-clientsパッケージをインストールします。</p>
+<p><img alt="" src="../images/linux/admin/image46.png" /></p>
+<p>ssh-copy-idコマンドを使って、自分の公開鍵をリモートホストにコピーします。</p>
+<p><img alt="" src="../images/linux/admin/image50.png" /></p>
+<p>今度は、パスワード認証を使ってリモートホストにsshします。</p>
+<p><img alt="" src="../images/linux/admin/image51.png" /></p>
+<p>これで、公開鍵が ~/.ssh/authorized_keys にあるはずです。</p>
+<p><img alt="" src="../images/linux/admin/image4.png" /></p>
+<p>~/.ssh/authorized_keyには、公開鍵のリストが入っています。この公開鍵に関連付けられているユーザーは、リモートホストへのsshアクセスが可能です。</p>
+</li>
+</ol>
+<h3 id="_9">リモートホストでコマンドを実行するには?</h3>
+<p>一般的な構文： <code>ssh &lt;ユーザー名&gt;@&lt;ホスト名|ホストIP&gt; &lt;コマンド&gt;</code></p>
+<p><img alt="" src="../images/linux/admin/image14.png" /></p>
+<h3 id="_10">あるホストから別のホストにファイルを転送するには？</h3>
+<p>一般的な構文: <code>scp &lt;ソースファイル&gt; &lt;転送先&gt;</code></p>
+<p><img alt="" src="../images/linux/admin/image32.png" /></p>
+<h2 id="_11">パッケージ管理</h2>
+<p>パッケージ管理とは、ソフトウェアをシステムにインストールして管理するプロセスです。必要なパッケージをLinuxのパッケージディストリビュータからインストールします。ディストリビューターによって異なるパッケージシステムを使用しています。</p>
+<table>
+<thead>
+<tr>
+<th>パッケージングシステム</th>
+<th>ディストリビューション</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Debian スタイル (.deb)</td>
+<td>Debian, Ubuntu</td>
+</tr>
+<tr>
+<td>Debian style (.deb)</td>
+<td>Debian, Ubuntu</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Linuxにおける一般的なパッケージシステム</strong>。</p>
+<table>
+<thead>
+<tr>
+<th>コマンド</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>yum install &lt;パッケージ名&gt;</td>
+<td>パッケージをシステムにインストールする</td>
+</tr>
+<tr>
+<td>yum update &lt;パッケージ名&gt;</td>
+<td>パッケージを最新のバージョンに更新する</td>
+</tr>
+<tr>
+<td>yum remove &lt;パッケージ名&gt;</td>
+<td>パッケージをシステムから削除する</td>
+</tr>
+<tr>
+<td>yum search &lt;パッケージ名&gt;</td>
+<td>特定のキーワードで検索する</td>
+</tr>
+</tbody>
+</table>
+<p><a href="https://docs.fedoraproject.org/en-US/quick-docs/dnf/">DNF</a>は、Fedoraでパッケージのインストールと管理に使われているYUMの後継です。DNF は、将来的にはRPMベースのすべてのLinuxディストリビューションでYUMを置き換えるかもしれません。</p>
+<p><img alt="" src="../images/linux/admin/image20.png" /></p>
+<p>yum searchコマンドで検索したところ、httpdというキーワードに完全に一致するものが見つかりました。それでは、httpdパッケージをインストールしてみましょう。</p>
+<p><img alt="" src="../images/linux/admin/image28.png" /></p>
+<p>httpdがインストールされたら、yum removeコマンドを使ってhttpdパッケージを削除します。</p>
+<p><img alt="" src="../images/linux/admin/image43.png" /></p>
+<h2 id="_12">プロセス管理</h2>
+<p>このセクションでは、Linuxシステムのプロセスを監視するのに便利なコマンドをいくつか紹介します。
+このセクションでは、Linux システムのプロセスを監視するために使用できる便利なコマンドについて学びます。</p>
+<h3 id="ps-process-status">ps (process status)</h3>
+<p>psコマンドは、プロセスの情報やプロセスのリストを知るために使用します。</p>
+<p><img alt="" src="../images/linux/admin/image24.png" /></p>
+<p>psコマンドの実行中に「ps command not found」というエラーが発生した場合は<strong>procps</strong>パッケージをインストールしてください。</p>
+<p>引数なしのpsはあまり役に立ちません。システム上のすべてのプロセスをリストアップしてみましょう。</p>
+<p>参考:
+<a href="https://unix.stackexchange.com/questions/106847/what-does-aux-mean-in-ps-aux">https://unix.stackexchange.com/questions/106847/what-does-aux-mean-in-ps-aux</a></p>
+<p><img alt="" src="../images/linux/admin/image42.png" /></p>
+<p>psコマンドに追加の引数を使用することで、特定のプロセスIDを指定して、そのプロセスの情報を表示することができます。</p>
+<p><img alt="" src="../images/linux/admin/image2.png" /></p>
+<p>psコマンドにgrepを併用することで、特定のプロセスのみをリストアップすることができます。</p>
+<p><img alt="" src="../images/linux/admin/image1.png" /></p>
+<h3 id="top">top</h3>
+<p>topコマンドは、システム上で実行されているLinuxプロセスの情報をリアルタイムで表示します。また、システム情報の概要を表示します。</p>
+<p><img alt="" src="../images/linux/admin/image53.png" /></p>
+<p>各プロセスについて、topはプロセスID、所有者、優先度、状態、CPU使用率、メモリ使用率、その他多くの情報が表示されます。また、システム全体のメモリ使用率やCPU使用率、システムの稼働時間やCPU負荷の平均値なども表示されます。</p>
+<h2 id="_13">メモリ管理</h2>
+<p>このセクションでは、システムのメモリに関する情報を表示するための便利なコマンドについて説明します。</p>
+<h3 id="free">free</h3>
+<p>freeコマンドは、システムのメモリ使用量を表示するために使用します。このコマンドは、RAM上の空き領域と使用領域の合計と、キャッシュ／バッファが占める領域を表示します。</p>
+<p><img alt="" src="../images/linux/admin/image22.png" /></p>
+<p>freeコマンドは、デフォルトではメモリ使用量をキロバイト単位で表示します。追加の引数を使用して、人間が読みやすい形式でデータを得ることができます。</p>
+<p><img alt="" src="../images/linux/admin/image5.png" /></p>
+<h3 id="vmstat">vmstat</h3>
+<p>vmstatコマンドを使用すると、メモリ使用量に加えて、ioやcpuの使用率などの情報を表示することができます。</p>
+<p><img alt="" src="../images/linux/admin/image38.png" /></p>
+<h2 id="_14">ディスク容量の確認</h2>
+<p>このセクションでは、Linuxでディスクの空き容量を確認するのに便利なコマンドを紹介します。</p>
+<h3 id="df-disk-free">df (disk free)</h3>
+<p>dfコマンドは、マウントされているファイルシステムごとに空き容量と利用可能容量を表示します。</p>
+<p><img alt="" src="../images/linux/admin/image36.png" /></p>
+<h3 id="du-disk-usage">du (disk usage)</h3>
+<p>duコマンドは、システム上のファイルやディレクトリのディスク使用量を表示します。</p>
+<p><img alt="" src="../images/linux/admin/image10.png" /></p>
+<p>以下のコマンドを実行すると、ルートディレクトリ内の上位5つのディレクトリを表示します。</p>
+<p><img alt="" src="../images/linux/admin/image18.png" /></p>
+<h2 id="_15">デーモン</h2>
+<p>バックグラウンドプロセスとして動作するコンピュータプログラムをデーモンと呼びます。伝統的に、デーモンプロセスの名前はdで終わります（sshd、httpdなど）。デーモンプロセスはバックグラウンドで実行されるため、ユーザーはデーモンプロセスと対話することはできません。</p>
+<p>サービスとデーモンは、ほとんどの場合同じ意味で使用されます。</p>
+<h2 id="systemd">systemd</h2>
+<p>systemdは、Linux オペレーティングシステムのシステムおよびサービスマネージャです。
+ユニットはsystemdの構成要素です。これらのユニットはユニット設定ファイルで表されます。</p>
+<p>以下の例は、RPMで配布されている/usr/lib/systemd/systemにあるユニット設定ファイルを示しています。これらはインストールされたRPMパッケージによって配布されています。
+ここでは、serviceで終わる設定ファイルがサービスユニットであることに注目します。</p>
+<p><img alt="" src="../images/linux/admin/image16.png" /></p>
+<h3 id="_16">システムサービスの管理</h3>
+<p>サービスユニットのファイル拡張子は.serviceです。systemdが管理しているサービスの起動、停止、再起動には、systemctlコマンドを使用します。</p>
+<table>
+<thead>
+<tr>
+<th>コマンド</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>systemctl start name.service</td>
+<td>サービスを開始する</td>
+</tr>
+<tr>
+<td>systemctl stop name.service</td>
+<td>サービスを停止する</td>
+</tr>
+<tr>
+<td>systemctl restart name.service</td>
+<td>サービスを再起動する</td>
+</tr>
+<tr>
+<td>systemctl status name.service</td>
+<td>サービスの状態を確認する</td>
+</tr>
+<tr>
+<td>systemctl reload name.service</td>
+<td>サービスの設定を再読み込みする</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_17">ログ</h2>
+<p>このセクションでは、Linuxのシステムログやアプリケーションログの閲覧に役立つ重要なファイルやディレクトリについて説明します。これらのログは、システムのトラブルシューティングを行う際に非常に役立ちます。</p>
+<table>
+<thead>
+<tr>
+<th>ファイル／ディレクトリ</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/var/log/*</td>
+<td>システムログに加えて、デーモンプロセスに関連するログを格納します。<br>var/logディレクトリにある重要なログファイルは以下の通りです。<br> ・var/log/messages - システムエラー、システムの起動と終了、システム構成の変更などに関するログが含まれます。<br>・/var/log/authlog - システムの認証に関するログが含まれています。 <br> ・/var/log/lastlog - 全ユーザーの最近のログイン情報が含まれています</td>
+</tr>
+<tr>
+<td>dmesg</td>
+<td>カーネルのログを表示します https://ja.wikipedia.org/wiki/Dmesg</td>
+</tr>
+</tbody>
+</table>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../command_line_basics/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                コマンドラインの基礎
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../conclusion/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                まとめ
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright 2020 LinkedIn Corporation. All Rights Reserved. Licensed under the Creative Commons Attribution 4.0 International Public License
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+  <div class="md-footer-social">
+    
+      
+      
+        
+        
+      
+      <a href="https://github.com/linkedin/school-of-sre" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+      </a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/vendor.18f0862e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.994580cf.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      
+      <script>
+        app = initialize({
+          base: "../..",
+          features: [],
+          search: Object.assign({
+            worker: "../../assets/javascripts/worker/search.9c0e82ba.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+    
+  </body>
+</html>

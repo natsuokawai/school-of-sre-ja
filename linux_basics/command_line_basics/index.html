@@ -1,0 +1,1990 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="shortcut icon" href="../../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.2.8">
+    
+    
+      
+        <title>コマンドラインの基礎 - School Of SRE</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.cb6bc1d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.39b8e14a.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/custom.css">
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+      
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+   <script async defer data-domain="linkedin.github.io" src="https://tracking.eskratch.com/js/plausible.js"></script>
+
+
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="../.." title="School Of SRE" class="md-header-nav__button md-logo" aria-label="School Of SRE">
+      
+  <img src="../../img/sos.png" alt="logo">
+
+    </a>
+    <!-- Button to open drawer -->
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            <a href="../.." title="School Of SRE" >
+              School Of SRE
+            </a>
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              コマンドラインの基礎
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        ホーム
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+      
+      <label class="md-nav__link" for="nav-2">
+        基礎
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="基礎" data-md-level="1">
+        <label class="md-nav__title" for="nav-2">
+          <span class="md-nav__icon md-icon"></span>
+          基礎
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2-1" type="checkbox" id="nav-2-1" checked>
+      
+      <label class="md-nav__link" for="nav-2-1">
+        Linuxの基礎
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Linuxの基礎" data-md-level="2">
+        <label class="md-nav__title" for="nav-2-1">
+          <span class="md-nav__icon md-icon"></span>
+          Linuxの基礎
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../intro/" class="md-nav__link">
+        はじめに
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          コマンドラインの基礎
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        コマンドラインの基礎
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    ラボ環境のセットアップ
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    コマンドとは
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    ファイルシステムの構成
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    ファイルシステムを操作するためのコマンド
+  </a>
+  
+    <nav class="md-nav" aria-label="ファイルシステムを操作するためのコマンド">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pwd" class="md-nav__link">
+    pwd (作業ディレクトリの表示)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cd" class="md-nav__link">
+    cd (ディレクトリの変更)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ls" class="md-nav__link">
+    ls（ファイルとディレクトリの一覧）
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    ファイルを操作するためのコマンド
+  </a>
+  
+    <nav class="md-nav" aria-label="ファイルを操作するためのコマンド">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#touch" class="md-nav__link">
+    touch (新規ファイルの作成)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mkdir" class="md-nav__link">
+    mkdir (新しいディレクトリの作成)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rm" class="md-nav__link">
+    rm (ファイルとディレクトリの削除)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cp" class="md-nav__link">
+    cp (ファイルやディレクトリのコピー)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    ファイルを閲覧するためのコマンド
+  </a>
+  
+    <nav class="md-nav" aria-label="ファイルを閲覧するためのコマンド">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cat" class="md-nav__link">
+    cat
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#head" class="md-nav__link">
+    head
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tail" class="md-nav__link">
+    tail
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#more" class="md-nav__link">
+    more
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#less" class="md-nav__link">
+    less
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#linuxecho" class="md-nav__link">
+    Linuxのechoコマンド
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    テキスト処理コマンド
+  </a>
+  
+    <nav class="md-nav" aria-label="テキスト処理コマンド">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#grep" class="md-nav__link">
+    grep
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sed" class="md-nav__link">
+    sed
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sort" class="md-nav__link">
+    sort
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#io" class="md-nav__link">
+    I/Oリダイレクション
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../linux_server_administration/" class="md-nav__link">
+        サーバー管理
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../conclusion/" class="md-nav__link">
+        まとめ
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2-2" type="checkbox" id="nav-2-2" >
+      
+      <label class="md-nav__link" for="nav-2-2">
+        Git
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Git" data-md-level="2">
+        <label class="md-nav__title" for="nav-2-2">
+          <span class="md-nav__icon md-icon"></span>
+          Git
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../git/git-basics/" class="md-nav__link">
+        Gitの基礎
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../git/branches/" class="md-nav__link">
+        ブランチを使った作業
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../git/github-hooks/" class="md-nav__link">
+        Githubとフック
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../git/conclusion/" class="md-nav__link">
+        まとめ
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2-3" type="checkbox" id="nav-2-3" >
+      
+      <label class="md-nav__link" for="nav-2-3">
+        Linuxネットワーキング
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Linuxネットワーキング" data-md-level="2">
+        <label class="md-nav__title" for="nav-2-3">
+          <span class="md-nav__icon md-icon"></span>
+          Linuxネットワーキング
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux_networking/intro/" class="md-nav__link">
+        はじめに
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux_networking/dns/" class="md-nav__link">
+        DNS
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux_networking/udp/" class="md-nav__link">
+        UDP
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux_networking/http/" class="md-nav__link">
+        HTTP
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux_networking/tcp/" class="md-nav__link">
+        TCP
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux_networking/ipr/" class="md-nav__link">
+        ルーティング
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux_networking/conclusion/" class="md-nav__link">
+        まとめ
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" >
+      
+      <label class="md-nav__link" for="nav-3">
+        PythonとWeb
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="PythonとWeb" data-md-level="1">
+        <label class="md-nav__title" for="nav-3">
+          <span class="md-nav__icon md-icon"></span>
+          PythonとWeb
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python_web/intro/" class="md-nav__link">
+        はじめに
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python_web/python-concepts/" class="md-nav__link">
+        Pythonの概念
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python_web/python-web-flask/" class="md-nav__link">
+        PythonとWebとFlask
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python_web/url-shorten-app/" class="md-nav__link">
+        URL短縮アプリ
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python_web/sre-conclusion/" class="md-nav__link">
+        まとめ
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" >
+      
+      <label class="md-nav__link" for="nav-4">
+        データ
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="データ" data-md-level="1">
+        <label class="md-nav__title" for="nav-4">
+          <span class="md-nav__icon md-icon"></span>
+          データ
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-1" type="checkbox" id="nav-4-1" >
+      
+      <label class="md-nav__link" for="nav-4-1">
+        リレーショナルデータベース
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="リレーショナルデータベース" data-md-level="2">
+        <label class="md-nav__title" for="nav-4-1">
+          <span class="md-nav__icon md-icon"></span>
+          リレーショナルデータベース
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../databases_sql/intro/" class="md-nav__link">
+        はじめに
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../databases_sql/concepts/" class="md-nav__link">
+        キーコンセプト
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../databases_sql/mysql/" class="md-nav__link">
+        MySQL
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../databases_sql/innodb/" class="md-nav__link">
+        InnoDB
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../databases_sql/operations/" class="md-nav__link">
+        運用上の概念
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../databases_sql/lab/" class="md-nav__link">
+        ラボ
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../databases_sql/conclusion/" class="md-nav__link">
+        まとめ
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-2" type="checkbox" id="nav-4-2" >
+      
+      <label class="md-nav__link" for="nav-4-2">
+        NoSQL
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="NoSQL" data-md-level="2">
+        <label class="md-nav__title" for="nav-4-2">
+          <span class="md-nav__icon md-icon"></span>
+          NoSQL
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../databases_nosql/intro/" class="md-nav__link">
+        はじめに
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../databases_nosql/key_concepts/" class="md-nav__link">
+        キーコンセプト
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../databases_nosql/further_reading/" class="md-nav__link">
+        まとめ
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-3" type="checkbox" id="nav-4-3" >
+      
+      <label class="md-nav__link" for="nav-4-3">
+        ビッグデータ
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="ビッグデータ" data-md-level="2">
+        <label class="md-nav__title" for="nav-4-3">
+          <span class="md-nav__icon md-icon"></span>
+          ビッグデータ
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../big_data/intro/" class="md-nav__link">
+        はじめに
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../big_data/evolution/" class="md-nav__link">
+        Hadoopの進化とアーキテクチャ
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../big_data/tasks/" class="md-nav__link">
+        まとめ
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" >
+      
+      <label class="md-nav__link" for="nav-5">
+        システム設計
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="システム設計" data-md-level="1">
+        <label class="md-nav__title" for="nav-5">
+          <span class="md-nav__icon md-icon"></span>
+          システム設計
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems_design/intro/" class="md-nav__link">
+        はじめに
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems_design/scalability/" class="md-nav__link">
+        スケーラビリティ
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems_design/availability/" class="md-nav__link">
+        可用性
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems_design/fault-tolerance/" class="md-nav__link">
+        フォールトトレランス
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems_design/conclusion/" class="md-nav__link">
+        まとめ
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6" >
+      
+      <label class="md-nav__link" for="nav-6">
+        メトリクスとモニタリング
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="メトリクスとモニタリング" data-md-level="1">
+        <label class="md-nav__title" for="nav-6">
+          <span class="md-nav__icon md-icon"></span>
+          メトリクスとモニタリング
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../metrics_and_monitoring/introduction/" class="md-nav__link">
+        はじめに
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../metrics_and_monitoring/command-line_tools/" class="md-nav__link">
+        コマンドラインツール
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../metrics_and_monitoring/third-party_monitoring/" class="md-nav__link">
+        サードパーティモニタリング
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../metrics_and_monitoring/alerts/" class="md-nav__link">
+        アラートによるプロアクティブモニタリング
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../metrics_and_monitoring/best_practices/" class="md-nav__link">
+        モニタリングのベストプラクティス
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../metrics_and_monitoring/observability/" class="md-nav__link">
+        可観測性
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../metrics_and_monitoring/conclusion/" class="md-nav__link">
+        まとめ
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7" >
+      
+      <label class="md-nav__link" for="nav-7">
+        セキュリティ
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="セキュリティ" data-md-level="1">
+        <label class="md-nav__title" for="nav-7">
+          <span class="md-nav__icon md-icon"></span>
+          セキュリティ
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/intro/" class="md-nav__link">
+        はじめに
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/fundamentals/" class="md-nav__link">
+        セキュリティの基礎知識
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/network_security/" class="md-nav__link">
+        ネットワークセキュリティ
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/threats_attacks_defences/" class="md-nav__link">
+        脅威、攻撃、防御
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/writing_secure_code/" class="md-nav__link">
+        セキュアなコードを書く
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/conclusion/" class="md-nav__link">
+        まとめ
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CONTRIBUTING/" class="md-nav__link">
+        貢献する
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CODE_OF_CONDUCT/" class="md-nav__link">
+        Code of Conduct
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sre_community/" class="md-nav__link">
+        SREコミュニティ
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about_translation/" class="md-nav__link">
+        翻訳について
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    ラボ環境のセットアップ
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    コマンドとは
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    ファイルシステムの構成
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    ファイルシステムを操作するためのコマンド
+  </a>
+  
+    <nav class="md-nav" aria-label="ファイルシステムを操作するためのコマンド">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pwd" class="md-nav__link">
+    pwd (作業ディレクトリの表示)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cd" class="md-nav__link">
+    cd (ディレクトリの変更)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ls" class="md-nav__link">
+    ls（ファイルとディレクトリの一覧）
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    ファイルを操作するためのコマンド
+  </a>
+  
+    <nav class="md-nav" aria-label="ファイルを操作するためのコマンド">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#touch" class="md-nav__link">
+    touch (新規ファイルの作成)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mkdir" class="md-nav__link">
+    mkdir (新しいディレクトリの作成)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rm" class="md-nav__link">
+    rm (ファイルとディレクトリの削除)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cp" class="md-nav__link">
+    cp (ファイルやディレクトリのコピー)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    ファイルを閲覧するためのコマンド
+  </a>
+  
+    <nav class="md-nav" aria-label="ファイルを閲覧するためのコマンド">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cat" class="md-nav__link">
+    cat
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#head" class="md-nav__link">
+    head
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tail" class="md-nav__link">
+    tail
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#more" class="md-nav__link">
+    more
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#less" class="md-nav__link">
+    less
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#linuxecho" class="md-nav__link">
+    Linuxのechoコマンド
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    テキスト処理コマンド
+  </a>
+  
+    <nav class="md-nav" aria-label="テキスト処理コマンド">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#grep" class="md-nav__link">
+    grep
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sed" class="md-nav__link">
+    sed
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sort" class="md-nav__link">
+    sort
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#io" class="md-nav__link">
+    I/Oリダイレクション
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="_1">コマンドラインの基礎</h1>
+<h2 id="_2">ラボ環境のセットアップ</h2>
+<p>オンラインのbashインタープリタを使って、このコースで例として提供されているすべてのコマンドを実行することができます。また、様々なLinuxコマンドを実際にハンズオンで体験することができます。</p>
+<p><a href="https://repl.it/languages/bash">REPL</a>は、Linuxのコマンドを実行するための人気のあるオンラインbashインタープリタのひとつです。このコースで紹介するすべてのコマンドを実行するために使用していきます。</p>
+<h2 id="_3">コマンドとは</h2>
+<p>コマンドとは、オペレーティングシステムに特定の作業を行うよう指示するプログラムです。Linuxではプログラムはファイルとして保存されます。したがって、コマンドもまたディスク上のどこかに保存されるファイルです。</p>
+<p>コマンドは、ユーザーからの入力として、追加の引数を取ることもできます。これらの引数は、コマンドライン引数と呼ばれます。コマンドの使用方法を知ることは重要であり、Linuxにおいては、特にコマンドについて、ヘルプを得る方法はたくさんあります。
+ほとんどのコマンドでは、コマンドライン引数「-h」または「--help」を使えば、何からの形のドキュメントが表示されます。しかし、Linuxで最も普及しているドキュメントシステムはmanページと呼ばれるもので、マニュアルページの略です。</p>
+<p>lsコマンドのドキュメントを表示するために、--helpを使用しています。</p>
+<p><img alt="" src="../images/linux/commands/image19.png" /></p>
+<h2 id="_4">ファイルシステムの構成</h2>
+<p>Linuxのファイルシステムは、ルートと呼ばれる最上位のディレクトリ（/で示されます）を持つ、階層（またはツリー）状の構造になっています。
+ルートディレクトリ内にあるディレクトリは、システムに関連するファイルが格納されています。
+これらのディレクトリには、システムファイル、アプリケーションファイルやユーザー関連ファイルが格納されています。</p>
+<p><img alt="" src="../images/linux/commands/image17.png" /></p>
+<p>bin｜一般的に使用されるコマンドの実行プログラムは、binディレクトリに格納されます。 </p>
+<p>sbin｜システム管理のためのプログラムが格納されているディレクトリです。</p>
+<p>home｜ユーザー関連のファイルやディレクトリが格納されています。</p>
+<p>lib｜すべてのライブラリファイルが格納されています。</p>
+<p>etc｜すべてのシステム設定ファイルが格納されています。</p>
+<p>proc｜システム上で実行中のプロセスに関連するファイルが格納されています。</p>
+<p>dev｜システム上のデバイスに関連するファイルが格納されるディレクトリです。</p>
+<p>mnt｜システム上にマウントされたデバイスに関するファイルが格納されているディレクトリです。</p>
+<p>tmp｜システム上の一時的なファイルを保存するためのディレクトリです。</p>
+<p>usr｜システム上のアプリケーションプログラムを格納するためのディレクトリです。</p>
+<h2 id="_5">ファイルシステムを操作するためのコマンド</h2>
+<p>ファイルシステムを操作するためによく使われる3つの基本的なコマンドがあります。</p>
+<ul>
+<li>
+<p>ls</p>
+</li>
+<li>
+<p>pwd</p>
+</li>
+<li>
+<p>cd</p>
+</li>
+</ul>
+<p>ここでは、それぞれのコマンドが何をするのか、またこれらのコマンドをどのように使うのかを理解しましょう。また、オンラインbashシェルで練習してみましょう。</p>
+<h3 id="pwd">pwd (作業ディレクトリの表示)</h3>
+<p>どんなときであっても、ユーザーはどこかのディレクトリにいます。今いるディレクトリの名前を知るには、Linuxのpwdコマンドを使います。</p>
+<p><img alt="" src="../images/linux/commands/image2.png" /></p>
+<p>それでは、cdコマンドを使って別のディレクトリに移動し、作業ディレクトリを表示します。</p>
+<p><img alt="" src="../images/linux/commands/image20.png" /></p>
+<h3 id="cd">cd (ディレクトリの変更)</h3>
+<p>cdコマンドは、作業ディレクトリを変更するために使用できます。このコマンドを使うと、あるディレクトリから別のディレクトリに移動することができます。</p>
+<p>以下の例では、最初はルートディレクトリにいます。その後、cdコマンドを使ってディレクトリを変更しています。</p>
+<p><img alt="" src="../images/linux/commands/image3.png" /></p>
+<h3 id="ls">ls（ファイルとディレクトリの一覧）</h3>
+<p>lsコマンドは、ディレクトリの内容を一覧表示するためのコマンドです。ディレクトリ内に存在するすべてのファイルとディレクトリをリストアップします。
+シェルでlsと入力すると、そのディレクトリにあるすべてのファイルとディレクトリが表示されます。</p>
+<p><img alt="" src="../images/linux/commands/image7.png" /></p>
+<p>lsコマンドの引数にディレクトリ名を指定することもできます。これにより、指定されたディレクトリ内のすべてのファイルとディレクトリを一覧表示します。</p>
+<p><img alt="" src="../images/linux/commands/image4.png" /></p>
+<h2 id="_6">ファイルを操作するためのコマンド</h2>
+<p>ファイルを操作するためによく使われる基本的なコマンドは次の5つです。</p>
+<ul>
+<li>
+<p>touch</p>
+</li>
+<li>
+<p>mkdir</p>
+</li>
+<li>
+<p>cp</p>
+</li>
+<li>
+<p>mv</p>
+</li>
+<li>
+<p>rm</p>
+</li>
+</ul>
+<p>ここからは、それぞれのコマンドが何をするものなのか、これらのコマンドをどのように使うのかを理解していきましょう。また、オンラインbashシェルで練習してみましょう。</p>
+<h3 id="touch">touch (新規ファイルの作成)</h3>
+<p>touchコマンドは、空の新規ファイルを作成するために使用します。このコマンドは他にもさまざまな用途に使えますが、ここでは最も簡単な新規ファイルの作成について説明します。</p>
+<p>touchコマンドの一般的な構文:</p>
+<pre><code>touch &lt;ファイル名&gt;
+</code></pre>
+<p><img alt="" src="../images/linux/commands/image9.png" /></p>
+<h3 id="mkdir">mkdir (新しいディレクトリの作成)</h3>
+<p>mkdirコマンドは、ディレクトリを作成するためのコマンドです。lsコマンドを使用して、新しいディレクトリが作成されたことを確認できます。</p>
+<p>mkdirコマンドの一般的な構文:</p>
+<pre><code>mkdir &lt;ディレクトリ名&gt;
+</code></pre>
+<p><img alt="" src="../images/linux/commands/image11.png" /></p>
+<h3 id="rm">rm (ファイルとディレクトリの削除)</h3>
+<p>rmコマンドは、ファイルやディレクトリを削除するコマンドです。このコマンドは、ファイルやディレクトリを完全に削除することに注意してください。一度rmコマンドを実行してしまうと、これらのファイルやディレクトリを復元することはほぼ不可能です。このコマンドは慎重に実行してください。</p>
+<p>rmコマンドの一般的な構文:</p>
+<pre><code>rm &lt;ファイル名&gt;
+</code></pre>
+<p>rmコマンドを理解するために、例を挙げてみましょう。ここではtouchとmkdirコマンドで作成したファイルとディレクトリをそれぞれ削除してみます。</p>
+<p><img alt="" src="../images/linux/commands/image18.png" /></p>
+<h3 id="cp">cp (ファイルやディレクトリのコピー)</h3>
+<p>cp コマンドは、ファイルやディレクトリをある場所から別の場所にコピーするために使用します。元のファイルやディレクトリには一切変更を加えません。cpコマンドが正常に実行されると、元のファイルやディレクトリとそのコピーが共存します。</p>
+<p>cpコマンドの一般的な構文:</p>
+<pre><code>cp &lt;コピー元のパス&gt; &lt;コピー先のパス&gt;
+</code></pre>
+<p>現在、私たちは「/home/runner」ディレクトリにいます。ここで、mkdirコマンドを使って、「test_directory」という名前の新しいディレクトリを作成します。それでは、先ほど作成したディレクトリに「_test_runner.py」ファイルをコピーしてみましょう。</p>
+<p><img alt="" src="../images/linux/commands/image23.png" /></p>
+<p>元の「_test_runner.py」ファイルには何も起こらないことに注意してください。カレントディレクトリに残っています。このファイルの新しいコピーが「test_directory」の中に作成されています。</p>
+<p><img alt="" src="../images/linux/commands/image14.png" /></p>
+<p>cpコマンドを使って、ディレクトリ全体をある場所から別の場所にコピーすることもできます。例を挙げて理解してみましょう。</p>
+<p><img alt="" src="../images/linux/commands/image12.png" /></p>
+<p>再びmkdirコマンドを使って、「another_directory」という新しいディレクトリを作成しました。続いて、cpコマンドに引数「-r」を加えて「test_directory」をコピーしました。</p>
+<p><strong>mv（ファイルとディレクトリの移動）</strong></p>
+<p>mvコマンドは、ファイルやディレクトリをある場所から別の場所に移動したり、ファイルやディレクトリの名前を変更したりするのに使用します。ただしファイルの移動はコピーとは大きく異なりますのでご注意ください。ファイルやディレクトリを移動すると、元のコピーは失われます。</p>
+<p>mvコマンドの一般的な構文:</p>
+<pre><code>mv &lt;移動元のパス&gt; &lt;移動先のパス&gt;
+</code></pre>
+<p>この例では、mvコマンドを使って「test_directory」に「test_runner.py」ファイルを移動します。今回のケースでは、このファイルすでに「test_directory」に存在しています。mvコマンドは単にそれを置き換えます。
+<strong>mvコマンドが正常に実行された後、元のファイルは現在のディレクトリには存在しないことに注意してください。</strong></p>
+<p><img alt="" src="../images/linux/commands/image26.png" /></p>
+<p>また、mvコマンドは、ディレクトリをある場所から別の場所に移動する際にも使用できます。この場合、cpコマンドのときに使った「-r」フラグは必要ありません。mvコマンドを使用すると、元のディレクトリは存在しなくなることに注意してください。</p>
+<p>mvコマンドの重要な用途のひとつは、ファイルやディレクトリの名前を変更することです。ここでは、このコマンドを使ってどのように名前を変更するかを説明します。</p>
+<p>まず、場所を「test_directory」に変更します。次に、mvコマンドを使って、「_test_runner.py」のファイル名を 「test.py」に変更します。</p>
+<p><img alt="" src="../images/linux/commands/image29.png" /></p>
+<h2 id="_7">ファイルを閲覧するためのコマンド</h2>
+<p>ファイルを閲覧する際によく使う基本的なコマンドは5つあります。</p>
+<ul>
+<li>
+<p>cat</p>
+</li>
+<li>
+<p>head</p>
+</li>
+<li>
+<p>tail</p>
+</li>
+<li>
+<p>more</p>
+</li>
+<li>
+<p>less</p>
+</li>
+</ul>
+<p>ここからは、それぞれのコマンドが何をするものなのか、これらのコマンドをどのように使うのかを理解していきましょう。また、オンラインのbashシェルを使って練習してみましょう。</p>
+<p>「numbers.txt」という新しいファイルを作成し、1から100までの数字を挿入します。それぞれの数字は別の行にします。</p>
+<p><img alt="" src="../images/linux/commands/image21.png" /></p>
+<p>上のコマンドは、今は気にしないでください。これは、数字を生成するための高度なコマンドです。そして、リダイレクト演算子を使って、この数字をファイルに書き込んでいます。I/Oのリダイレクトについては、後のセクションで説明します。</p>
+<h3 id="cat">cat</h3>
+<p>cat コマンドの最も簡単な使い方は、ファイルの内容を出力画面に表示することです。このコマンドは非常に便利で、他にもさまざまな用途に使用できます。他の使用例については後で勉強します。</p>
+<p><img alt="" src="../images/linux/commands/image1.png" /></p>
+<p>上のコマンドを実行してみると、画面に1から100までの数字が表示されます。すべての数字を見るには、上にスクロールする必要があります。</p>
+<h3 id="head">head</h3>
+<p>head コマンドは、デフォルトではファイルの最初の 10 行を表示します。また追加の引数を指定して、必要な行数を先頭から表示することができます。</p>
+<p>この例では、headコマンドを使用した場合、ファイルの最初の10行のみが表示されます。</p>
+<p><img alt="" src="../images/linux/commands/image15.png" /></p>
+<p>デフォルトでは、headコマンドは最初の10行のみを表示します。もし先頭から表示する行数を指定したい場合は、「-n」引数を使用します。</p>
+<p><img alt="" src="../images/linux/commands/image16.png" /></p>
+<h3 id="tail">tail</h3>
+<p>tailコマンドは、デフォルトでは、ファイルの最後の10行を表示します。また追加の引数を指定することで、ファイルの最後から必要な行数だけ表示することができます。</p>
+<p><img alt="" src="../images/linux/commands/image22.png" /></p>
+<p>デフォルトでは、tailコマンドは最後の10行のみを表示します。もし最後から何行目まで表示するかを指定したい場合は、「-n」引数で入力します。</p>
+<p><img alt="" src="../images/linux/commands/image10.png" /></p>
+<p>この例では、-nオプションを指定してtailコマンドを実行して、ファイルの最後の5行だけを見ることができます。</p>
+<h3 id="more">more</h3>
+<p>moreコマンドは、ファイルの内容やコマンドの出力を表示します。ファイルのサイズが大きい場合 (例: ログファイル)、一画面分を表示します。また、ファイルの前方への移動と限定的な後方への移動が可能です。</p>
+<p><img alt="" src="../images/linux/commands/image33.png" /></p>
+<p>moreコマンドは、現在の画面に収まるだけの情報を表示し、ユーザーの入力を待って進みます。前方へのナビゲーションは、エンターキーを押すと出力が1行進み、スペースキーを押すと出力が1画面進みます。</p>
+<h3 id="less">less</h3>
+<p>less コマンドは、more の改良版です。ファイルやコマンド出力の内容を 1 ページずつ表示し、ファイル内を前方だけでなく後方にも移動でき、検索オプションも備えています。矢印キーを使って、1行ずつ後ろに進んだり、前に進んだりすることができます。1ページ進むにはキーボードのスペースキーを、1ページ戻るにはbキーを押します。
+ファイルの最初と最後に瞬時に移動することができます。</p>
+<h2 id="linuxecho">Linuxのechoコマンド</h2>
+<p>echoコマンドは、シェルで使われる最もシンプルなコマンドのひとつです。このコマンドは、他のプログラミング言語でいうところの「print」に相当します。</p>
+<p>echoコマンドは、与えられた入力文字列を画面に表示します。</p>
+<p><img alt="" src="../images/linux/commands/image24.png" /></p>
+<h2 id="_8">テキスト処理コマンド</h2>
+<p>前のセクションでは、ファイルの内容を表示する方法を学びました。
+多くの場合、以下のような操作を行いたいと思うでしょう。</p>
+<ul>
+<li>
+<p>特定の単語を含む行だけを表示する</p>
+</li>
+<li>
+<p>ファイル内の特定の単語を別の単語で置き換える</p>
+</li>
+<li>
+<p>行を特定の順序でソートする</p>
+</li>
+</ul>
+<p>テキスト処理によく使われる基本的なコマンドが3つあります。</p>
+<ul>
+<li>
+<p>grep</p>
+</li>
+<li>
+<p>sed</p>
+</li>
+<li>
+<p>sort</p>
+</li>
+</ul>
+<p>それぞれのコマンドが何をするものなのか、どのように使うのかを理解しておきましょう。
+また、オンラインbashシェルで練習してみましょう。</p>
+<p>「numbers.txt」という新しいファイルを作成し、1から100までの数字を挿入します。それぞれの数字は別の行にします。</p>
+<p><img alt="" src="../images/linux/commands/image8.png" /></p>
+<h3 id="grep">grep</h3>
+<p>grep コマンドは、テキストファイル内の特定の単語を検索するための最も単純なコマンドです。ファイル内の特定の入力を含む行をすべて表示します。検索したい単語はgrepコマンドの入力として与えられます。</p>
+<p>grepコマンドの一般的な構文:</p>
+<pre><code>grep &lt;検索したい単語&gt; &lt;ファイル名&gt;
+</code></pre>
+<p>この例では、このファイルの中から文字列「1」を検索しようとしています。
+grepコマンドは、この文字列を見つけた行を出力します。</p>
+<p><img alt="" src="../images/linux/commands/image5.png" /></p>
+<h3 id="sed">sed</h3>
+<p>sedコマンドは、ファイル内のテキストを置き換えるために使用します。</p>
+<p>sedコマンドの一般的な構文:</p>
+<pre><code>sed 's/&lt;置換したい文字列&gt;/&lt;置換文字列&gt;/' &lt;ファイル名&gt;
+</code></pre>
+<p>それでは、sedコマンドを使って、ファイル中の「1」の各出現箇所を「3」に置き換えてみましょう。</p>
+<p><img alt="" src="../images/linux/commands/image31.png" /></p>
+<p>上記の例では、ファイルの内容は変わりません。そのためには、追加の引数「-i」を使用して、変更がファイルに反映されるようにします。</p>
+<h3 id="sort">sort</h3>
+<p>sort コマンドは、引数として与えられた入力を並べ替えるコマンドです。デフォルトでは、昇順でソートされます。</p>
+<p>並べ替えを行う前に、まずファイルの内容を見てみましょう。</p>
+<p><img alt="" src="../images/linux/commands/image27.png" /></p>
+<p>それでは、sortコマンドを使ってファイルをソートしてみましょう。sortコマンドは、内容を辞書順に並べ替えます。</p>
+<p><img alt="" src="../images/linux/commands/image32.png" /></p>
+<p>上記の例では、ファイルの内容は変わりません。</p>
+<h2 id="io">I/Oリダイレクション</h2>
+<p>開いているファイルには、それぞれファイルディスクリプタが割り当てられます。ファイルディスクリプタとは、システム内で開いているファイルの一意の識別子です。常に開かれているファイルは3つあり、stdin(キーボード)、stdout(画面)、stderr(画面に出力されるエラーメッセージ)です。これらのファイルはリダイレクトすることができます。</p>
+<p>Linuxではすべてがファイルです。<a href="https://unix.stackexchange.com/questions/225537/everything-is-a-file">https://unix.stackexchange.com/questions/225537/everything-is-a-file</a></p>
+<p>これまでは、すべての出力を標準出力である画面に表示してきました。いくつかの特殊な演算子を使って、コマンドの出力をファイルや他の入力にリダイレクトすることができます。
+I/Oリダイレクションは非常に強力な機能です。</p>
+<p>以下の例では、&gt;演算子を使って、lsコマンドの出力を output.txtにリダイレクトしています。</p>
+<p><img alt="" src="../images/linux/commands/image30.png" /></p>
+<p>下の例では、echoコマンドの出力をファイルにリダイレクトしています。</p>
+<p><img alt="" src="../images/linux/commands/image13.png" /></p>
+<p>また、あるコマンドの出力を別のコマンドの入力としてリダイレクトすることもできます。これは、パイプの助けを借りることで可能になります。</p>
+<p>以下の例では、catコマンドの出力をパイプ演算子（|）を使って、catコマンドの出力をgrepコマンドの入力として渡しています。</p>
+<p><img alt="" src="../images/linux/commands/image6.png" /></p>
+<p>下の例では、sortコマンドの出力をパイプ演算子（|）でuniqコマンドの入力として渡しています。
+uniqコマンドは、入力された数字の中から入力された数字の中からユニークなものだけを表示します。</p>
+<p><img alt="" src="../images/linux/commands/image28.png" /></p>
+<p>I/Oリダイレクション
+<a href="https://tldp.org/LDP/abs/html/io-redirection.html">https://tldp.org/LDP/abs/html/io-redirection.html</a></p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../intro/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                はじめに
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../linux_server_administration/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                サーバー管理
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright 2020 LinkedIn Corporation. All Rights Reserved. Licensed under the Creative Commons Attribution 4.0 International Public License
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+  <div class="md-footer-social">
+    
+      
+      
+        
+        
+      
+      <a href="https://github.com/linkedin/school-of-sre" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+      </a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/vendor.18f0862e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.994580cf.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      
+      <script>
+        app = initialize({
+          base: "../..",
+          features: [],
+          search: Object.assign({
+            worker: "../../assets/javascripts/worker/search.9c0e82ba.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+    
+  </body>
+</html>
