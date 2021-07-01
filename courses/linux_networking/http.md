@@ -1,10 +1,10 @@
 # HTTP
 
-Till this point we have only got the IP address of linkedin.com. The HTML page of linkedin.com is served by HTTP protocol which the browser renders. Browser sends a HTTP request to the IP of the server determined above.
-Request has a verb GET, PUT, POST followed by a path and query parameters and lines of key value pair which gives information about the client and capabilities of the client like contents it can accept and a body (usually in POST or PUT)
+ここまでの内容では、linkedin.comのIPアドレスしかわかりませんでした。linkin.comのHTMLページはHTTPプロトコルで提供されており、ブラウザはこれをレンダリングします。ブラウザは、上記で判明したサーバーのIPアドレスにHTTPリクエストを送信します。
+リクエストには、GET、PUT、POSTという動詞に続いて、パス、クエリパラメータに加え、クライアントに関する情報や、受け入れ可能なコンテンツなどのクライアントの能力を示すキーバリューペアの行と、（通常、POSTまたはPUTの場合）ボディがあります。
 
 ```bash
-# Eg run the following in your container and have a look at the headers 
+# コンテナで以下を実行して、ヘッダーを見てみましょう。
 curl linkedin.com -v
 ```
 ```bash
@@ -25,14 +25,14 @@ curl linkedin.com -v
 * Closing connection 0
 ```
 
-Here, in the first line GET is the verb, / is the path and 1.1 is the HTTP protocol version. Then there are key value pairs which give client capabilities and some details to the server. The server responds back with HTTP version, [Status Code and Status message](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes). Status codes 2xx means success, 3xx denotes redirection, 4xx denotes client side errors and 5xx server side errors.
+ここで、1行目のGETは動詞、/はパス、1.1はHTTPプロトコルのバージョンを表しています。そして、クライアントの機能といくつかの詳細をサーバーに伝えるキーバリューペアがあります。サーバは、HTTPバージョン、[ステータスコードとステータスメッセージ](https://ja.wikipedia.org/wiki/HTTP%E3%82%B9%E3%83%86%E3%83%BC%E3%82%BF%E3%82%B9%E3%82%B3%E3%83%BC%E3%83%89)で応答します。ステータスコードの2xxは成功を、3xxはリダイレクトを、4xxはクライアント側のエラーを、5xxはサーバー側のエラーを意味します。
 
-We will now jump in to see the difference between HTTP/1.0 and HTTP/1.1. 
+HTTP/1.0とHTTP/1.1の違いについて説明します。
 
 ```bash
-#On the terminal type
-telnet  www.linkedin.com 80
-#Copy and paste the following with an empty new line at last in the telnet STDIN
+#ターミナルで次のように入力します
+telnet www.linkedin.com 80
+#telnet STDINの最後に空の改行を入れて、以下の内容をコピー＆ペーストします。
 GET / HTTP/1.1
 HOST:linkedin.com
 USER-AGENT: curl
@@ -40,14 +40,14 @@ USER-AGENT: curl
 ```
 
 
-This would get server response and waits for next input as the underlying connection to www.linkedin.com can be reused for further queries. While going through TCP, we can understand the benefits of this. But in HTTP/1.0 this connection will be immediately closed after the response meaning new connection has to be opened for each query. HTTP/1.1 can have only one inflight request in an open connection but connection can be reused for multiple requests one after another. One of the benefits of HTTP/2.0 over HTTP/1.1 is we can have multiple inflight requests on the same connection. We are restricting our scope to generic HTTP and not jumping to the intricacies of each protocol version but they should be straight forward to understand post the course.
+これによってサーバーからの応答が得られ、www.linkedin.comへのベースとなる接続が次の問い合わせに再利用できるため、次の入力を待ちます。TCPを使ってみると、そのメリットがよくわかります。しかし、HTTP/1.0では、この接続は応答の後すぐに閉じられるため、問い合わせのたびに新しい接続を開かなければなりません。HTTP/1.1では、開いている接続では同時に1つのリクエストしかできませんが、接続は複数のリクエストに次々と再利用できます。HTTP/1.1と比較したHTTP/2.0の利点の1つは、同じ接続で複数のリクエストを処理することが可能なことです。ここでは、一般的なHTTPに範囲を限定しているため、各プロトコルバージョンの複雑さには触れていませんが、コース終了後には簡単に理解できるようになっているはずです。
 
-HTTP is  called **stateless protocol**. This section we will try to understand what stateless means. Say we logged in to linkedin.com, each request to linkedin.com from the client will have no context of the user and it makes no sense to prompt user to login for each page/resource. This problem of HTTP is solved by *COOKIE*. A user is created a session when a user logs in. This session identifier is sent to the browser via *SET-COOKIE* header. The browser stores the COOKIE till the expiry set by the server and sends the cookie for each request from hereon for linkedin.com. More details on cookies are available [here](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies). Cookies are a critical piece of information like password and since HTTP is a plain text protocol, any man in the middle can capture either password or cookies and can breach the privacy of the user. Similarly as discussed during DNS a spoofed IP of linkedin.com can cause a phishing attack on users where an user can give linkedin’s password to login on the malicious site. To solve both problems HTTPs came in place and HTTPs has to be mandated.
+HTTPは**ステートレスプロトコル**と呼ばれています。ここでは、ステートレスとは何を意味するのかを説明します。例えば、私たちがlinkedin.comにログインしたとすると、クライアントからlinkedin.comへの各リクエストは、ユーザーのコンテキストを持たず、各ページ/リソースごとにユーザーにログインを促すことは意味がありません。このようなHTTPの問題を解決するのが、*COOKIE*です。ユーザーがログインすると、セッションが作成されます。このセッション識別子は、*SET-COOKIE*ヘッダーを介してブラウザに送信されます。ブラウザは、サーバーが設定した有効期限までCOOKIEを保存し、今後linkedin.comへのリクエストごとにクッキーを送信します。クッキーの詳細については、[こちら](https://developer.mozilla.org/ja/docs/Web/HTTP/Cookies)をご覧ください。クッキーはパスワードと同様に重要な情報であり、HTTPはプレーンテキストプロトコルであるため、中間者はパスワードやクッキーのいずれかを捕捉することができ、ユーザーのプライバシーを侵害する可能性があります。同様に、DNSの項で述べたように、linkedin.comのIPを偽装すると、ユーザーがlinkedinのパスワードを入力して悪意のあるサイトにログインするというフィッシング攻撃を受ける可能性があります。この2つの問題を解決するために、HTTPSが導入され、HTTPSを義務づける必要があります。
 
-HTTPS has to provide server identification and encryption of data between client and server. The server administrator has to generate a private public key pair and certificate request. This certificate request has to be signed by a certificate authority which converts the certificate request to a certificate. The server administrator has to update the certificate and private key to the webserver. The certificate has details about the server (like domain name for which it serves, expiry date), public key of the server. The private key is a secret to the server and losing the private key loses the trust the server provides. When clients connect, the client sends a HELLO. The server sends its certificate to the client. The client checks the validity of the cert by seeing if it is within its expiry time, if it is signed by a trusted authority and the hostname in the cert is the same as the server. This validation makes sure the server is the right server and there is no phishing. Once that is validated, the client negotiates a symmetrical key and cipher with the server by encrypting the negotiation with the public key of the server. Nobody else other than the server who has the private key can understand this data. Once negotiation is complete, that symmetric key and algorithm is used for further encryption which can be decrypted only by client and server from thereon as they only know the symmetric key and algorithm. The switch to symmetric algorithm from asymmetric encryption algorithm is to not strain the resources of client devices as symmetric encryption is generally less resource intensive than asymmetric. 
+HTTPSは、サーバー証明書と、クライアントとサーバー間のデータの暗号化を提供しなければなりません。サーバー管理者は、秘密鍵・公開鍵ペアと証明書要求を生成する必要があります。この証明書要求は、証明書要求を証明書に変換する認証局によって署名されなければなりません。サーバー管理者は、証明書と秘密鍵を更新してウェブサーバーに送る必要があります。証明書には、サーバーに関する詳細（サービスを提供するドメイン名、有効期限など）と、サーバーの公開鍵が含まれています。秘密鍵はサーバーの秘密であり、秘密鍵を失うとサーバーが提供する信頼を失うことになります。クライアントが接続して、HELLOと送信したとします。サーバーは証明書をクライアントに送ります。クライアントは、証明書の有効期限内であるか、信頼できる機関によって署名されているか、証明書に記載されているホスト名がサーバーと同じであるかなど、証明書の有効性を確認します。この検証により、サーバーが正しいものであり、フィッシングがないことが確認されます。それが検証されると、クライアントはサーバーの公開鍵でネゴシエーションを暗号化して、サーバーと対称的な鍵と暗号をネゴシエートします。秘密鍵を持っているサーバー以外の誰もこのデータを理解することはできません。ネゴシエーションが完了すると、その対称鍵とアルゴリズムがさらに暗号化に使用され、対称鍵とアルゴリズムを知っているのはクライアントとサーバーだけなので、それ以降は復号化することができます。非対称暗号化アルゴリズムから対称暗号化アルゴリズムへの切り替えは、一般的に対称暗号化は非対称暗号化よりもリソースを消費しないため、クライアントデバイスのリソースに負担をかけないためです。
 
 ```bash
-#Try the following on your terminal to see the cert details like Subject Name(domain name), Issuer details, Expiry date
+#ターミナルで以下を実行すると、Subject Name(ドメイン名)、Issuer details、Expiry dateなどの証明書の詳細が表示されます。
 curl https://www.linkedin.com -v 
 ```
 ```bash
@@ -124,6 +124,6 @@ date: Mon, 09 Nov 2020 10:50:10 GMT
 * Closing connection 0
 ```
 
-Here my system has a list of certificate authorities it trusts in this file  /etc/ssl/cert.pem. Curl validates the certificate is for www.linkedin.com by seeing the CN section of the subject part of the certificate. It also makes sure the certificate is not expired by seeing the expire date. It also validates the signature on the certificate by using the public key of issuer Digicert in  /etc/ssl/cert.pem. Once this is done, using the public key of www.linkedin.com it negotiates cipher TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 with a symmetric key. Subsequent data transfer including first HTTP request uses the same cipher and symmetric key.
+ここで、システムは信頼する認証局のリストを/etc/ssl/cert.pemに持っています。curlは、証明書のサブジェクト部分のCNセクションを見ることで、証明書がwww.linkedin.comのものであることを検証します。また、証明書の有効期限を確認することで、証明書が期限切れでないことを確認します。また、/etc/ssl/cert.pemにある発行者DigiCertの公開鍵を使用して、証明書の署名を検証します。これが完了すると、www.linkedin.comの公開鍵を使って、対称鍵を持つ暗号TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384をネゴシエートします。最初のHTTPリクエストを含むその後のデータ転送は、同じ暗号と対称鍵を使用します。
 
 
