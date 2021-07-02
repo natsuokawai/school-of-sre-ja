@@ -1,35 +1,35 @@
 # TCP
 
-TCP is a transport layer protocol like UDP but it guarantees reliability, flow control and congestion control.
-TCP guarantees reliable delivery by using sequence numbers. A TCP connection is established by a three way handshake. In our case, the client sends a SYN packet along with the starting sequence number it plans to use, the server acknowledges the SYN packet and sends a SYN with its sequence number. Once the client acknowledges the syn packet, the connection is established. Each data transferred from here on is considered delivered reliably once acknowledgement for that sequence is received by the concerned party
+TCPはUDPと同じトランスポート層のプロトコルですが、信頼性、フロー制御、輻輳制御を保証します。
+TCPはシーケンス番号を用いて信頼性の高い配信を保証します。TCPの接続は、3ウェイハンドシェイクによって確立されます。このケースでは、クライアントがSYNパケットを使用する予定の開始シーケンス番号と共に送信し、サーバーはSYNパケットを確認して、そのシーケンス番号を添えたSYNを送信します。クライアントがSYNパケットを確認すると、接続が確立されます。以降、転送される各データは、そのシーケンスに対する確認応答を関係者が受け取った時点で、確実に配信されたとみなされます。
 
-![3-way handshake](images/established.png)
+![3ウェイハンドシェイク](images/established.png)
 
 ```bash
-#To understand handshake run packet capture on one bash session
+#ハンドシェイクを理解するために、あるbashセッションでパケットキャプチャを実行します
 tcpdump -S -i any port 80
-#Run curl on one bash session
+#bashセッションでcurlを実行します
 curl www.linkedin.com
 ```
 
 ![tcpdump-3way](images/pcap.png)
 
 
-Here client sends a syn flag shown by [S] flag with a sequence number 1522264672. The server acknowledges receipt of SYN with an ack [.] flag and a Syn flag for its sequence number[S]. The server uses the sequence number 1063230400 and acknowledges the client it’s expecting sequence number 1522264673 (client sequence+1). Client sends a zero length acknowledgement packet to the server(server sequence+1) and connection stands established. This is called three way handshake. The client sends a 76 bytes length packet after this and increments its sequence number by 76. Server sends a 170 byte response and closes the connection. This was the difference we were talking about between HTTP/1.1 and HTTP/1.0. In HTTP/1.1 this same connection can be reused which reduces overhead of 3 way handshake for each HTTP request. If a packet is missed between client and server, server won’t send an ack to the client and client would retry sending the packet till the ACK is received. This guarantees reliability.
-The flow control is established by the win size field in each segment. The win size says available TCP buffer length in the kernel which can be used to buffer received segments. A size 0 means the receiver has a lot of lag to catch from its socket buffer and the sender has to pause sending packets so that receiver can cope up. This flow control protects from slow receiver and fast sender problem
+ここでは、クライアントが[S]フラグで示されるSYNフラグをシーケンス番号1522264672と共に送信しています。サーバはSYNの受信をACK[.]フラグとシーケンス番号[S]のSYNフラグで確認します。サーバーはシーケンス番号1063230400を使用し、シーケンス番号1522264673（クライアントシーケンス+1）を期待していることをクライアントに通知します。クライアントはゼロ長の確認応答パケットをサーバーに送信し（サーバーシーケンス+1）、接続が確立します。これを3ウェイハンドシェイクと呼びます。クライアントはこの後、76バイト長のパケットを送信し、シーケンス番号を76だけインクリメントします。サーバーは170バイトのレスポンスを送り、コネクションを閉じます。これが、先ほどのHTTP/1.1とHTTP/1.0の違いです。HTTP/1.1では、この同じ接続を再利用することで、HTTPリクエストごとの3ウェイハンドシェイクのオーバーヘッドを減らすことができます。また、クライアントとサーバーの間でパケットが欠落した場合、サーバーはクライアントにACKを送信せず、クライアントはACKを受信するまでパケットの送信を再試行します。これにより、信頼性が保証されます。
+フロー制御は、各セグメントのwin sizeフィールドによって確立されます。winサイズは、受信したセグメントのバッファリングに使用できる、カーネル内の利用可能なTCPバッファの長さを示します。winサイズが0の場合、受信側のソケットバッファからの遅延が大きく、送信側は受信側が対応できるようにパケットの送信を一時停止しなければなりません。このフロー制御は、遅い受信者と速い送信者の問題を防ぎます。
 
-TCP also does congestion control which determines how many segments can be in transit without an ack. Linux provides us the ability to configure algorithms for congestion control which we are not covering here.
+また、TCPは輻輳制御も行います。輻輳制御では、どれだけ多くのセグメントがACKなしで通過できるかを決定します。Linuxでは輻輳制御のアルゴリズムを設定することができますが、ここでは説明しません。
 
-While closing a connection, client/server calls a close syscall. Let's assume client do that. Client’s kernel will send a FIN packet to the server. Server’s kernel can’t close the connection till the close syscall is called by the server application. Once server app calls close, server also sends a FIN packet and client enters into time wait state for 2*MSS(120s) so that this socket can’t be reused for that time period to prevent any TCP state corruptions due to stray stale packets. 
+接続を閉じるとき、クライアント/サーバーはcloseシステムコールを呼び出します。ここでは、クライアントがそれを行ったと仮定します。クライアントのカーネルはFINパケットをサーバーに送信します。サーバーのカーネルは、サーバーアプリケーションがcloseシステムコールを呼び出すまで、接続を閉じることができません。サーバーアプリケーションがcloseを呼び出すと、サーバーもFINパケットを送信し、クライアントは2*MSS(120s)の時間待ち状態に入り、その間はこのソケットが再利用されないようにして、行き先のない古いパケットによってTCPの状態が壊れるのを防ぎます。
 
 ![Connection tearing](images/closed.png)
 
-Armed with our TCP and HTTP knowledge lets see how this is used by SREs in their role
+TCPとHTTPの知識を身につけて、SREがどのように使用するかを見てみましょう。
 
-## Applications in SRE role
-1. Scaling HTTP performance using load balancers need consistent knowledge about both TCP and HTTP. There are [different kinds of load balancing](https://blog.envoyproxy.io/introduction-to-modern-network-load-balancing-and-proxying-a57f6ff80236?gi=428394dbdcc3) like L4, L7 load balancing, Direct Server Return etc. HTTPs offloading can be done on Load balancer or directly on servers based on the performance and compliance needs.
-2. Tweaking sysctl variables for rmem and wmem like we did for UDP can improve throughput of sender and receiver.
-3. Sysctl variable tcp_max_syn_backlog and socket variable somax_conn determines how many connections for which the kernel can complete 3 way handshake before app calling accept syscall. This is much useful in single threaded applications. Once the backlog is full, new connections stay in SYN_RCVD state (when you run netstat) till the application calls accept syscall
-4. Apps can run out of file descriptors if there are too many short lived connections. Digging through [tcp_reuse and tcp_recycle](http://lxr.linux.no/linux+v3.2.8/Documentation/networking/ip-sysctl.txt#L464) can help reduce time spent in the time wait state(it has its own risk). Making apps reuse a pool of connections instead of creating ad hoc connection can also help
-5. Understanding performance bottlenecks by seeing metrics and classifying whether its a problem in App or network side. Example too many sockets in Close_wait state is a problem on application whereas retransmissions can be a problem more on network or on OS stack than the application itself. Understanding the fundamentals can help us narrow down where the bottleneck is
+## SREの役割における応用
+1. ロードバランサーを使用してHTTPのパフォーマンスをスケーリングするには、TCPとHTTPの両方に関する一貫した知識が必要です。ロードバランサーには、L4ロードバランサー、L7ロードバランサー、DSRなどの[異なる種類のロードバランサー](https://blog.envoyproxy.io/introduction-to-modern-network-load-balancing-and-proxying-a57f6ff80236?gi=428394dbdcc3)があります。HTTPのオフロードは、パフォーマンスとコンプライアンスのニーズに基づいて、ロードバランサー上で行うことも、サーバーに直接行うこともできます。
+2. UDPのパートで行ったように、rmemとwmemのシステムコール変数を調整することで、送信者と受信者のスループットを向上させることができます。
+3. システムコール変数tcp_max_syn_backlogとソケット変数somax_connは、アプリケーションがacceptシステムコールを呼び出す前に、カーネルが3ウェイハンドシェイクを完了できる接続数を決定します。これはシングルスレッドのアプリケーションでは非常に便利です。バックログが一杯になると、アプリケーションがacceptシステムコールを呼び出すまで、新しい接続はSYN_RCVD状態（netstatを実行したとき）になります。
+4. あまりにも多くの短命な接続があると、アプリケーションはファイルディスクリプタを使い果たしてしまいます。[tcp_reuse and tcp_recycle](http://lxr.linux.no/linux+v3.2.8/Documentation/networking/ip-sysctl.txt#L464)を調べると、時間待ち状態の時間を短縮することができます(それなりのリスクがあります)。また、アプリケーションがその場限りの接続を行うのではなく、プールされた接続を再利用することも有効です。
+5. メトリクスを見てパフォーマンスのボトルネックを理解し、アプリケーション側の問題なのか、ネットワーク側の問題なのかを分類します。例えば、Close_wait状態のソケットが多いのはアプリケーションの問題であり、再送はアプリケーション自体よりもネットワークやOSスタックの問題である可能性があります。基本的なことを理解することで、ボトルネックがどこにあるかを絞り込むことができます。
 
