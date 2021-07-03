@@ -1,11 +1,12 @@
-# Conclusion
+# まとめ
 
-With this we have traversed through the TCP/IP stack completely. We hope there will be a different perspective when one opens any website in the browser post the course.
+これで、TCP/IPスタックを理解することができました。コース終了後は、ブラウザでWebサイトを開いたときにこれまでとは違った見方ができるようになることを期待しています。
 
-During the course we have also dissected what are common tasks in this pipeline which falls under the ambit of SRE.
+またこのコースでは、SREの対象となる一般的なタスクについても解説しました。
 
-# Post Training Exercises
-1. Setup own DNS resolver in the dev environment which acts as an authoritative DNS server for example.com and forwarder for other domains. Update resolv.conf to use the new DNS resolver running in localhost
-2. Set up a site dummy.example.com in localhost and run a webserver with a self signed certificate. Update the trusted CAs or pass self signed CA’s public key as a parameter so that curl https://dummy.example.com -v works properly without self signed cert warning
-3. Update the routing table to use another host(container/VM) in the same network as a gateway for 8.8.8.8/32 and run ping 8.8.8.8. Do the packet capture on the new gateway to see L3 hop is working as expected(might need to disable icmp_redirect)
+
+## トレーニング後のエクササイズ
+1. 開発環境に独自のDNSリゾルバを設定しましょう。このリゾルバはexample.comの権威DNSサーバとして、また他のドメインのフォワーダとして機能します。localhostで稼働している新しいDNSリゾルバを使用するためにresolv.confを更新しましょう。
+2. localhostにdummy.example.comというサイトを設定し、自己署名証明書を使用してウェブサーバーを実行しましょう。信頼できるCAを更新するか、自己署名付きCAの公開鍵をパラメータとして渡し、自己署名付き証明書の警告なしに`curl https://dummy.example.com -v`が正しく動作するようにしましょう。
+3. 8.8.8.8/32のゲートウェイとして同一ネットワーク上の別のホスト(コンテナ/VM)を使用するようにルーティングテーブルを更新し、ping 8.8.8.8を実行しましょう。新しいゲートウェイでパケットキャプチャを行い、L3ホップが期待通りに動作していることを確認しましょう(icmp_redirectを無効にする必要があるかもしれません)。
 
