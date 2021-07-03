@@ -1,12 +1,12 @@
-# Some Python Concepts
+# Pythonの概念
 
-Though you are expected to know python and its syntax at basic level, let us discuss some fundamental concepts that will help you understand the python language better.
+Pythonとその構文については基本的なレベルで理解していると思いますが、ここではPython言語をより深く理解するための基礎的な概念について説明します。
 
-**Everything in Python is an object.**
+**Pythonのすべてのものはオブジェクトです。**
 
-That includes the functions, lists, dicts, classes, modules, a running function (instance of function definition), everything. In the CPython, it would mean there is an underlying struct variable for each object.
+関数、リスト、ディクショナリ、クラス、モジュール、実行中の関数（関数定義のインスタンス）など、すべてを含みます。CPythonでは、各オブジェクトについて構造体変数があることを意味します。
 
-In python's current execution context, all the variables are stored in a dict. It'd be a string to object mapping. If you have a function and a float variable defined in the current context, here is how it is handled internally.
+Pythonの現在の実行コンテキストでは、すべての変数はディクショナリに格納されています。文字列とオブジェクトのマッピングですね。現在のコンテキストで、関数とfloat変数が定義されている場合、内部的には以下のように処理されます。
 
 ```python
 >>> float_number=42.0
@@ -14,14 +14,14 @@ In python's current execution context, all the variables are stored in a dict. I
 ...     pass
 ...
 
-# NOTICE HOW VARIABLE NAMES ARE STRINGS, stored in a dict
+# 変数名が文字列であり、ディクショナリに格納されていることに注意してください。
 >>> locals()
 {'__name__': '__main__', '__doc__': None, '__package__': None, '__loader__': <class '_frozen_importlib.BuiltinImporter'>, '__spec__': None, '__annotations__': {}, '__builtins__': <module 'builtins' (built-in)>, 'float_number': 42.0, 'foo_func': <function foo_func at 0x1055847a0>}
 ```
 
-## Python Functions
+## 関数
 
-Since functions too are objects, we can see what all attributes a function contains as following
+関数もオブジェクトなので、次のようにして関数に含まれるすべての属性を見ることができます。
 
 ```python
 >>> def hello(name):
@@ -35,17 +35,17 @@ Since functions too are objects, we can see what all attributes a function conta
 '__subclasshook__']
 ```
 
-While there are a lot of them, let's look at some interesting ones
+たくさんありますが、興味深いものをいくつか見てみましょう。
 
 #### __globals__
 
-This attribute, as the name suggests, has references of global variables. If you ever need to know what all global variables are in the scope of this function, this will tell you. See how the function start seeing the new variable in globals
+この属性はその名の通り、グローバル変数の参照を持ちます。この関数のスコープ内にあるすべてのグローバル変数を知ることができます。関数が新たなグローバル変数を参照し始める様子を見てみましょう。
 
 ```python
 >>> hello.__globals__
 {'__name__': '__main__', '__doc__': None, '__package__': None, '__loader__': <class '_frozen_importlib.BuiltinImporter'>, '__spec__': None, '__annotations__': {}, '__builtins__': <module 'builtins' (built-in)>, 'hello': <function hello at 0x7fe4e82554c0>}
 
-# adding new global variable
+# 新しいグローバル変数の追加
 >>> GLOBAL="g_val"
 >>> hello.__globals__
 {'__name__': '__main__', '__doc__': None, '__package__': None, '__loader__': <class '_frozen_importlib.BuiltinImporter'>, '__spec__': None, '__annotations__': {}, '__builtins__': <module 'builtins' (built-in)>, 'hello': <function hello at 0x7fe4e82554c0>, 'GLOBAL': 'g_val'}
@@ -53,41 +53,41 @@ This attribute, as the name suggests, has references of global variables. If you
 
 ### __code__
 
-This is an interesting one! As everything in python is an object, this includes the bytecode too. The compiled python bytecode is a python code object. Which is accessible via `__code__` attribute here. A function has an associated code object which carries some interesting information.
+これは面白いです！Pythonではすべてがオブジェクトなので、バイトコードも同様です。コンパイルされた PythonバイトコードはPythonのコードオブジェクトです。これは`__code__`属性でアクセスできます。関数には、いくつかの興味深い情報を持ったコードオブジェクトが関連付けられています。
 
 ```python
-# the file in which function is defined
-# stdin here since this is run in an interpreter
+# 関数が定義されているファイルを出力
+# インタプリタで実行されるので、stdinとなる
 >>> hello.__code__.co_filename
 '<stdin>'
 
-# number of arguments the function takes
+# 関数が受け取る引数の数
 >>> hello.__code__.co_argcount
 1
 
-# local variable names
+# ローカル変数名
 >>> hello.__code__.co_varnames
 ('name',)
 
-# the function code's compiled bytecode
+# 関数コードのコンパイル済みバイトコード
 >>> hello.__code__.co_code
 b't\x00d\x01|\x00\x9b\x00d\x02\x9d\x03\x83\x01\x01\x00d\x00S\x00'
 ```
 
-There are more code attributes which you can enlist by `>>> dir(hello.__code__)`
+他にもコードの属性はありますが、それは`>> dir(hello.__code__)` でリストアップできます。
 
-## Decorators
+## デコレータ
 
-Related to functions, python has another feature called decorators. Let's see how that works, keeping  `everything is an object` in mind.
+関数に関連して、Pythonにはデコレータと呼ばれる機能があります。「全てはオブジェクトである」ということを念頭に置いて、どのように機能するか見てみましょう。
 
-Here is a sample decorator:
+デコレータのサンプルを紹介します。
 
 ```python
 >>> def deco(func):
 ...     def inner():
-...             print("before")
-...             func()
-...             print("after")
+...         print("before")
+...         func()
+...         print("after")
 ...     return inner
 ...
 >>> @deco
@@ -101,7 +101,7 @@ hello world
 after
 ```
 
-Here `@deco` syntax is used to decorate the `hello_world` function. It is essentially same as doing
+ここでは`@deco`構文を使って`hello_world`関数を装飾しています。基本的には以下のようにするのと同じです。
 
 ```python
 >>> def hello_world():
@@ -110,17 +110,17 @@ Here `@deco` syntax is used to decorate the `hello_world` function. It is essent
 >>> hello_world = deco(hello_world)
 ```
 
-What goes inside the `deco` function might seem complex. Let's try to uncover it.
+`deco`関数の中身は複雑に見えるかもしれません。それを解明してみましょう。
 
-1. Function `hello_world` is created
-2. It is passed to `deco` function
-3. `deco` create a new function
-      1. This new function is calls `hello_world` function
-      2. And does a couple other things
-4. `deco` returns the newly created function
-5. `hello_world` is replaced with above function
+1. 関数`hello_world`が作られる
+2. `hello_world`関数が `deco` 関数に渡される
+3. `deco`は新しい関数を作成する
+    1. この新しい関数は`hello_world`関数と呼ばれる
+    2. 他にもいくつかのことをする
+4. `deco`は新しく作られた関数を返す
+5. 元の`hello_world`は上記の関数に置き換えられる
 
-Let's visualize it for better understanding
+理解を深めるために視覚化してみましょう。
 
 ```
        BEFORE                   function_object (ID: 100)
@@ -152,11 +152,11 @@ Let's visualize it for better understanding
        "hello_world" +-------------+
 ```
 
-Note how the `hello_world` name points to a new function object but that new function object knows the reference (ID) of the original function.
+`hello_world`という名前は新しい関数オブジェクトを指していますが、その新しい関数オブジェクトは元の関数の参照（ID）を知っていることに注意してください。
 
-## Some Gotchas
+## いくつかの落とし穴
 
-- While it is very quick to build prototypes in python and there are tons of libraries available, as the codebase complexity increases, type errors become more common and will get hard to deal with. (There are solutions to that problem like type annotations in python. Checkout [mypy](http://mypy-lang.org/).)
-- Because python is dynamically typed language, that means all types are determined at runtime. And that makes python run very slow compared to other statically typed languages.
-- Python has something called [GIL](https://www.dabeaz.com/python/UnderstandingGIL.pdf) (global interpreter lock) which is a limiting factor for utilizing multiple CPI cores for parallel computation.
-- Some weird things that python does: https://github.com/satwikkansal/wtfpython
+- Pythonでプロトタイプを作るのはとても簡単で、利用可能なライブラリも大量にありますが、コードベースが複雑になると、型エラーがより頻繁に発生するようになり、対処が難しくなります。(Pythonの型アノテーションのような問題の解決策があります。[mypy](http://mypy-lang.org/)をご覧ください。
+- Pythonは動的型付け言語なので、すべての型が実行時に決定されることになります。そのため、他の静的型付けされた言語に比べて、Pythonの動作は非常に遅くなっています。
+- Python には[GIL](https://www.dabeaz.com/python/UnderstandingGIL.pdf)（global interpreter lock）と呼ばれるものがあり、これが並列計算のために複数のCPIコアを利用する際の制限要因となっています。
+- Pythonの奇妙な点のまとめ: https://github.com/satwikkansal/wtfpython

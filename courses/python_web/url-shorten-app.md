@@ -1,40 +1,40 @@
-# The URL Shortening App
+# URL短縮アプリ
 
-Let's build a very simple URL shortening app using flask and try to incorporate all aspects of the development process including the reliability aspects. We will not be building the UI and we will come up with a minimal set of API that will be enough for the app to function well.
+Flaskを使って非常にシンプルなURL短縮アプリを作り、信頼性の面も含めて開発プロセスのすべての側面を取り入れてみましょう。UIは構築せず、アプリが十分に機能するための最小限のAPIを考えます。
 
-## Design
+## 設計
 
-We don't jump directly to coding. First thing we do is gather requirements. Come up with an approach. Have the approach/design reviewed by peers. Evolve, iterate, document the decisions and tradeoffs. And then finally implement. While we will not do the full blown design document here, we will raise certain questions here that are important to the design.
+いきなりコーディングに飛びつくことはしません。まず最初にすることは、要件を集めることです。アプローチを考えましょう。アプローチや設計を同僚にレビューしてもらいましょう。進化させ、反復させ、決定事項とトレードオフを文書化しましょう。そして、最後に実装します。ここでは本格的な設計書は作成しませんが、設計にあたって重要となる問題提起をします。
 
-### 1. High Level Operations and API Endpoints
+### 1. 高度なオペレーションとAPIエンドポイント
 
-Since it's a URL shortening app, we will need an API for generating the shorten link given an original link. And an API/Endpoint which will accept the shorten link and redirect to original URL. We are not including the user aspect of the app to keep things minimal. These two API should make app functional and usable by anyone.
+URL短縮アプリなので、元のリンクから短縮リンクを生成するためのAPIが必要になります。また、短縮されたリンクを受け取り、元のURLにリダイレクトするAPI（エンドポイント）も必要です。物事を最小限にするため、アプリのUIは含めていません。この2つのAPIでアプリを機能するようにし、誰でも使えるようにする必要があります。
 
-### 2. How to shorten?
+### 2. 短縮するには？
 
-Given a url, we will need to generate a shortened version of it. One approach could be using random characters for each link. Another thing that can be done is to use some sort of hashing algorithm. The benefit here is we will reuse the same hash for the same link. ie: if lot of people are shortening `https://www.linkedin.com` they all will have the same value, compared to multiple entries in DB if chosen random characters.
+URLが与えられたら、その短縮版を生成する必要があります。一つの方法は、各リンクにランダムな文字を使用することです。もう一つの方法は、ある種のハッシュアルゴリズムを使用することです。ここでの利点は、同じリンクに対して同じハッシュを再利用することです。例えば、多くの人が`https://www.linkedin.com`を短縮した場合、ランダムな文字を選択した場合にDBに複数のエントリがあるのと比較して、同じ値を持つことになります。
 
-What about hash collisions? Even in random characters approach, though there is a less probability, hash collisions can happen. And we need to be mindful of them. In that case we might want to prepend/append the string with some random value to avoid conflict.
+ハッシュの衝突についてはどうでしょうか？ランダムな文字を使う方法でも、確率は低いですがハッシュの衝突は起こり得るので、注意する必要があります。その場合には、文字列の前にランダムな値を付加して衝突を回避することも考えられます。
 
-Also, choice of hash algorithm matters. We will need to analyze algorithms. Their CPU requirements and their characteristics. Choose one that suits the most.
+また、ハッシュアルゴリズムの選択も重要です。我々はアルゴリズムを分析する必要があります。それらのCPU要件とその特徴。最も適したものを選んでください。
 
-### 3. Is URL Valid?
+### 3. URLは有効か？
 
-Given a URL to shorten, how do we verify if the URL is valid? Do we even verify or validate? One basic check that can be done is see if the URL matches a regex of a URL. To go even further we can try opening/visiting the URL. But there are certain gotchas here.
+短縮したいURLがある場合、そのURLが有効かどうかをどうやって確認するのでしょうか？基本的なチェックとしては、そのURLがURLの正規表現と一致するかどうかを確認します。さらに進んで、URLを開いてみたり、訪問してみたりすることもできます。しかし、ここにはいくつかの問題があります。
 
-1. We need to define success criteria. ie: HTTP 200 means it is valid.
-2. What is the URL is in private network?
-3. What if URL is temporarily down?
+1. 例えば、HTTP 200は有効であることを意味します。
+2. URLがプライベートネットワーク内にある場合はどうするか？
+3. URLが一時的にダウンした場合は？
 
-### 4. Storage
+### 4. ストレージ
 
-Finally, storage. Where will we store the data that we will generate over time? There are multiple database solutions available and we will need to choose the one that suits this app the most. Relational database like MySQL would be a fair choice but **be sure to checkout School of SRE's [SQL database section](../databases_sql/intro.md) and [NoSQL databases section](../databases_nosql/intro.md) for deeper insights into making a more informed decision.**
+最後にストレージです。時間の経過とともに生成されるデータをどこに保存するのでしょうか？複数のデータベースソリューションがありますが、このアプリに最も適したものを選択する必要があります。MySQLのようなリレーショナルデータベースを選択するのが妥当ですが、 **School of SREの[SQLデータベースのセクション](../databases_sql/intro.md)と[NoSQLデータベースのセクション](../databases_nosql/intro.md)をチェックして、より詳細な情報に基づいた決定を行ってください。**
 
-### 5. Other
+### 5. その他
 
-We are not accounting for users into our app and other possible features like rate limiting, customized links etc but it will eventually come up with time. Depending on the requirements, they too might need to get incorporated.
+このアプリでは、ユーザーを考慮していません。レート制限やカスタマイズされたリンクなど、その他の機能も考えられますが、時間の経過とともに出てくるでしょう。要求に応じて、これらの機能を組み込む必要があるかもしれません。
 
-The minimal working code is given below for reference but I'd encourage you to come up with your own.
+参考までに最低限の動作コードを以下に示しますが、自分で考えてみることをお勧めします。
 
 ```python
 from flask import Flask, redirect, request
@@ -53,17 +53,17 @@ def shorten():
     if "url" not in payload:
         return "Missing URL Parameter", 400
 
-    # TODO: check if URL is valid
+    # TODO: URLが有効かどうかのチェック
 
     hash_ = md5()
     hash_.update(payload["url"].encode())
-    digest = hash_.hexdigest()[:5]  # limiting to 5 chars. Less the limit more the chances of collission
+    digest = hash_.hexdigest()[:5] # 5文字に制限しています。制限が少ないほど衝突の可能性が高くなります
 
     if digest not in mapping:
         mapping[digest] = payload["url"]
         return f"Shortened: r/{digest}\n"
     else:
-        # TODO: check for hash collission
+        # TODO: ハッシュの衝突をチェックする
         return f"Already exists: r/{digest}\n"
 
 
@@ -81,13 +81,13 @@ if __name__ == "__main__":
 OUTPUT:
 
 
-===> SHORTENING
+===> 短縮
 
 $ curl localhost:5000/shorten -H "content-type: application/json" --data '{"url":"https://linkedin.com"}'
 Shortened: r/a62a4
 
 
-===> REDIRECTING, notice the response code 302 and the location header
+===> リダイレクト: レスポンスコード302とLocationに注目してください
 
 $ curl localhost:5000/r/a62a4 -v
 * Uses proxy env variable NO_PROXY == '127.0.0.1'
@@ -116,5 +116,4 @@ $ curl localhost:5000/r/a62a4 -v
 <h1>Redirecting...</h1>
 * Closing connection 0
 <p>You should be redirected automatically to target URL: <a href="https://linkedin.com">https://linkedin.com</a>.  If not click the link.
-"""
 ```

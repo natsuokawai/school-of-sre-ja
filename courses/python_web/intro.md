@@ -1,59 +1,59 @@
-# Python and The Web
+# PythonとWeb
 
-## Prerequisites
+## 前提条件
 
-- Basic understanding of python language.
-- Basic familiarity with flask framework.
+- Python言語の基本的な理解
+- Flaskフレームワークの基本的な知識
 
-## What to expect from this course
+## このコースで扱うこと
 
-This course is divided into two high level parts. In the first part, assuming familiarity with python language’s basic operations and syntax usage, we will dive a little deeper into understanding python as a language. We will compare python with other programming languages that you might already know like Java and C. We will also explore concepts of Python objects and with help of that, explore python features like decorators.
+このコースは2つのハイレベルなパートに分かれています。最初のパートでは、Python言語の基本的な操作や構文の使い方を知っていることを前提に、言語としてのPythonをもう少し深く理解します。また、Pythonのオブジェクトの概念を探り、それをもとにデコレータのようなPythonの機能を探ります。
 
-In the second part which will revolve around the web, and also assume familiarity with the Flask framework, we will start from the socket module and work with HTTP requests. This will demystify how frameworks like flask work internally.
+第2部ではウェブを中心に展開し、Flaskフレームワークを使い慣れていることを前提に、ソケットモジュールから始めて、HTTPリクエストを扱います。これにより、Flaskのようなフレームワークが内部でどのように動作するかを解明します。
 
-And to introduce SRE flavour to the course, we will design, develop and deploy (in theory) a URL shortening application. We will emphasize parts of the whole process that are more important as an SRE of the said app/service.
+また、このコースでSREの雰囲気を感じてもらうために、URL短縮アプリケーションを設計、開発、デプロイします（理論的には）。このコースでは、アプリやサービスのSREとしてより重要なプロセスの部分に注目します。
 
-## What is not covered under this course
+## このコースでは扱わないこと
 
-Extensive knowledge of python internals and advanced python.
+Pythonの内部構造や高度なPythonの知識。
 
-## Lab Environment Setup
+## ラボ環境のセットアップ
 
-Have latest version of python installed
+最新バージョンのPythonがインストールされていること。
 
-## Course Contents
+## コース内容
 
-1. [The Python Language](https://linkedin.github.io/school-of-sre/python_web/intro/#the-python-language)
-      1. [Some Python Concepts](https://linkedin.github.io/school-of-sre/python_web/python-concepts/)
-      2. [Python Gotchas](https://linkedin.github.io/school-of-sre/python_web/python-concepts/#some-gotchas)
-2. [Python and Web](https://linkedin.github.io/school-of-sre/python_web/python-web-flask/)
-      1. [Sockets](https://linkedin.github.io/school-of-sre/python_web/python-web-flask/#sockets)
-      2. [Flask](https://linkedin.github.io/school-of-sre/python_web/python-web-flask/#flask)
-3. [The URL Shortening App](https://linkedin.github.io/school-of-sre/python_web/url-shorten-app/)
-      1. [Design](https://linkedin.github.io/school-of-sre/python_web/url-shorten-app/#design)
-      2. [Scaling The App](https://linkedin.github.io/school-of-sre/python_web/sre-conclusion/#scaling-the-app)
-      3. [Monitoring The App](https://linkedin.github.io/school-of-sre/python_web/sre-conclusion/#monitoring-strategy)
+1. [Python言語](python_web/intro/#the-python-language/)
+      1. [Pythonの概念](python_web/python-concepts/)
+      2. [いくつかの落とし穴](python_web/python-concepts/#some-gotchas)
+2. [PythonとWeb](python_web/python-web-flask/)
+      1. [ソケット](python_web/python-web-flask/#sockets)
+      2. [Flask](python_web/python-web-flask/#flask)
+3. [URL短縮アプリ](python_web/url-shorten-app/)
+      1. [設計](python_web/url-shorten-app/#design)
+      2. [アプリのスケーリング](python_web/sre-conclusion/#scaling-the-app)
+      3. [アプリの監視](python_web/sre-conclusion/#monitoring-strategy)
 
-## The Python Language
+## Python言語
 
-Assuming you know a little bit of C/C++ and Java, let's try to discuss the following questions in context of those two languages and python. You might have heard that C/C++ is a compiled language while python is an interpreted language. Generally, with compiled language we first compile the program and then run the executable while in case of python we run the source code directly like `python hello_world.py`. While Java, being an interpreted language, still has a separate compilation step and then its run. So what's really the difference?
+C/C++とJavaを少し知っていると仮定して、これら2つの言語とpythonの文脈で以下の質問を議論してみましょう。C/C++はコンパイル言語で、pythonはインタプリタ言語であると聞いたことがあるかもしれません。一般的に、コンパイル言語では、まずプログラムをコンパイルしてから実行ファイルを実行しますが、pythonの場合は、`python hello_world.py`のようにソースコードを直接実行します。一方、インタプリタ型言語であるJavaの場合は、コンパイルと実行が別々に行われます。では、実際には何が違うのでしょうか？
 
-### Compiled vs. Interpreted
+### コンパイラとインタプリタの違い
 
-This might sound a little weird to you: python, in a way is a compiled language! Python has a compiler built-in! It is obvious in the case of java since we compile it using a separate command ie: `javac helloWorld.java` and it will produce a `.class` file which we know as a _bytecode_. Well, python is very similar to that. One difference here is that there is no separate compile command/binary needed to run a python program.
+奇妙に聞こえるかもしれませんが、Pythonはある意味ではコンパイル言語です。Pythonはコンパイラを内蔵しています。Javaの場合は、`javac helloWorld.java`のように別のコマンドを使ってコンパイルし、_バイトコード_ として知られている`.class`ファイルが生成されるので、明らかです。さて、Pythonもこれとよく似ています。一つの違いは、Pythonプログラムを実行するために必要な別のコンパイルコマンド/バイナリがないことです。
 
-**What is the difference then, between java and python?**
-Well, Java's compiler is more strict and sophisticated. As you might know Java is a statically typed language. So the compiler is written in a way that it can verify types related errors during compile time. While python being a _dynamic_ language, types are not known until a program is run. So in a way, python compiler is dumb (or, less strict). But there indeed is a compile step involved when a python program is run. You might have seen python bytecode files with `.pyc` extension. Here is how you can see bytecode for a given python program.
+**JavaとPythonの違いは何でしょうか？**
+Javaのコンパイラはより厳密で洗練されています。ご存知のように、Javaは静的型付け言語です。そのため、コンパイラはコンパイル時に型に関するエラーを検証できるように書かれています。一方、Pythonは _動的_ 言語であり、プログラムが実行されるまで型はわかりません。ですから、ある意味ではPythonのコンパイラは間抜け（というか、あまり厳密ではない）なのです。しかし、Pythonのプログラムが実行されるときには、確かにコンパイルのステップがあります。Python のバイトコードファイルの拡張子が`.pyc`であるのを見たことがあるかもしれません。以下は、あるPythonプログラムのバイトコードを見る方法です。
 
 ```bash
-# Create a Hello World
+# Hello Worldの作成
 $ echo "print('hello world')" > hello_world.py
 
-# Making sure it runs
+# 実行されることを確認
 $ python3 hello_world.py
 hello world
 
-# The bytecode of the given program
+# プログラムのバイトコード
 $ python -m dis hello_world.py
  1           0 LOAD_NAME                0 (print)
              2 LOAD_CONST               0 ('hello world')
@@ -63,15 +63,15 @@ $ python -m dis hello_world.py
             10 RETURN_VALUE
 ```
 
-Read more about dis module [here](https://docs.python.org/3/library/dis.html)
+disモジュールの詳細は[こちら](https://docs.python.org/ja/3/library/dis.html)
 
-Now coming to C/C++, there of course is a compiler. But the output is different than what java/python compiler would produce. Compiling a C program would produce what we also know as _machine code_. As opposed to bytecode.
+C/C++については、もちろんコンパイラがあります。しかし、その出力はJava/Pythonのコンパイラが出力するものとは異なります。C言語のプログラムをコンパイルすると、「マシンコード」と呼ばれるものが生成されます。バイトコードとは異なります。
 
-### Running The Programs
+### プログラムの実行
 
-We know compilation is involved in all 3 languages we are discussing. Just that the compilers are different in nature and they output different types of content. In case of C/C++, the output is machine code which can be directly read by your operating system. When you execute that program, your OS will know how exactly to run it. **But this is not the case with bytecode.**
+ここで取り上げる3つの言語は、いずれもコンパイルが必要です。ただ、コンパイラの性質が異なり、出力される内容も異なります。C/C++の場合、出力されるのはマシンコードで、OSが直接読むことができます。そのプログラムを実行すると、OSはそのプログラムを正確に実行する方法を知ることができます。**しかし、バイトコードの場合はそうはいきません。**
 
-Those bytecodes are language specific. Python has its own set of bytecode defined (more in `dis` module) and so does java. So naturally, your operating system will not know how to run it. To run this bytecode, we have something called Virtual Machines. Ie: The JVM or the Python VM (CPython, Jython). These so called Virtual Machines are the programs which can read the bytecode and run it on a given operating system. Python has multiple VMs available. Cpython is a python VM implemented in C language, similarly Jython is a Java implementation of python VM. **At the end of the day, what they should be capable of is to understand python language syntax, be able to compile it to bytecode and be able to run that bytecode.** You can implement a python VM in any language! (And people do so, just because it can be done)
+それらのバイトコードは言語固有のものです。Pythonには独自のバイトコードが定義されていますし（詳しくは`dis`モジュールで）、Javaも同様です。ですから当然ながら、あなたのオペレーティングシステムはそれを実行する方法を知りません。このバイトコードを実行するために、仮想マシンというものがあります。例えば、JVMやPython VM（CPython、Jython）などです。これらの仮想マシンと呼ばれるものは、バイトコードを読み込んで、所定のオペレーティングシステム上で実行することができるプログラムです。Pythonには複数のVMが用意されています。CpythonはC言語で実装されたPython VMで、同様にJythonはPython VMのJava実装です。**結局のところ、 VMの能力はPython言語の構文を理解し、それをバイトコードにコンパイルし、そのバイトコードを実行することができることです。** PythonのVMはどんな言語でも実装できます！（そしてそれができるからといって、実際に自作している人もいます）
 
 ```
                                                               The Operating System
@@ -106,7 +106,7 @@ hello_world.c                     OS Specific machinecode     |         A New Pr
                                                               +------------------------------------+
 ```
 
-Two things to note for above diagram:
+上の図の注意点は2つあります。
 
-1. Generally, when we run a python program, a python VM process is started which reads the python source code, compiles it to byte code and run it in a single step. Compiling is not a separate step. Shown only for illustration purpose.
-2. Binaries generated for C like languages are not _exactly_ run as is. Since there are multiple types of binaries (eg: ELF), there are more complicated steps involved in order to run a binary but we will not go into that since all that is done at OS level.
+1. 一般的に、Pythonプログラムを実行するとPython VMプロセスが開始され、Pythonのソースコードを読み、バイトコードにコンパイルして、1つのステップで実行します。コンパイルは別のステップではありません。説明のためにのみ表示されています。
+2. C言語のような言語用に生成されたバイナリは、そのままでは正確には実行されません。バイナリには複数の種類（例：ELF）があるため、バイナリを実行するためにはより複雑な手順が必要となりますが、これらはすべてOSレベルで行われるため、ここでは触れません。

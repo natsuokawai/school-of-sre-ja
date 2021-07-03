@@ -1,45 +1,45 @@
-# Conclusion
+# まとめ
 
-## Scaling The App
+## アプリのスケールアップ
 
-The design and development is just a part of the journey. We will need to setup continuous integration and continuous delivery pipelines sooner or later. And we have to deploy this app somewhere.
+設計と開発は旅の一部に過ぎません。遅かれ早かれ、継続的インテグレーションと継続的デリバリーのパイプラインをセットアップする必要があります。そして、このアプリをどこかにデプロイしなければなりません。
 
-Initially we can start with deploying this app on one virtual machine on any cloud provider. But this is a `Single point of failure` which is something we never allow as an SRE (or even as an engineer). So an improvement here can be having multiple instances of applications deployed behind a load balancer. This certainly prevents problems of one machine going down.
+最初は、任意のクラウドプロバイダー上の1つの仮想マシンにアプリをデプロイすることから始めましょう。しかしこれでは「単一障害点」となってしまい、SREとして（あるいはエンジニアとして）絶対に許されないことです。そこで改善策としては、ロードバランサーの後ろに複数のアプリケーションのインスタンスを配置することです。これにより、1台のマシンがダウンするという問題を確実に防ぐことができます。
 
-Scaling here would mean adding more instances behind the load balancer. But this is scalable upto only a certain point. After that, other bottlenecks in the system will start appearing. ie: DB will become the bottleneck, or perhaps the load balancer itself. How do you know what is the bottleneck? You need to have observability into each aspects of the application architecture.
+ここでのスケーリングは、ロードバランサーの後ろにさらにインスタンスを追加することです。しかし、これはある一定の範囲までしか拡張できません。例えば、DBがボトルネックになったり、ロードバランサー自体がボトルネックになったりします。何がボトルネックになっているかを知るにはどうすればいいのでしょうか？アプリケーションやアーキテクチャの各側面を観測できるようにする必要があります。
 
-Only after you have metrics, you will be able to know what is going wrong where. **What gets measured, gets fixed!**
+メトリクスがあって初めて、どこで何が問題になっているのかを知ることができます。**測定されたものは修正されるのです！**
 
-Get deeper insights into scaling from School Of SRE's [Scalability module](../systems_design/scalability.md) and post going through it, apply your learnings and takeaways to this app. Think how will we make this app geographically distributed and highly available and scalable.
+School of SREの[スケーラビリティのセクション](../systems_design/scalability.md)からスケーリングについてのより深い洞察を得て、それに目を通した後、学んだことや得られたものをこのアプリに適用してください。どうやってこのアプリを地理的に分散させ、高い可用性と拡張性を持たせるかを考えてみましょう。
 
-## Monitoring Strategy
+## モニタリング戦略
 
-Once we have our application deployed. It will be working ok. But not forever. Reliability is in the title of our job and we make systems reliable by making the design in a certain way. But things still will go down. Machines will fail. Disks will behave weirdly. Buggy code will get pushed to production. And all these possible scenarios will make the system less reliable. So what do we do? **We monitor!**
+アプリケーションがデプロイされると、しばらくは順調に動いているでしょうが、永遠ではありません。信頼性は私たちの仕事のタイトルであり、私たちは何らかの方法で設計を行うことでシステムの信頼性を高めます。しかし、それでもシステムはダウンします。マシンは故障します。ディスクはおかしな動きをします。バグのあるコードが本番環境に投入されることもあるでしょう。これらすべてがもたらしうるシナリオは、システムの信頼性を低下させます。では、どうすればいいでしょうか？**モニタリングしましょう！**
 
-We keep an eye on the system's health and if anything is not going as expected, we want ourselves to get alerted.
+システムの健全性を監視し、何か予想外のことがあれば警告してほしいのです。
 
-Now let's think in terms of the given url shortening app. We need to monitor it. And we would want to get notified in case something goes wrong. But we first need to decide what is that _something_ that we want to keep an eye on.
+ここで、URL短縮アプリについて考えてみましょう。私たちはそれを監視する必要があります。そして、何か問題が発生した場合には通知を受けたいと思います。しかし、私たちはまず、監視したい「何か」とは何かを決める必要があります。
 
-1. Since it's a web app serving HTTP requests, we want to keep an eye on HTTP Status codes and latencies
-2. Request volume again is a good candidate, if the app is receiving an unusual amount of traffic, something might be off.
-3. We also want to keep an eye on the database so depending on the database solution chosen. Query times, volumes, disk usage etc.
-4. Finally, there also needs to be some external monitoring which runs periodic tests from devices outside of your data centers. This emulates customers and ensures that from customer point of view, the system is working as expected.
+1. このアプリはHTTPリクエストを扱うウェブアプリなので、HTTPステータスコードとレイテンシーを監視します。
+2. リクエストの量も候補の一つです。アプリが異常な量のトラフィックを受信している場合、何かがおかしいかもしれません。
+3. データベースにも注意を払いたいので、選択したデータベースソリューションに応じて、クエリ時間、ボリューム、ディスク使用量など。
+4. 最後に、データセンターの外にあるデバイスから定期的にテストを行う外部モニタリングも必要です。これによって顧客をエミュレートし、顧客の視点からシステムが期待通りに動作していることを確認します。
 
-## Applications in SRE role
+## SREの役割における応用
 
-In the world of SRE, python is a widely used language. For small scripts and tooling developed for various purposes. Since tooling developed by SRE works with critical pieces of infrastructure and has great power (to bring things down), it is important to know what you are doing while using a programming language and its features. Also it is equally important to know the language and its characteristics while debugging the issues. As an SRE having a deeper understanding of python language, it has helped me a lot to debug very sneaky bugs and be generally more aware and informed while making certain design decisions.
+SREの世界では、Pythonは広く使われている言語です。様々な目的のために開発された小さなスクリプトやツールのために使われます。SREが開発したツールは重要なインフラを扱い、（物事を停止させる）大きな力を持っているので、プログラミング言語とその機能を使っている間に何をしているのかを知ることが重要です。また、問題をデバッグする際にも、言語とその特徴を知ることは同様に重要です。SREとしてPython言語をより深く理解することで、非常に巧妙なバグをデバッグするのに非常に役立ちますし、設計上の決定を行う際により多くの情報を得ることができます。
 
-While developing tools may or may not be part of SRE job, supporting tools or services is more likely to be a daily duty. Building an application or tool is just a small part of productionization. While there is certainly that goes in the design of the application itself to make it more robust, as an SRE you are responsible for its reliability and stability once it is deployed and running. And to ensure that, you’d need to understand the application first and then come up with a strategy to monitor it properly and be prepared for various failure scenarios.
+ツールの開発はSREの仕事の一部かもしれませんが、ツールやサービスのサポートは日常的に行われていると思います。アプリケーションやツールの構築は、プロダクション業務のほんの一部に過ぎません。アプリケーション自体の設計には堅牢性を高めるための工夫が施されていますが、SREとしては、アプリケーションがデプロイされて稼働した後の信頼性と安定性に責任を負うことになります。それを確実にするためには、まずアプリケーションを理解し、適切に監視し、様々な障害シナリオに備えるための戦略を考える必要があります。
 
-## Optional Exercises
+## エクササイズ
 
-1. Make a decorator that will cache function return values depending on input parameters.
-2. Host the URL shortening app on any cloud provider.
-3. Setup monitoring using many of the tools available like catchpoint, datadog etc.
-4. Create a minimal flask-like framework on top of TCP sockets.
+1. 入力パラメータに応じて関数の戻り値をキャッシュするデコレーターを作成しましょう。
+2. URL短縮アプリを任意のクラウドプロバイダーにホスティングしましょう。
+3. CatchpointやDatadogなどのツールを使ってモニタリングを設定しましょう。
+4. TCPソケット上に最小限のFlaskのようなフレームワークを作成しましょう。
 
-## Conclusion
+## まとめ
 
-This module, in the first part, aims to make you more aware of the things that will happen when you choose python as your programming language and what happens when you run a python program. With the knowledge of how python handles things internally as objects, lot of seemingly magic things in python will start to make more sense.
+このモジュールの最初のパートでは、プログラミング言語としてPythonを選択したときに起こることや、Pythonプログラムを実行したときに起こることをより認識してもらうことを目的としています。Pythonがオブジェクトとして内部的に物事を処理する方法の知識があれば、Pythonの一見魔法のように見える多くのことがより意味を持ち始めるでしょう。
 
-The second part will first explain how a framework like flask works using the existing knowledge of protocols like TCP and HTTP. It then touches the whole lifecycle of an application development lifecycle including the SRE parts of it. While the design and areas in architecture considered will not be exhaustive, it will give a good overview of things that are also important being an SRE and why they are important.
+2つめのパートでは、まずTCPやHTTPなどのプロトコルに関する既存の知識を用いて、Flaskのようなフレームワークがどのように動作するかを説明しました。その後、SREの部分を含むアプリケーション開発のライフサイクル全体に触れました。考慮した設計とアーキテクチャの分野は完全ではありませんが、SREとしても重要な事柄とその理由の概要を知ることができます。
