@@ -60,7 +60,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#conclusion" class="md-skip">
+        <a href="#_1" class="md-skip">
           Skip to content
         </a>
       
@@ -458,9 +458,38 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          まとめ
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         まとめ
       </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    トレーニング後のエクササイズ
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1227,6 +1256,21 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    トレーニング後のエクササイズ
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1238,14 +1282,14 @@
               
                 
                 
-                <h1 id="conclusion">Conclusion</h1>
-<p>With this we have traversed through the TCP/IP stack completely. We hope there will be a different perspective when one opens any website in the browser post the course.</p>
-<p>During the course we have also dissected what are common tasks in this pipeline which falls under the ambit of SRE.</p>
-<h1 id="post-training-exercises">Post Training Exercises</h1>
+                <h1 id="_1">まとめ</h1>
+<p>これで、TCP/IPスタックを理解することができました。コース終了後は、ブラウザでWebサイトを開いたときにこれまでとは違った見方ができるようになることを期待しています。</p>
+<p>またこのコースでは、SREの対象となる一般的なタスクについても解説しました。</p>
+<h2 id="_2">トレーニング後のエクササイズ</h2>
 <ol>
-<li>Setup own DNS resolver in the dev environment which acts as an authoritative DNS server for example.com and forwarder for other domains. Update resolv.conf to use the new DNS resolver running in localhost</li>
-<li>Set up a site dummy.example.com in localhost and run a webserver with a self signed certificate. Update the trusted CAs or pass self signed CA’s public key as a parameter so that curl https://dummy.example.com -v works properly without self signed cert warning</li>
-<li>Update the routing table to use another host(container/VM) in the same network as a gateway for 8.8.8.8/32 and run ping 8.8.8.8. Do the packet capture on the new gateway to see L3 hop is working as expected(might need to disable icmp_redirect)</li>
+<li>開発環境に独自のDNSリゾルバを設定しましょう。このリゾルバはexample.comの権威DNSサーバとして、また他のドメインのフォワーダとして機能します。localhostで稼働している新しいDNSリゾルバを使用するためにresolv.confを更新しましょう。</li>
+<li>localhostにdummy.example.comというサイトを設定し、自己署名証明書を使用してウェブサーバーを実行しましょう。信頼できるCAを更新するか、自己署名付きCAの公開鍵をパラメータとして渡し、自己署名付き証明書の警告なしに<code>curl https://dummy.example.com -v</code>が正しく動作するようにしましょう。</li>
+<li>8.8.8.8/32のゲートウェイとして同一ネットワーク上の別のホスト(コンテナ/VM)を使用するようにルーティングテーブルを更新し、ping 8.8.8.8を実行しましょう。新しいゲートウェイでパケットキャプチャを行い、L3ホップが期待通りに動作していることを確認しましょう(icmp_redirectを無効にする必要があるかもしれません)。</li>
 </ol>
                 
               
