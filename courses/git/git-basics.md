@@ -18,10 +18,10 @@ Gitの高度な使い方や内部実装の詳細について。
 
 ## コース内容
 
- 1. [Gitの基本](https://linkedin.github.io/school-of-sre/git/git-basics/#git-basics)
- 2. [ブランチの扱い方](https://linkedin.github.io/school-of-sre/git/branches/)
- 3. [GithubとGit](https://linkedin.github.io/school-of-sre/git/github-hooks/#git-with-github)
- 4. [フック](https://linkedin.github.io/school-of-sre/git/github-hooks/#hooks)
+ 1. [Gitの基本](/git/git-basics/#git-basics)
+ 2. [ブランチの扱い方](/git/branches/)
+ 3. [GithubとGit](/git/github-hooks/#git-with-github)
+ 4. [フック](/git/github-hooks/#hooks)
 
 ## Gitの基本
 

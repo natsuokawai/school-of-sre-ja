@@ -23,16 +23,16 @@ Pythonの内部構造や高度なPythonの知識。
 
 ## コース内容
 
-1. [Python言語](python_web/intro/#the-python-language/)
-      1. [Pythonの概念](python_web/python-concepts/)
-      2. [いくつかの落とし穴](python_web/python-concepts/#some-gotchas)
-2. [PythonとWeb](python_web/python-web-flask/)
-      1. [ソケット](python_web/python-web-flask/#sockets)
-      2. [Flask](python_web/python-web-flask/#flask)
-3. [URL短縮アプリ](python_web/url-shorten-app/)
-      1. [設計](python_web/url-shorten-app/#design)
-      2. [アプリのスケーリング](python_web/sre-conclusion/#scaling-the-app)
-      3. [アプリの監視](python_web/sre-conclusion/#monitoring-strategy)
+1. [Python言語](/python_web/intro/#the-python-language/)
+      1. [Pythonの概念](/python_web/python-concepts/)
+      2. [いくつかの落とし穴](/python_web/python-concepts/#some-gotchas)
+2. [PythonとWeb](/python_web/python-web-flask/)
+      1. [ソケット](/python_web/python-web-flask/#sockets)
+      2. [Flask](/python_web/python-web-flask/#flask)
+3. [URL短縮アプリ](/python_web/url-shorten-app/)
+      1. [設計](/python_web/url-shorten-app/#design)
+      2. [アプリのスケーリング](/python_web/sre-conclusion/#scaling-the-app)
+      3. [アプリの監視](/python_web/sre-conclusion/#monitoring-strategy)
 
 ## Python言語
 

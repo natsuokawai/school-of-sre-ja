@@ -3,7 +3,7 @@
 ## 前提条件
 
 - DNS、TCP、UDP、HTTPなど、TCP/IPスタックでよく使われる専門用語に関する高度な知識
-- [Linuxコマンドラインの基礎](linux_basics/command_line_basics/)
+- [Linuxコマンドラインの基礎](/linux_basics/command_line_basics/)
 
 ## このコースで扱うこと
 
@@ -18,8 +18,8 @@
 このコースでは、「linkedin.comをブラウザで開くと何が起こるか？」という質問を取り上げます。具体的には、アプリケーション層のプロトコルであるDNSとHTTP、トランスポート層のプロトコルであるUDPとTCP、ネットワーキング層のプロトコルであるIPとデータリンク層のプロトコルを取り上げます。
 
 # # コース内容
-1. [DNS](linux_networking/dns/)
-2. [UDP](linux_networking/udp/)
-3. [HTTP](linux_networking/http/)
-4. [TCP](linux_networking/tcp/)
-5. [IPルーティング](linux_networking/ipr/)
+1. [DNS](/linux_networking/dns/)
+2. [UDP](/linux_networking/udp/)
+3. [HTTP](/linux_networking/http/)
+4. [TCP](/linux_networking/tcp/)
+5. [IPルーティング](/linux_networking/ipr/)
