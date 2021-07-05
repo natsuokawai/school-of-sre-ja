@@ -60,7 +60,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#popular-databases" class="md-skip">
+        <a href="#_1" class="md-skip">
           Skip to content
         </a>
       
@@ -651,8 +651,8 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#popular-databases" class="md-nav__link">
-    Popular databases
+  <a href="#_1" class="md-nav__link">
+    人気のあるデータベース
   </a>
   
 </li>
@@ -1257,8 +1257,8 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#popular-databases" class="md-nav__link">
-    Popular databases
+  <a href="#_1" class="md-nav__link">
+    人気のあるデータベース
   </a>
   
 </li>
@@ -1279,79 +1279,89 @@
                   <h1>キーコンセプト</h1>
                 
                 <ul>
-<li>Relational DBs are used for data storage. Even a file can be used to store data, but relational DBs are designed with specific goals:<ul>
-<li>Efficiency</li>
-<li>Ease of access and management</li>
-<li>Organized</li>
-<li>Handle relations between data (represented as tables)</li>
+<li>
+<p>リレーショナルDBはデータの保存に使われます。ファイルでもデータを保存することはできますが、リレーショナルDBは特定の目的のために設計されています。</p>
+<ul>
+<li>効率性</li>
+<li>アクセスや管理のしやすさ</li>
+<li>規則正しい</li>
+<li>データ間の関係を扱う（テーブルとして表現される）</li>
 </ul>
 </li>
-<li>Transaction: a unit of work that can comprise multiple statements, executed together</li>
 <li>
-<p>ACID properties</p>
-<p>Set of properties that guarantee data integrity of DB transactions</p>
+<p>トランザクション：複数のステートメントをまとめて実行することができる作業単位</p>
+</li>
+<li>
+<p>ACID特性</p>
+<p>DBトランザクションのデータ整合性を保証する一連の特性</p>
 <ul>
-<li>Atomicity: Each transaction is atomic (succeeds or fails completely)</li>
-<li>Consistency: Transactions only result in valid state (which includes rules, constraints, triggers etc.)</li>
-<li>Isolation: Each transaction is executed independently of others safely within a concurrent system</li>
-<li>Durability: Completed transactions will not be lost due to any later failures</li>
+<li>原子性（atomicity）：各トランザクションは不可分（完全に成功または失敗するかのどちらか）である</li>
+<li>一貫性（consistency）：トランザクションは有効な状態（ルール、制約、トリガーなどを含む）にのみなる</li>
+<li>隔離性（isolation）：各トランザクションは、他のトランザクションとは独立して、並行システム内で安全に実行される</li>
+<li>耐久性（durability）：完了したトランザクションは、後の障害によって失われることはない</li>
 </ul>
-<p>Let’s take some examples to illustrate the above properties.</p>
+<p>上記の性質を説明するために、いくつかの例を挙げてみましょう。</p>
 <ul>
-<li>Account A has a balance of ₹200 &amp; B has ₹400. Account A is transferring ₹100 to Account B. This transaction has a deduction from sender and an addition into the recipient’s balance. If the first operation passes successfully while the second fails, A’s balance would be ₹100 while B would be having ₹400 instead of ₹500. <strong>Atomicity</strong> in a DB ensures this partially failed transaction is rolled back.</li>
-<li>If the second operation above fails, it leaves the DB inconsistent (sum of balance of accounts before and after the operation is not the same). <strong>Consistency</strong> ensures that this does not happen.</li>
-<li>There are three operations, one to calculate interest for A’s account,  another to add that to A’s account, then transfer ₹100 from B to A. Without <strong>isolation</strong> guarantees, concurrent execution of these 3 operations may lead to a different outcome every time.</li>
-<li>What happens if the system crashes before the transactions are written to disk? <strong>Durability</strong> ensures that the changes are applied correctly during recovery.</li>
-<li>Relational data</li>
-<li>Tables represent relations</li>
-<li>Columns (fields) represent attributes</li>
-<li>Rows are individual records</li>
-<li>Schema describes the structure of DB</li>
-<li>SQL</li>
+<li>口座Aの残高は200円、Bの残高は400円です。この取引では、送信者からの控除と受信者の残高への追加が行われます。最初の操作が成功し、2番目の操作が失敗した場合、Aの残高は100円で、Bの残高は500円ではなく400円となります。DBの<strong>原子性</strong>により、この部分的に失敗したトランザクションは確実にロールバックされます。</li>
+<li>上記の2つ目の操作が失敗した場合、DBは矛盾した状態になります（操作前と操作後の口座の残高の合計が同じではありません）。<strong>一貫性</strong>はこのようなことが起こらないようにします。</li>
+<li>Aの口座の利息を計算する操作、Aの口座に利息を追加する操作、BからAに100円を送金する操作の3つがあります。<strong>隔離性</strong>が保証されていないと、これら3つの操作を同時に実行すると、毎回異なる結果になる可能性があります。</li>
+<li>トランザクションがディスクに書き込まれる前に、システムがクラッシュしたらどうなるでしょう？復旧時に変更が正しく適用されることを保証するのが<strong>耐久性</strong>です。</li>
 </ul>
-<p>A query language to interact with and manage data.</p>
-<p><a href="https://stackify.com/what-are-crud-operations/">CRUD operations</a> - create, read, update, delete queries</p>
-<p>Management operations - create DBs/tables/indexes etc, backup, import/export, users, access controls</p>
-<p>Exercise: Classify the below queries into the four types - DDL (definition), DML(manipulation), DCL(control) and TCL(transactions) and explain in detail.</p>
-<pre><code>insert, create, drop, delete, update, commit, rollback, truncate, alter, grant, revoke
+</li>
+<li>
+<p>リレーショナルデータ</p>
+<ul>
+<li>テーブルは関係を表す</li>
+<li>カラム（フィールド）は属性を表す</li>
+<li>行は個々のレコードである</li>
+<li>スキーマはDBの構造を表す</li>
+</ul>
+</li>
+<li>
+<p>SQL</p>
+<p>データを操作、管理するためのクエリ言語。</p>
+<p><a href="https://stackify.com/what-are-crud-operations/">CRUD操作</a> - 作成（create）、読み取り（read）、更新（update）、削除（delete）のクエリ</p>
+<p>管理操作 - DB/テーブル/インデックスなどの作成、バックアップ、インポート/エクスポート、ユーザー、アクセス制御</p>
+<p>練習問題：以下のクエリをDDL（定義）、DML（操作）、DCL（制御）、TCL（トランザクション）の4種類に分類し、詳細に説明しなさい。</p>
+<pre><code>insert、create、drop、delete、update、commit、rollback、truncate、alter、gant、revoke
 </code></pre>
-<p>You can practise these in the <a href="https://linkedin.github.io/school-of-sre/databases_sql/lab/">lab section</a>.</p>
+<p>これらは<a href="/databases_sql/lab/">ラボセクション</a>で練習することができます。</p>
 </li>
 <li>
-<p>Constraints</p>
-<p>Rules for data that can be stored. Query fails if you violate any of these defined on a table.</p>
-<p>Primary key: one or more columns that contain UNIQUE values, and cannot contain NULL values. A table can have only ONE primary key. An index on it is created by default.</p>
-<p>Foreign key: links two tables together. Its value(s) match a primary key in a different table \
-Not null: Does not allow null values \
-Unique: Value of column must be unique across all rows \
-Default: Provides a default value for a column if none is specified during insert</p>
-<p>Check: Allows only particular values (like Balance &gt;= 0)</p>
+<p>制約</p>
+<p>保存可能なデータのルール。テーブルに定義された制約のいずれかに違反すると、クエリは失敗します。</p>
+<p>主キー：ユニークな値を含む1つ以上の列で、NULL値を含むことはできません。1つのテーブルには1つの主キーしかありません。主キーに対するインデックスはデフォルトで作成されます。</p>
+<p>外部キー：2つのテーブルを結びつけます。その値は別のテーブルの主キーと一致します。</p>
+<p>NOT NULL：NULL値を許可しません。</p>
+<p>ユニーク：列の値はすべての行で一意でなければなりません。  </p>
+<p>デフォルト：挿入時にカラムが指定されていない場合、デフォルト値を提供します。  </p>
+<p>チェック：特定の値のみを許可します。（Balance &gt;= 0 など）</p>
 </li>
 <li>
-<p><a href="https://datageek.blog/en/2018/06/05/rdbms-basics-indexes-and-clustered-indexes/">Indexes</a></p>
-<p>Most indexes use B+ tree structure.</p>
-<p>Why use them: Speeds up queries (in large tables that fetch only a few rows, min/max queries, by eliminating rows from consideration etc)</p>
-<p>Types of indexes: unique, primary key, fulltext, secondary</p>
-<p>Write-heavy loads, mostly full table scans or accessing large number of rows etc. do not benefit from indexes</p>
+<p><a href="https://datageek.blog/en/2018/06/05/rdbms-basics-indexes-and-clustered-indexes/">インデックス</a></p>
+<p>ほとんどのインデックスはB+木構造を使用しています。</p>
+<p>使う理由：クエリの高速化（数行しか取得しない大規模なテーブル、最小/最大クエリ、検討対象から行を除外することなど）</p>
+<p>インデックスの種類：ユニーク、プライマリキー、フルテキスト、セカンダリ</p>
+<p>書き込みの多い負荷、主にフルテーブルスキャンや大量の行へのアクセスなどはインデックスの恩恵を受けません</p>
 </li>
 <li>
-<p><a href="https://www.sqlservertutorial.net/sql-server-basics/sql-server-joins/">Joins</a></p>
-<p>Allows you to fetch related data from multiple tables, linking them together with some common field. Powerful but also resource-intensive and makes scaling databases difficult. This is the cause of many slow performing queries when run at scale, and the solution is almost always to find ways to reduce the joins.</p>
+<p><a href="https://www.sqlservertutorial.net/sql-server-basics/sql-server-joins/">結合（JOIN）</a></p>
+<p>複数のテーブルから関連するデータを取得し、共通のフィールドでリンクすることができます。強力ですが、リソースを大量に消費するため、データベースの拡張が難しくなります。これは、大規模なクエリを実行したときにパフォーマンスが低下する多くの原因であり、解決策はほとんどの場合、結合を削減する方法を見つけることです。</p>
 </li>
 <li>
-<p><a href="https://dev.mysql.com/doc/refman/8.0/en/access-control.html">Access control</a></p>
-<p>DBs have privileged accounts for admin tasks, and regular accounts for clients. There are finegrained controls on what actions(DDL, DML etc. discussed earlier )are allowed for these accounts.</p>
-<p>DB first verifies the user credentials (authentication), and then examines whether this user is permitted to perform the request (authorization) by looking up these information in some internal tables.</p>
-<p>Other controls include activity auditing that allows examining the history of actions done by a user, and resource limits which define the number of queries, connections etc. allowed.</p>
+<p><a href="https://dev.mysql.com/doc/refman/8.0/en/access-control.html">アクセス制御</a></p>
+<p>DBには、管理者用の特権アカウントと、クライアント用の通常アカウントがあります。これらのアカウントにどのようなアクション（前述のDDL、DMLなど）が許されるかを細かく制御しています。</p>
+<p>DBはまずユーザーの資格を確認し（認証）、次にそのユーザーがリクエストを実行することを許可されているかどうかを内部テーブルで調べます（承認）。</p>
+<p>他にも、ユーザの行動履歴を調べるアクティビティ監査や、クエリ数や接続数などを制限するリソース制限などの制御があります。</p>
 </li>
 </ul>
-<h3 id="popular-databases">Popular databases</h3>
-<p>Commercial, closed source - Oracle, Microsoft SQL Server, IBM DB2</p>
-<p>Open source with optional paid support - MySQL, MariaDB, PostgreSQL</p>
-<p>Individuals and small companies have always preferred open source DBs because of the huge cost associated with commercial software.</p>
-<p>In recent times, even large organizations have moved away from commercial software to open source alternatives because of the flexibility and cost savings associated with it.</p>
-<p>Lack of support is no longer a concern because of the paid support available from the developer and third parties.</p>
-<p>MySQL is the most widely used open source DB, and it is widely supported by hosting providers, making it easy for anyone to use. It is part of the popular Linux-Apache-MySQL-PHP (<a href="https://en.wikipedia.org/wiki/LAMP_(software_bundle)">LAMP</a>) stack that became popular in the 2000s. We have many more choices for a programming language, but the rest of that stack is still widely used.</p>
+<h3 id="_1">人気のあるデータベース</h3>
+<p>商用のクローズドソース - Oracle、Microsoft SQL Server、IBM DB2</p>
+<p>オープンソース - MySQL、MariaDB、PostgreSQLなど</p>
+<p>個人や小規模な企業では、商用ソフトでは膨大なコストがかかるため、オープンソースのDBが好まれてきました。</p>
+<p>最近では大企業でも、柔軟性とコスト削減の観点から商用ソフトウェアからオープンソースの代替品に移行しています。</p>
+<p>また、開発者やサードパーティによる有償サポートが利用できるため、サポート不足の心配もありません。</p>
+<p>MySQLは最も広く使用されているオープンソースのDBであり、ホスティングプロバイダによって広くサポートされているため、誰でも簡単に使用することができます。2000年代に普及したLinux-Apache-MySQL-PHP（<a href="https://ja.wikipedia.org/wiki/LAMP_(%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2%E3%83%90%E3%83%B3%E3%83%89%E3%83%AB)">LAMP</a>）スタックの一部です。プログラミング言語の選択肢は増えましたが、このスタックの残りの部分はまだ広く使われています。</p>
                 
               
               
