@@ -60,7 +60,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#why-should-you-use-this" class="md-skip">
+        <a href="#innodb" class="md-skip">
           Skip to content
         </a>
       
@@ -675,22 +675,22 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#why-should-you-use-this" class="md-nav__link">
-    Why should you use this?
+  <a href="#innodb" class="md-nav__link">
+    なぜInnoDBを使うべきなのか？
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#architecture" class="md-nav__link">
-    Architecture
+  <a href="#_1" class="md-nav__link">
+    アーキテクチャ
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#key-components" class="md-nav__link">
-    Key components:
+  <a href="#_2" class="md-nav__link">
+    主要なコンポーネント
   </a>
   
 </li>
@@ -1271,22 +1271,22 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#why-should-you-use-this" class="md-nav__link">
-    Why should you use this?
+  <a href="#innodb" class="md-nav__link">
+    なぜInnoDBを使うべきなのか？
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#architecture" class="md-nav__link">
-    Architecture
+  <a href="#_1" class="md-nav__link">
+    アーキテクチャ
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#key-components" class="md-nav__link">
-    Key components:
+  <a href="#_2" class="md-nav__link">
+    主要なコンポーネント
   </a>
   
 </li>
@@ -1306,31 +1306,29 @@
                 
                   <h1>InnoDB</h1>
                 
-                <h3 id="why-should-you-use-this">Why should you use this?</h3>
-<p>General purpose, row level locking, ACID support, transactions, crash recovery and multi-version concurrency control etc.</p>
-<h3 id="architecture">Architecture</h3>
+                <h3 id="innodb">なぜInnoDBを使うべきなのか？</h3>
+<p>汎用性、行レベルのロック、ACIDサポート、トランザクション、クラッシュリカバリー、マルチバージョン同時実行制御など。</p>
+<h3 id="_1">アーキテクチャ</h3>
 <p><img alt="alt_text" src="../images/innodb_architecture.png" title="InnoDB components" /></p>
-<h3 id="key-components">Key components:</h3>
+<h3 id="_2">主要なコンポーネント</h3>
 <ul>
 <li>
-<p>Memory:</p>
+<p>メモリ：</p>
 <ul>
-<li>Buffer pool: LRU cache of frequently used data(table and index) to be processed directly from memory, which speeds up processing. Important for tuning performance.</li>
-<li>Change buffer: Caches changes to secondary index pages when those pages are not in the buffer pool and merges it when they are fetched. Merging may take a long time and impact live queries. It also takes up part of the buffer pool. Avoids the extra I/O to read secondary indexes in.</li>
-<li>Adaptive hash index: Supplements InnoDB’s B-Tree indexes with fast hash lookup tables like a cache. Slight performance penalty for misses, also adds maintenance overhead of updating it. Hash collisions cause AHI rebuilding for large DBs.</li>
-<li>
-<p>Log buffer: Holds log data before flush to disk.</p>
-<p>Size of each above memory is configurable, and impacts performance a lot. Requires careful analysis of workload, available resources, benchmarking and tuning for optimal performance.</p>
-</li>
+<li>バッファプール：使用頻度の高いデータ（テーブルやインデックス）をLRUキャッシュし、メモリから直接処理することで処理を高速化します。パフォーマンスのチューニングで重要になります。</li>
+<li>変更バッファ：セカンダリインデックスページの変更をバッファプールにないときにキャッシュし、ページがフェッチされたときにマージします。マージには長い時間がかかり、ライブクエリに影響を与える可能性があります。また、バッファプールの一部を占有します。セカンダリインデックスを読み込むための余分なI/Oを回避することができます。</li>
+<li>適応型ハッシュインデックス（AHI）：InnoDBのB-Treeインデックスを、キャッシュのような高速ハッシュルックアップテーブルで補完します。ミスした場合にはわずかにパフォーマンスが低下し、それを更新するためのメンテナンスのオーバーヘッドも発生します。ハッシュの衝突は、大きなDBではAHIの再構築を引き起こします。</li>
+<li>ログバッファ：ログバッファ：ディスクにフラッシュする前のログデータを保持します。</li>
 </ul>
+<p>上記メモリのサイズは設定可能で、パフォーマンスに大きな影響を与えます。最適なパフォーマンスを得るためには、ワークロードや利用可能なリソースを慎重に分析し、ベンチマークやチューニングを行う必要があります。</p>
 </li>
 <li>
-<p>Disk:</p>
+<p>ディスク：</p>
 <ul>
-<li>Tables: Stores data within rows and columns.</li>
-<li>Indexes: Helps find rows with specific column values quickly, avoids full table scans.</li>
-<li>Redo Logs: all transactions are written to them, and after a crash, the recovery process corrects data written by incomplete transactions and replays any pending ones.</li>
-<li>Undo Logs: Records associated with a single transaction that contains information about how to undo the latest change by a transaction.</li>
+<li>テーブル：行と列にデータを格納する。</li>
+<li>インデックス：特定の列の値を持つ行を迅速に見つけることができ、テーブルのフルスキャンを避けることができます。</li>
+<li>REDOログ：すべてのトランザクションはログに書き込まれ、クラッシュの後、リカバリプロセスは不完全なトランザクションによって書き込まれたデータを修正し、保留中のトランザクションを再生します。</li>
+<li>UNDOログ：1つのトランザクションに関連する記録で、トランザクションによる最新の変更を元に戻す方法に関する情報が含まれます。</li>
 </ul>
 </li>
 </ul>
