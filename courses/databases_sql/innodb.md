@@ -1,26 +1,27 @@
-### Why should you use this?
+### なぜInnoDBを使うべきなのか？
 
-General purpose, row level locking, ACID support, transactions, crash recovery and multi-version concurrency control etc.
+汎用性、行レベルのロック、ACIDサポート、トランザクション、クラッシュリカバリー、マルチバージョン同時実行制御など。
 
 
-### Architecture
+### アーキテクチャ
 
 ![alt_text](images/innodb_architecture.png "InnoDB components")
 
 
-### Key components:
+### 主要なコンポーネント
 
-*   Memory:
-    *   Buffer pool: LRU cache of frequently used data(table and index) to be processed directly from memory, which speeds up processing. Important for tuning performance.
-    *   Change buffer: Caches changes to secondary index pages when those pages are not in the buffer pool and merges it when they are fetched. Merging may take a long time and impact live queries. It also takes up part of the buffer pool. Avoids the extra I/O to read secondary indexes in.
-    *   Adaptive hash index: Supplements InnoDB’s B-Tree indexes with fast hash lookup tables like a cache. Slight performance penalty for misses, also adds maintenance overhead of updating it. Hash collisions cause AHI rebuilding for large DBs.
-    *   Log buffer: Holds log data before flush to disk.
+* メモリ：
+    * バッファプール：使用頻度の高いデータ（テーブルやインデックス）をLRUキャッシュし、メモリから直接処理することで処理を高速化します。パフォーマンスのチューニングで重要になります。
+    * 変更バッファ：セカンダリインデックスページの変更をバッファプールにないときにキャッシュし、ページがフェッチされたときにマージします。マージには長い時間がかかり、ライブクエリに影響を与える可能性があります。また、バッファプールの一部を占有します。セカンダリインデックスを読み込むための余分なI/Oを回避することができます。
+    * 適応型ハッシュインデックス（AHI）：InnoDBのB-Treeインデックスを、キャッシュのような高速ハッシュルックアップテーブルで補完します。ミスした場合にはわずかにパフォーマンスが低下し、それを更新するためのメンテナンスのオーバーヘッドも発生します。ハッシュの衝突は、大きなDBではAHIの再構築を引き起こします。
+    * ログバッファ：ログバッファ：ディスクにフラッシュする前のログデータを保持します。
 
-        Size of each above memory is configurable, and impacts performance a lot. Requires careful analysis of workload, available resources, benchmarking and tuning for optimal performance.
+      上記メモリのサイズは設定可能で、パフォーマンスに大きな影響を与えます。最適なパフォーマンスを得るためには、ワークロードや利用可能なリソースを慎重に分析し、ベンチマークやチューニングを行う必要があります。
 
-*   Disk:
-    *   Tables: Stores data within rows and columns.
-    *   Indexes: Helps find rows with specific column values quickly, avoids full table scans.
-    *   Redo Logs: all transactions are written to them, and after a crash, the recovery process corrects data written by incomplete transactions and replays any pending ones.
-    *   Undo Logs: Records associated with a single transaction that contains information about how to undo the latest change by a transaction.
+
+* ディスク：
+    * テーブル：行と列にデータを格納する。
+    * インデックス：特定の列の値を持つ行を迅速に見つけることができ、テーブルのフルスキャンを避けることができます。
+    * REDOログ：すべてのトランザクションはログに書き込まれ、クラッシュの後、リカバリプロセスは不完全なトランザクションによって書き込まれたデータを修正し、保留中のトランザクションを再生します。
+    * UNDOログ：1つのトランザクションに関連する記録で、トランザクションによる最新の変更を元に戻す方法に関する情報が含まれます。
 
