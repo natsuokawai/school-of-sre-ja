@@ -1219,56 +1219,56 @@
                 
                 <ul>
 <li>
-<p>Explain and explain+analyze</p>
-<p>EXPLAIN &lt;query&gt; analyzes query plans from the optimizer, including how tables are joined, which tables/rows are scanned etc.</p>
-<p>Explain analyze shows the above and additional info like execution cost, number of rows returned, time taken etc.</p>
-<p>This knowledge is useful to tweak queries and add indexes.</p>
-<p>Watch this performance tuning <a href="https://www.youtube.com/watch?v=pjRTLPeUOug">tutorial video</a>.</p>
-<p>Checkout the <a href="https://linkedin.github.io/school-of-sre/databases_sql/lab/">lab section</a> for a hands-on about indexes.</p>
+<p>EXPLAINとEXPLAIN+analyze</p>
+<p>EXPLAIN &lt;query&gt;は、オプティマイザからのクエリ計画を分析し、テーブルの結合方法、どのテーブルや行をスキャンするかなどを表示します。</p>
+<p>Explain analyzeは、上記に加えて、実行コスト、返される行数、所要時間などの追加情報を表示します。</p>
+<p>これらの情報は、クエリの微調整やインデックスの追加に役立ちます。</p>
+<p>パフォーマンスチューニングの<a href="https://www.youtube.com/watch?v=pjRTLPeUOug">チュートリアルビデオ</a>をご覧ください。</p>
+<p>また、<a href="/databases_sql/lab/">ラボセクション</a>では、インデックスに関するハンズオンを行っています。</p>
 </li>
 <li>
-<p><a href="https://dev.mysql.com/doc/refman/5.7/en/slow-query-log.html">Slow query logs</a></p>
-<p>Used to identify slow queries (configurable threshold), enabled in config or dynamically with a query</p>
-<p>Checkout the <a href="https://linkedin.github.io/school-of-sre/databases_sql/lab/">lab section</a> about identifying slow queries.</p>
+<p><a href="https://dev.mysql.com/doc/refman/8.0/ja/slow-query-log.html">スロークエリログ</a></p>
+<p>スロークエリ（閾値が設定可能）を特定するために使用し、設定または動的に有効化されます。</p>
+<p>スロークエリの特定については、<a href="/databases_sql/lab/">ラボセクション</a>をご覧ください。</p>
 </li>
 <li>
-<p>User management</p>
-<p>This includes creation and changes to users, like managing privileges, changing password etc.</p>
+<p>ユーザー管理</p>
+<p>ユーザーの作成や変更、権限の管理、パスワードの変更などが含まれます。</p>
 </li>
 <li>
-<p>Backup and restore strategies, pros and cons</p>
-<p>Logical backup using mysqldump - slower but can be done online</p>
-<p>Physical backup (copy data directory or use xtrabackup) -  quick backup/recovery. Copying data directory requires locking or shut down. xtrabackup is an improvement because it supports backups without shutting down (hot backup).</p>
-<p>Others - PITR, snapshots etc.</p>
+<p>バックアップとリストアの戦略、長所と短所</p>
+<p>mysqldumpを使用した論理的バックアップ - 時間はかかるがオンラインで実行可能。</p>
+<p>物理的なバックアップ（データディレクトリのコピーまたはxtrabackupの使用） - 迅速なバックアップ/リカバリーが可能。xtrabackupはシャットダウンせずにバックアップができる（ホットバックアップ）ので改善されている。</p>
+<p>その他 - PITR、スナップショットなど。</p>
 </li>
 <li>
-<p>Crash recovery process using redo logs</p>
-<p>After a crash, when you restart server it reads redo logs and replays modifications to recover</p>
+<p>REDOログによるクラッシュリカバリー処理</p>
+<p>クラッシュ後、サーバを再起動すると、REDOログを読み込み変更を再生して復旧します。</p>
 </li>
 <li>
-<p>Monitoring MySQL</p>
-<p>Key MySQL metrics: reads, writes, query runtime, errors, slow queries, connections, running threads, InnoDB metrics</p>
-<p>Key OS metrics: CPU, load, memory, disk I/O, network</p>
+<p>MySQLの監視</p>
+<p>MySQLの主な指標：読み取り、書き込み、クエリ実行時間、エラー、スロークエリ、接続、実行中のスレッド、InnoDBの指標</p>
+<p>主なOS指標：CPU、負荷、メモリ、ディスクI/O、ネットワーク</p>
 </li>
 <li>
-<p>Replication</p>
-<p>Copies data from one instance to one or more instances. Helps in horizontal scaling, data protection, analytics and performance. Binlog dump thread on primary, replication I/O and SQL threads on secondary. Strategies include the standard async, semi async or group replication.</p>
+<p>レプリケーション</p>
+<p>1つのインスタンスから1つまたは複数のインスタンスにデータをコピーします。水平方向のスケーリング、データ保護、分析、パフォーマンスに役立ちます。プライマリではBinlogダンプスレッド、セカンダリではレプリケーションI/OおよびSQLスレッドを使用。戦略には、標準的な非同期、半非同期、グループレプリケーションがあります。</p>
 </li>
 <li>
-<p>High Availability</p>
-<p>Ability to cope with failure at software, hardware and network level. Essential for anyone who needs 99.9%+ uptime. Can be implemented with replication or clustering solutions from MySQL, Percona, Oracle etc. Requires expertise to setup and maintain. Failover can be manual, scripted or using tools like Orchestrator.</p>
+<p>高可用性</p>
+<p>ソフトウェア、ハードウェア、ネットワークレベルでの障害に対処する能力。99.9%以上のアップタイムを必要とする人には必須。MySQL、Percona、Oracleなどのレプリケーションやクラスタリングソリューションで実装可能。セットアップとメンテナンスには専門知識が必要です。フェイルオーバーは、手動、スクリプト、またはOrchestratorのようなツールを使用します。</p>
 </li>
 <li>
-<p><a href="https://dev.mysql.com/doc/refman/8.0/en/data-directory.html">Data directory</a></p>
-<p>Data is stored in a particular directory, with nested directories for the data contained in each database. There are also MySQL log files, InnoDB log files, server process ID file and some other configs. The data directory is configurable.</p>
+<p><a href="https://dev.mysql.com/doc/refman/8.0/ja/data-directory.html">データディレクトリ</a></p>
+<p>データは特定のディレクトリに保存され、各データベースに含まれるデータのためのネストしたディレクトリがあります。また、MySQLログファイル、InnoDBログファイル、サーバープロセスIDファイル、その他いくつかの設定があります。データディレクトリは設定可能です。</p>
 </li>
 <li>
-<p><a href="https://dev.mysql.com/doc/refman/5.7/en/server-configuration.html">MySQL configuration</a></p>
-<p>This can be done by passing <a href="https://dev.mysql.com/doc/refman/5.7/en/server-options.html">parameters during startup</a>, or in a <a href="https://dev.mysql.com/doc/refman/8.0/en/option-files.html">file</a>. There are a few <a href="https://dev.mysql.com/doc/refman/8.0/en/option-files.html#option-file-order">standard paths</a> where MySQL looks for config files, <code>/etc/my.cnf</code> is one of the commonly used paths. These options are organized under headers (mysqld for server and mysql for client), you can explore them more in the lab that follows.</p>
+<p><a href="https://dev.mysql.com/doc/refman/8.0/ja/server-configuration.html">サーバー設定</a></p>
+<p>これは、<a href="https://dev.mysql.com/doc/refman/8.0/ja/server-options.html">起動時のパラメータ</a>を渡すか、<a href="https://dev.mysql.com/doc/refman/8.0/en/option-files.html">ファイル</a>で行うことができます。MySQL が設定ファイルを探す場所にはいくつかの <a href="https://dev.mysql.com/doc/refman/8.0/en/option-files.html#option-file-order">標準パス</a> があり、<code>/etc/my.cnf</code> はよく使われるパスのひとつです。これらのオプションはヘッダ（サーバーはmysqld、クライアントはmysql）の下に整理されているので、次のラボで詳しく調べてみてください。</p>
 </li>
 <li>
-<p><a href="https://dev.mysql.com/doc/refman/5.7/en/server-logs.html">Logs</a></p>
-<p>MySQL has logs for various purposes - general query log, errors, binary logs (for replication), slow query log. Only error log is enabled by default (to reduce I/O and storage requirement), the others can be enabled when required - by specifying config parameters at startup or running commands at runtime. <a href="https://dev.mysql.com/doc/refman/5.7/en/log-destinations.html">Log destination</a> can also be tweaked with config parameters.</p>
+<p><a href="https://dev.mysql.com/doc/refman/8.0/ja/server-logs.html">ログ</a></p>
+<p>MySQL には、一般的なクエリログ、エラー、バイナリログ（レプリケーション用）、スロークエリログなど、さまざまな目的のログがあります。エラーログだけがデフォルトで有効になっていますが（I/O とストレージの要件を減らすため）、他は必要に応じて有効にすることができます。これは、起動時に設定パラメータを指定するか、ランタイムにコマンドを実行することで行います。ログの保存先](https://dev.mysql.com/doc/refman/5.7/en/log-destinations.html)も、設定パラメータで調整できます。</p>
 </li>
 </ul>
                 
