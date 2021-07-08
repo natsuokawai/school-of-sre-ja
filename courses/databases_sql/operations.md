@@ -1,64 +1,64 @@
-*   Explain and explain+analyze
+* EXPLAINとEXPLAIN+analyze
 
-	EXPLAIN &lt;query> analyzes query plans from the optimizer, including how tables are joined, which tables/rows are scanned etc.
+	EXPLAIN &lt;query>は、オプティマイザからのクエリ計画を分析し、テーブルの結合方法、どのテーブルや行をスキャンするかなどを表示します。
 
-	Explain analyze shows the above and additional info like execution cost, number of rows returned, time taken etc.
+	Explain analyzeは、上記に加えて、実行コスト、返される行数、所要時間などの追加情報を表示します。
 
-	This knowledge is useful to tweak queries and add indexes.
+	これらの情報は、クエリの微調整やインデックスの追加に役立ちます。
 
-	Watch this performance tuning [tutorial video](https://www.youtube.com/watch?v=pjRTLPeUOug).
+	パフォーマンスチューニングの[チュートリアルビデオ](https://www.youtube.com/watch?v=pjRTLPeUOug)をご覧ください。
 
-	Checkout the [lab section](https://linkedin.github.io/school-of-sre/databases_sql/lab/) for a hands-on about indexes.
+	また、[ラボセクション](/databases_sql/lab/)では、インデックスに関するハンズオンを行っています。
 
-*   [Slow query logs](https://dev.mysql.com/doc/refman/5.7/en/slow-query-log.html)
+* [スロークエリログ](https://dev.mysql.com/doc/refman/8.0/ja/slow-query-log.html)
 
-	Used to identify slow queries (configurable threshold), enabled in config or dynamically with a query
+	スロークエリ（閾値が設定可能）を特定するために使用し、設定または動的に有効化されます。
 
-	Checkout the [lab section](https://linkedin.github.io/school-of-sre/databases_sql/lab/) about identifying slow queries.
+	スロークエリの特定については、[ラボセクション](/databases_sql/lab/)をご覧ください。
 
-*   User management
+* ユーザー管理
 
-	This includes creation and changes to users, like managing privileges, changing password etc.
-
-
-
-*   Backup and restore strategies, pros and cons
-
-	Logical backup using mysqldump - slower but can be done online
-
-	Physical backup (copy data directory or use xtrabackup) -  quick backup/recovery. Copying data directory requires locking or shut down. xtrabackup is an improvement because it supports backups without shutting down (hot backup).
-
-	Others - PITR, snapshots etc.
+	ユーザーの作成や変更、権限の管理、パスワードの変更などが含まれます。
 
 
-*   Crash recovery process using redo logs
 
-	After a crash, when you restart server it reads redo logs and replays modifications to recover
+* バックアップとリストアの戦略、長所と短所
 
+	mysqldumpを使用した論理的バックアップ - 時間はかかるがオンラインで実行可能。
 
-*   Monitoring MySQL
+	物理的なバックアップ（データディレクトリのコピーまたはxtrabackupの使用） - 迅速なバックアップ/リカバリーが可能。xtrabackupはシャットダウンせずにバックアップができる（ホットバックアップ）ので改善されている。
 
-	Key MySQL metrics: reads, writes, query runtime, errors, slow queries, connections, running threads, InnoDB metrics
-
-	Key OS metrics: CPU, load, memory, disk I/O, network
+	その他 - PITR、スナップショットなど。
 
 
-*   Replication
+* REDOログによるクラッシュリカバリー処理
 
-    Copies data from one instance to one or more instances. Helps in horizontal scaling, data protection, analytics and performance. Binlog dump thread on primary, replication I/O and SQL threads on secondary. Strategies include the standard async, semi async or group replication.
+	クラッシュ後、サーバを再起動すると、REDOログを読み込み変更を再生して復旧します。
 
-*   High Availability
 
-    Ability to cope with failure at software, hardware and network level. Essential for anyone who needs 99.9%+ uptime. Can be implemented with replication or clustering solutions from MySQL, Percona, Oracle etc. Requires expertise to setup and maintain. Failover can be manual, scripted or using tools like Orchestrator.
+* MySQLの監視
 
-*   [Data directory](https://dev.mysql.com/doc/refman/8.0/en/data-directory.html)
+	MySQLの主な指標：読み取り、書き込み、クエリ実行時間、エラー、スロークエリ、接続、実行中のスレッド、InnoDBの指標
 
-    Data is stored in a particular directory, with nested directories for the data contained in each database. There are also MySQL log files, InnoDB log files, server process ID file and some other configs. The data directory is configurable.
+	主なOS指標：CPU、負荷、メモリ、ディスクI/O、ネットワーク
 
-*   [MySQL configuration](https://dev.mysql.com/doc/refman/5.7/en/server-configuration.html)
 
-    This can be done by passing [parameters during startup](https://dev.mysql.com/doc/refman/5.7/en/server-options.html), or in a [file](https://dev.mysql.com/doc/refman/8.0/en/option-files.html). There are a few [standard paths](https://dev.mysql.com/doc/refman/8.0/en/option-files.html#option-file-order) where MySQL looks for config files, `/etc/my.cnf` is one of the commonly used paths. These options are organized under headers (mysqld for server and mysql for client), you can explore them more in the lab that follows.
+* レプリケーション
 
-*   [Logs](https://dev.mysql.com/doc/refman/5.7/en/server-logs.html)
+    1つのインスタンスから1つまたは複数のインスタンスにデータをコピーします。水平方向のスケーリング、データ保護、分析、パフォーマンスに役立ちます。プライマリではBinlogダンプスレッド、セカンダリではレプリケーションI/OおよびSQLスレッドを使用。戦略には、標準的な非同期、半非同期、グループレプリケーションがあります。
 
-    MySQL has logs for various purposes - general query log, errors, binary logs (for replication), slow query log. Only error log is enabled by default (to reduce I/O and storage requirement), the others can be enabled when required - by specifying config parameters at startup or running commands at runtime. [Log destination](https://dev.mysql.com/doc/refman/5.7/en/log-destinations.html) can also be tweaked with config parameters.
+* 高可用性
+
+    ソフトウェア、ハードウェア、ネットワークレベルでの障害に対処する能力。99.9%以上のアップタイムを必要とする人には必須。MySQL、Percona、Oracleなどのレプリケーションやクラスタリングソリューションで実装可能。セットアップとメンテナンスには専門知識が必要です。フェイルオーバーは、手動、スクリプト、またはOrchestratorのようなツールを使用します。
+
+* [データディレクトリ](https://dev.mysql.com/doc/refman/8.0/ja/data-directory.html)
+
+    データは特定のディレクトリに保存され、各データベースに含まれるデータのためのネストしたディレクトリがあります。また、MySQLログファイル、InnoDBログファイル、サーバープロセスIDファイル、その他いくつかの設定があります。データディレクトリは設定可能です。
+
+* [サーバー設定](https://dev.mysql.com/doc/refman/8.0/ja/server-configuration.html)
+
+    これは、[起動時のパラメータ](https://dev.mysql.com/doc/refman/8.0/ja/server-options.html)を渡すか、[ファイル](https://dev.mysql.com/doc/refman/8.0/en/option-files.html)で行うことができます。MySQL が設定ファイルを探す場所にはいくつかの [標準パス](https://dev.mysql.com/doc/refman/8.0/en/option-files.html#option-file-order) があり、`/etc/my.cnf` はよく使われるパスのひとつです。これらのオプションはヘッダ（サーバーはmysqld、クライアントはmysql）の下に整理されているので、次のラボで詳しく調べてみてください。
+
+* [ログ](https://dev.mysql.com/doc/refman/8.0/ja/server-logs.html)
+
+    MySQL には、一般的なクエリログ、エラー、バイナリログ（レプリケーション用）、スロークエリログなど、さまざまな目的のログがあります。エラーログだけがデフォルトで有効になっていますが（I/O とストレージの要件を減らすため）、他は必要に応じて有効にすることができます。これは、起動時に設定パラメータを指定するか、ランタイムにコマンドを実行することで行います。[ログの保存先](https://dev.mysql.com/doc/refman/5.7/en/log-destinations.html)も、設定パラメータで調整できます。
