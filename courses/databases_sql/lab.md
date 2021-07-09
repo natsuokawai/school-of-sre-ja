@@ -1,13 +1,13 @@
-**Prerequisites**
+**前提条件**
 
-Install Docker
+Dockerがインストールされていること
 
 
-**Setup**
+**セットアップ**
 
-Create a working directory named sos or something similar, and cd into it.
+sosなどの作業用ディレクトリを作成し、そこにcdで移動します。
 
-Enter the following into a file named my.cnf under a directory named custom.
+customというディレクトリにy.cnfというファイルに以下の内容を入力します。
 
 
 ```
@@ -22,7 +22,7 @@ long_query_time=1
 ```
 
 
-Start a container and enable slow query log with the following:
+コンテナを起動し、以下のようにスロークエリログを有効にします。
 
 
 ```
@@ -32,7 +32,7 @@ sos $ docker restart $(docker ps -qf "name=db")
 ```
 
 
-Import a sample database
+サンプルデータベースのインポート
 
 
 ```
@@ -46,14 +46,14 @@ root@3ab5b18b0c7d:/etc# chown mysql:mysql /var/log/mysqlslow.log
 ```
 
 
-_Workshop 1: Run some sample queries_
-Run the following
+_ワークショップ1：サンプルクエリの実行_
+以下を実行してください。
 ```
 $ mysql -uroot -prealsecret mysql
 mysql>
 
-# inspect DBs and tables
-# the last 4 are MySQL internal DBs
+# DBとテーブルの検査
+# 最後の4つはMySQLの内部DB
 
 mysql> show databases;
 +--------------------+
@@ -81,20 +81,20 @@ mysql> show tables;
 | titles               |
 +----------------------+
 
-# read a few rows
+# 数行を読み込む
 mysql> select * from employees limit 5;
 
-# filter data by conditions
+# 条件によるデータのフィルタリング
 mysql> select count(*) from employees where gender = 'M' limit 5;
 
-# find count of particular data
+# 特定のデータのカウントを見つける
 mysql> select count(*) from employees where first_name = 'Sachin'; 
 ```
 
-_Workshop 2: Use explain and explain analyze to profile a query, identify and add indexes required for improving performance_
+_ワークショップ2：explainとexplain analyzeを使用してクエリをプロファイリングし、パフォーマンスを向上させるために必要なインデックスを特定して追加する。_
 ```
-# View all indexes on table 
-#(\G is to output horizontally, replace it with a ; to get table output)
+# テーブルのインデックスを表示
+#（'\G'をつけると結果を縦方向に表示します。';'に置き換えるとテーブル出力になります。）
 mysql> show index from employees from employees\G
 *************************** 1. row ***************************
         Table: employees
@@ -113,9 +113,9 @@ Index_comment:
       Visible: YES
    Expression: NULL
 
-# This query uses an index, idenitfied by 'key' field
-# By prefixing explain keyword to the command, 
-# we get query plan (including key used)
+# このクエリは、'key'フィールドで識別されるインデックスを使用しています。
+# コマンドの前にexplainキーワードを付けることで
+# クエリプラン（使用されたキーを含む）を取得します。
 mysql> explain select * from employees where emp_no < 10005\G
 *************************** 1. row ***************************
            id: 1
@@ -131,7 +131,7 @@ possible_keys: PRIMARY
      filtered: 100.00
         Extra: Using where
 
-# Compare that to the next query which does not utilize any index
+# インデックスを利用していない次のクエリと比較してみましょう。
 mysql> explain select first_name, last_name from employees where first_name = 'Sachin'\G
 *************************** 1. row ***************************
            id: 1
@@ -147,16 +147,16 @@ possible_keys: NULL
      filtered: 10.00
         Extra: Using where
 
-# Let's see how much time this query takes
+# このクエリにどれだけの時間がかかるか見てみましょう
 mysql> explain analyze select first_name, last_name from employees where first_name = 'Sachin'\G
 *************************** 1. row ***************************
 EXPLAIN: -> Filter: (employees.first_name = 'Sachin')  (cost=30143.55 rows=29911) (actual time=28.284..3952.428 rows=232 loops=1)
     -> Table scan on employees  (cost=30143.55 rows=299113) (actual time=0.095..1996.092 rows=300024 loops=1)
 
 
-# Cost(estimated by query planner) is 30143.55
+# （クエリプランナーによって予測された）コストは30143.55です
 # actual time=28.284ms for first row, 3952.428 for all rows
-# Now lets try adding an index and running the query again
+# それでは、インデックスを追加して再度クエリを実行してみましょう。
 mysql> create index idx_firstname on employees(first_name);
 Query OK, 0 rows affected (1.25 sec)
 Records: 0  Duplicates: 0  Warnings: 0
@@ -170,25 +170,24 @@ mysql> explain analyze select first_name, last_name from employees where first_n
 +--------------------------------------------------------------------------------------------------------------------------------------------+
 1 row in set (0.01 sec)
 
-# Actual time=0.551ms for first row
-# 2.934ms for all rows. A huge improvement!
-# Also notice that the query involves only an index lookup,
-# and no table scan (reading all rows of table)
-# ..which vastly reduces load on the DB.
+# 1行目の実時間=0.551ms
+# すべての行に関して2.934ms。大幅な改善です！
+# また、このクエリはインデックス検索のみで、テーブルスキャン（テーブルの全行を読み取ること）がないことにも注目してください。
+# DBの負荷が大幅に軽減されています。
 ```
 
-_Workshop 3: Identify slow queries on a MySQL server_
+_ワークショップ3：MySQLサーバ上でスロークエリを特定する_
 ```
-# Run the command below in two terminal tabs to open two shells into the container.
+# 以下のコマンドを2つのターミナルタブで実行し、コンテナ内に2つのシェルを開きます。
 docker exec -it $(docker ps -qf "name=db") bash
 
-# Open a mysql prompt in one of them and execute this command
-# We have configured to log queries that take longer than 1s,
-# so this sleep(3) will be logged
+# そのうちの一つでmysqlプロンプトを開き、以下のコマンドを実行します。
+# 1秒以上かかったクエリをログに記録するように設定しています。
+# したがって、このsleep(3)はログに記録されます。
 mysql -uroot -prealsecret mysql
 mysql> select sleep(3);
 
-# Now, in the other terminal, tail the slow log to find details about the query
+# ここで、もう一方のターミナルで、クエリの詳細を見つけるために、スローログをtailします。
 root@62c92c89234d:/etc# tail -f /var/log/mysqlslow.log
 /usr/sbin/mysqld, Version: 8.0.21 (MySQL Community Server - GPL). started with:
 Tcp port: 3306  Unix socket: /var/run/mysqld/mysqld.sock
@@ -204,4 +203,4 @@ SET timestamp=1606402428;
 select sleep(3);
 ```
 
-These were simulated examples with minimal complexity. In real life, the queries would be much more complex and the explain/analyze and slow query logs would have more details.
+これらは複雑さを最小限に抑えたシミュレーションの例でした。実際にはクエリはもっと複雑で、explanation/analyzeやスロークエリのログにはもっと詳細な情報があるでしょう。
