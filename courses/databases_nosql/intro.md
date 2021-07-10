@@ -1,219 +1,93 @@
-# NoSQL Concepts
+# NoSQLの概念
 
-## Prerequisites
-- [Relational Databases](https://linkedin.github.io/school-of-sre/databases_sql/intro/)
+## 前提条件
+- [リレーショナル・データベース](/databases_sql/intro/)
 
-## What to expect from this course
+## このコースで扱うこと
 
-At the end of training, you will have an understanding of what a NoSQL database is, what kind of advantages or disadvantages it has over traditional RDBMS, learn about different types of NoSQL databases and understand some of the underlying concepts & trade offs w.r.t to NoSQL.
-
-
-## What is not covered under this course
-
-We will not be deep diving into any specific NoSQL Database. 
+このトレーニングの最後には、NoSQLデータベースとは何か、従来のRDBMSと比較してどのようなメリットやデメリットがあるのかを理解し、様々なタイプのNoSQLデータベースについて学び、NoSQLの基本的な概念やトレードオフを理解することができます。
 
 
-## Course Contents
+## このコースでは扱わないこと
+
+このコースでは、特定のNoSQLデータベースについて深く掘り下げることはありません。
 
 
-
-*   [Introduction to NoSQL](https://linkedin.github.io/school-of-sre/databases_nosql/intro/#introduction)
-*   [CAP Theorem](https://linkedin.github.io/school-of-sre/databases_nosql/key_concepts/#cap-theorem)
-*   [Data versioning](https://linkedin.github.io/school-of-sre/databases_nosql/key_concepts/#versioning-of-data-in-distributed-systems)
-*   [Partitioning](https://linkedin.github.io/school-of-sre/databases_nosql/key_concepts/#partitioning)
-*   [Hashing](https://linkedin.github.io/school-of-sre/databases_nosql/key_concepts/#hashing)
-*   [Quorum](https://linkedin.github.io/school-of-sre/databases_nosql/key_concepts/#quorum)
-
-
-## Introduction
-
-When people use the term “NoSQL database”, they typically use it to refer to any non-relational database. Some say the term “NoSQL” stands for “non SQL” while others say it stands for “not only SQL.” Either way, most agree that NoSQL databases are databases that store data in a format other than relational tables.
-
-A common misconception is that NoSQL databases or non-relational databases don’t store relationship data well. NoSQL databases can store relationship data—they just store it differently than relational databases do. In fact, when compared with SQL databases, many find modeling relationship data in NoSQL databases to be _easier_, because related data doesn’t have to be split between tables.
-
-Such databases have existed since the late 1960s, but the name "NoSQL" was only coined in the early 21st century. NASA used a NoSQL database to track inventory for the Apollo mission. NoSQL databases emerged in the late 2000s as the cost of storage dramatically decreased. Gone were the days of needing to create a complex, difficult-to-manage data model simply for the purposes of reducing data duplication. Developers (rather than storage) were becoming the primary cost of software development, so NoSQL databases optimized for developer productivity. With the rise of Agile development methodology, NoSQL databases were developed with a focus on scaling, fast performance and at the same time allowed for frequent application changes and made programming easier.
-
-
-### Types of NoSQL databases:
-
-Over time due to the way these NoSQL databases were developed to suit requirements at different companies, we ended up with quite a few types of them. However, they can be broadly classified into 4 types. Some of the databases can overlap between different types. They are
+## コース内容
 
 
 
-1. **Document databases:** They store data in documents similar to [JSON](https://www.json.org/json-en.html) (JavaScript Object Notation) objects. Each document contains pairs of fields and values. The values can typically be a variety of types including things like strings, numbers, booleans, arrays, or objects, and their structures typically align with objects developers are working with in code. The advantages include intuitive data model & flexible schemas. Because of their variety of field value types and powerful query languages, document databases are great for a wide variety of use cases and can be used as a general purpose database. They can horizontally scale-out to accomodate large data volumes. Ex: MongoDB, Couchbase
-2. **Key-Value databases:** These are a simpler type of databases where each item contains keys and values. A value can typically only be retrieved by referencing its key, so learning how to query for a specific key-value pair is typically simple. Key-value databases are great for use cases where you need to store large amounts of data but you don’t need to perform complex queries to retrieve it. Common use cases include storing user preferences or caching. Ex: [Redis](https://redis.io/), [DynamoDB](https://aws.amazon.com/dynamodb/), [Voldemort](https://www.project-voldemort.com/voldemort/)/[Venice](https://engineering.linkedin.com/blog/2017/04/building-venice--a-production-software-case-study) (Linkedin), 
-3. **Wide-Column stores:** They store data in tables, rows, and dynamic columns. Wide-column stores provide a lot of flexibility over relational databases because each row is not required to have the same columns. Many consider wide-column stores to be two-dimensional key-value databases. Wide-column stores are great for when you need to store large amounts of data and you can predict what your query patterns will be. Wide-column stores are commonly used for storing Internet of Things data and user profile data. [Cassandra](https://cassandra.apache.org/) and [HBase](https://hbase.apache.org/) are two of the most popular wide-column stores.
-4. **Graph Databases:** These databases store data in nodes and edges. Nodes typically store information about people, places, and things while edges store information about the relationships between the nodes. The underlying storage mechanism of graph databases can vary. Some depend on a relational engine and “store” the graph data in a table (although a table is a logical element, therefore this approach imposes another level of abstraction between the graph database, the graph database management system and the physical devices where the data is actually stored). Others use a key-value store or document-oriented database for storage, making them inherently NoSQL structures. Graph databases excel in use cases where you need to traverse relationships to look for patterns such as social networks, fraud detection, and recommendation engines. Ex: [Neo4j](https://neo4j.com/) 
+* [NoSQLの紹介](/databases_nosql/intro/#introduction)
+* [CAPの定理](/databases_nosql/key_concepts/#cap-theorem)
+* [データバージョニング](/databases_nosql/key_concepts/#versioning-of-data-in-distributed-systems)
+* [パーティショニング](/databases_nosql/key_concepts/#partitioning)
+* [ハッシング](/databases_nosql/key_concepts/#hashing)
+* [Quorum](/databases_nosql/key_concepts/#quorum)
 
 
-### **Comparison** 
+## はじめに
+
+人々が「NoSQLデータベース」という言葉を使うとき、一般的には非リレーショナルデータベースのことを指します。「NoSQL」という言葉は「Non SQL」の略だと言う人もいれば、「Not only SQL」の略だと言う人もいます。いずれにしても、NoSQLデータベースがリレーショナルテーブル以外の形式でデータを保存するデータベースであることにはほとんどの人が同意しています。
+
+よくある誤解は、「NoSQLデータベースや非リレーショナルデータベースはリレーショナルデータをうまく保存できない」というものです。NoSQLデータベースはリレーショナルデータを格納できますが、その格納方法はリレーショナルデータベースとは異なります。実際、SQLデータベースと比較すると、リレーショナルデータをテーブル間で分割する必要がないため、NoSQLデータベースの方がリレーショナルデータのモデリングが容易であると考える人が多いようです。
+
+このようなデータベースは1960年代後半から存在していましたが、「NoSQL」という名称は21世紀初頭になってから生まれたものです。NASAはアポロ計画のための在庫管理にNoSQLデータベースを使用しました。NoSQLデータベースが登場したのは、ストレージのコストが劇的に下がった2000年代後半のことです。データの重複を減らすためだけに複雑で管理の難しいデータモデルを作成する必要があった時代は終わりました。ソフトウェア開発の主なコストはストレージではなく開発者になっていたため、NoSQLデータベースは開発者の生産性を高めるために最適化されました。アジャイル開発手法の台頭により、NoSQLデータベースは拡張性と高速性を重視して開発され、同時にアプリケーションの頻繁な変更が可能になり、プログラミングが容易になりました。
 
 
-<table>
-  <tr>
-   <td>
-   </td>
-   <td>Performance
-   </td>
-   <td>Scalability
-   </td>
-   <td>Flexibility
-   </td>
-   <td>Complexity
-   </td>
-   <td>Functionality
-   </td>
-  </tr>
-  <tr>
-   <td>Key Value
-   </td>
-   <td>high
-   </td>
-   <td>high
-   </td>
-   <td>high
-   </td>
-   <td>none
-   </td>
-   <td>Variable
-   </td>
-  </tr>
-  <tr>
-   <td>Document stores
-   </td>
-   <td>high
-   </td>
-   <td>Variable (high)
-   </td>
-   <td>high
-   </td>
-   <td>low
-   </td>
-   <td>Variable (low)
-   </td>
-  </tr>
-  <tr>
-   <td>Column DB
-   </td>
-   <td>high
-   </td>
-   <td>high
-   </td>
-   <td>moderate
-   </td>
-   <td>low
-   </td>
-   <td>minimal
-   </td>
-  </tr>
-  <tr>
-   <td>Graph
-   </td>
-   <td>Variable
-   </td>
-   <td>Variable
-   </td>
-   <td>high
-   </td>
-   <td>high
-   </td>
-   <td>Graph theory
-   </td>
-  </tr>
-</table>
+### NoSQLデータベースの種類
+
+NoSQLデータベースは企業の要求に合わせて開発されたため、時間の経過とともにかなりの種類が出てきました。しかし、大きく分けると4つのタイプに分類できます。いくつかのデータベースは異なる種類の間で重複することがあります。
 
 
 
-### Differences between SQL and NoSQL
+1. **ドキュメント・データベース：**データを[JSON](https://www.json.org/json-en.html) (JavaScript Object Notation)オブジェクトに似たドキュメントに格納します。各ドキュメントにはフィールドと値のペアが含まれています。値には、文字列、数値、ブーリアン、配列、オブジェクトなど様々な種類があり、その構造は開発者がコードで扱うオブジェクトによく似ています。直感的なデータモデルと柔軟なスキーマが利点です。ドキュメントデータベースは、多様なフィールド値のタイプと強力なクエリ言語を備えているためさまざまなユースケースに適しており、汎用データベースとして使用することができます。また、大規模なデータ量に対応するために水平方向にスケールアウトすることができます。例：MongoDB、Couchbase
+2. **キーバリューデータベース：** よりシンプルなタイプのデータベースで、各項目にキーと値が含まれています。値は通常そのキーを参照することでのみ取得できるため、特定のキーと値のペアを検索する方法を学ぶことは一般的に簡単です。キーバリューデータベースは、大量のデータを保存する必要があるが複雑なクエリを実行してデータを取り出す必要がない場合に最適です。一般的な使用例としては、ユーザーの好みを保存したりキャッシングを行ったりすることが挙げられます。例：[Redis](https://redis.io/)、[DynamoDB](https://aws.amazon.com/dynamodb/)、[Voldemort](https://www.project-voldemort.com/voldemort/)/[Venice](https://engineering.linkedin.com/blog/2017/04/building-venice--a-production-software-case-study) (Linkedin)
+3. **ワイドカラムストア：** テーブル、行、ダイナミックカラムでデータを保存します。ワイドカラムストアは、各行が同じカラムを持つ必要がないため、リレーショナルデータベースに比べて柔軟性が高いです。多くの人はワイドカラムストアを2次元のキーバリューデータベースとみなしています。ワイドカラムストアは、大量のデータを保存する必要がありかつクエリのパターンが予測できる場合に最適です。ワイドカラムストアは、IoTデータやユーザープロファイルデータの保存によく使われます。[Cassandra](https://cassandra.apache.org/)と[HBase](https://hbase.apache.org/)は、最も人気のあるワイドカラムストアの2つです。
+4. **グラフデータベース：** これらのデータベースは、データをノードとエッジに格納します。ノードは通常、人、場所、物に関する情報を格納し、エッジはノード間の関係に関する情報を格納します。グラフデータベースの基本的な記憶メカニズムは様々である。リレーショナルエンジンに依存し、グラフデータをテーブルに「格納」するものもあります（ただし、テーブルは論理的な要素であるため、このアプローチでは、グラフデータベース、グラフデータベース管理システム、およびデータが実際に格納される物理デバイスの間に、別のレベルの抽象化が必要となる）。また、キーバリューストアやドキュメント指向のデータベースを使用するものもあり、本質的にNoSQLの構造となっています。グラフデータベースは、ソーシャルネットワーク、不正検知、レコメンデーションエンジンなど、関係性を辿ってパターンを探す必要があるユースケースに優れています。例：[Neo4j](https://neo4j.com/) 
 
-The table below summarizes the main differences between SQL and NoSQL databases.
 
+### **比較**
 
-<table>
-  <tr>
-   <td>
-   </td>
-   <td>SQL Databases
-   </td>
-   <td>NoSQL Databases
-   </td>
-  </tr>
-  <tr>
-   <td>Data Storage Model
-   </td>
-   <td>Tables with fixed rows and columns
-   </td>
-   <td>Document: JSON documents, Key-value: key-value pairs, Wide-column: tables with rows and dynamic columns, Graph: nodes and edges
-   </td>
-  </tr>
-  <tr>
-   <td>Primary Purpose
-   </td>
-   <td>General purpose
-   </td>
-   <td>Document: general purpose, Key-value: large amounts of data with simple lookup queries, Wide-column: large amounts of data with predictable query patterns, Graph: analyzing and traversing relationships between connected data
-   </td>
-  </tr>
-  <tr>
-   <td>Schemas
-   </td>
-   <td>Rigid
-   </td>
-   <td>Flexible
-   </td>
-  </tr>
-  <tr>
-   <td>Scaling
-   </td>
-   <td>Vertical (scale-up with a larger server)
-   </td>
-   <td>Horizontal (scale-out across commodity servers)
-   </td>
-  </tr>
-  <tr>
-   <td>Multi-Record <a href="https://en.wikipedia.org/wiki/ACID">ACID </a>Transactions
-   </td>
-   <td>Supported
-   </td>
-   <td>Most do not support multi-record ACID transactions. However, some—like MongoDB—do.
-   </td>
-  </tr>
-  <tr>
-   <td>Joins
-   </td>
-   <td>Typically required
-   </td>
-   <td>Typically not required
-   </td>
-  </tr>
-  <tr>
-   <td>Data to Object Mapping
-   </td>
-   <td>Requires ORM (object-relational mapping)
-   </td>
-   <td>Many do not require ORMs. Document DB documents map directly to data structures in most popular programming languages.
-   </td>
-  </tr>
-</table>
+| |パフォーマンス|スケーラビリティ|柔軟性|複雑さ|機能|
+|:----|:----|:----|:----|:----|:----|
+|キーバリュー|高|高|高|なし|不定|
+|ドキュメント|高|不定 (高)|高|低|不定 (低)|
+|ワイドカラム|高|高|中|低|最小|
+|グラフ|不定|不定|高|高|グラフ理論|
 
 
 
-### Advantages
+### SQLとNoSQLの相違点
+
+下の表は、SQLデータベースとNoSQLデータベースの主な違いをまとめたものです。
+
+| |SQLデータベース|NoSQLデータベース|
+|:----|:----|:----|
+|データストレージモデル|固定の行と列を持つテーブル|ドキュメント: JSONドキュメント<br>キーバリュー：キーと値のペア<br>ワイドカラム：行と動的な列を持つテーブル<br>グラフ：ノードとエッジ|
+|主な目的|一般的な目的|ドキュメント：一般的な目的<br>キーバリュー：単純なルックアップクエリを持つ大量のデータ<br>ワイドカラム：予測可能なクエリパターンを持つ大量のデータ<br>グラフ：接続されたデータ間の関係性の分析と走査|
+|スキーマ|厳格|柔軟|
+|スケーリング|垂直（より大きなサーバーでスケールアップ）|水平（コモディティサーバーでスケールアウト）|
+|複数レコード[ACID](https://ja.wikipedia.org/wiki/ACID_(%E3%82%B3%E3%83%B3%E3%83%94%E3%83%A5%E3%83%BC%E3%82%BF%E7%A7%91%E5%AD%A6))トランザクション|対応|ほとんどは非対応。MongoDBなど一部対応|
+|結合（JOIN）|一般的に必要|一般的に不要|
+|データからオブジェクトへのマッピング|ORM(object-relational mapping)が必要|多くの場合ORMを必要としない。<br>ドキュメントDBのドキュメントはほとんどの一般的なプログラミング言語のデータ構造に直接マッピングされる。|
+
+
+### 利点
 
 
 
-*   **Flexible Data Models**
+* **柔軟なデータモデル**
 
-    Most NoSQL systems feature flexible schemas. A flexible schema means you can easily modify your database schema to add or remove fields to support for evolving application requirements. This facilitates with continuous application development of new features without database operation overhead.
+    ほとんどのNoSQLシステムは柔軟なスキーマを備えています。柔軟なスキーマとは、進化するアプリケーションの要求に対応するために、フィールドの追加や削除などデータベースのスキーマを容易に変更できることを意味します。これにより、データベース運用のオーバーヘッドを伴わずに継続的な新機能のアプリケーション開発が可能になります。
 
-*   **Horizontal Scaling**
+* **水平方向の拡張性**
 
-    Most NoSQL systems allow you to scale horizontally, which means you can add in cheaper & commodity hardware, whenever you want to scale a system. On the other hand SQL systems generally scale Vertically (a more powerful server). NoSQL systems can also host huge data sets when compared to traditional SQL systems.
+    ほとんどのNoSQLシステムでは水平方向に拡張することができます。これは、システムを拡張したいときに安価なコモディティハードウェアを追加できることを意味します。一方、SQLシステムは一般的に垂直方向にスケールします（より強力なサーバーを使用します）。NoSQLシステムは、従来のSQLシステムに比べて巨大なデータセットを扱うことができます。
 
-*   **Fast Queries**
+* **高速なクエリ**
 
-    NoSQL can generally be a lot faster than traditional SQL systems due to data denormalization and horizontal scaling. Most NoSQL systems also tend to store similar data together facilitating faster query responses. 
+    NoSQLはデータの非正規化と水平方向のスケーリングにより、一般的に従来のSQLシステムよりもはるかに高速です。また、ほとんどのNoSQLシステムでは類似したデータをまとめて保存する傾向があるため、クエリの応答が速くなります。
 
-*   **Developer productivity**
+* **開発者の生産性**
 
-    NoSQL systems tend to map data based on the programming data structures. As a result developers need to perform fewer data transformations leading to increased productivity & fewer bugs.
+    NoSQLシステムでは、プログラムのデータ構造に基づいてデータをマッピングする傾向があります。その結果開発者はデータ変換を行う必要が少なくなり、生産性の向上とバグの減少につながります。
