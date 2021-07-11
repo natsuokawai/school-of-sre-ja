@@ -1,10 +1,10 @@
-# Conclusion
+# まとめ
 
-We have covered basic concepts of NoSQL databases. There is much more to learn and do. We hope this course gives you a good start and inspires you to explore further.
+ここまで、NoSQLデータベースの基本的な概念を説明してきました。まだまだ学ぶべきこと、やるべきことはたくさんあります。このコースが皆様の良いスタートとなり、さらに探求するきっかけとなることを願っています。
 
-# Further reading
+# 参考文献
 
-NoSQL:
+NoSQL：
 
 [https://hostingdata.co.uk/nosql-database/](https://hostingdata.co.uk/nosql-database/)
 
@@ -12,15 +12,15 @@ NoSQL:
 
 [https://www.mongodb.com/nosql-explained/nosql-vs-sql](https://www.mongodb.com/nosql-explained/nosql-vs-sql)
 
-Cap Theorem
+CAP定理
 
 [http://www.julianbrowne.com/article/brewers-cap-theorem](http://www.julianbrowne.com/article/brewers-cap-theorem)
 
-Scalability
+スケーラビリティ
 
 [http://www.slideshare.net/jboner/scalability-availability-stability-patterns](http://www.slideshare.net/jboner/scalability-availability-stability-patterns)
 
-Eventual Consistency
+結果整合性
 
 [https://www.allthingsdistributed.com/2008/12/eventually_consistent.html](https://www.allthingsdistributed.com/2008/12/eventually_consistent.html)
 
