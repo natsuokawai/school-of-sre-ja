@@ -1,57 +1,57 @@
-# Big Data
+# ビッグデータ
 
-## Prerequisites
+## 前提条件
 
-- Basics of Linux File systems.
-- Basic understanding of System Design.
+- Linuxファイルシステムの基礎
+- システム設計の基礎知識
 
-## What to expect from this course
+## このコースで扱うこと
 
-This course covers the basics of Big Data and how it has evolved to become what it is today. We will take a look at a few realistic scenarios where Big Data would be a perfect fit. An interesting assignment on designing a Big Data system is followed by understanding the architecture of Hadoop and the tooling around it.
+このコースでは、ビッグデータの基礎と現在のビッグデータ関連技術がどのように進化してきたかを説明します。ビッグデータが完璧に適合するいくつかの現実的なシナリオを見ていきます。ビッグデータシステムの設計に関する興味深い課題に続いて、Hadoopのアーキテクチャとその周辺のツールを理解します。
 
-## What is not covered under this course
+## このコースでは扱わないこと
 
-Writing programs to draw analytics from data.
+データから分析結果を導き出すプログラムの作成
 
-## Course Contents
+## コース内容
 
-1. [Overview of Big Data](https://linkedin.github.io/school-of-sre/big_data/intro/#overview-of-big-data)
-2. [Usage of Big Data techniques](https://linkedin.github.io/school-of-sre/big_data/intro/#usage-of-big-data-techniques)
-3. [Evolution of Hadoop](https://linkedin.github.io/school-of-sre/big_data/evolution/)
-4. [Architecture of hadoop](https://linkedin.github.io/school-of-sre/big_data/evolution/#architecture-of-hadoop)
+1. [ビッグデータの概要](/big_data/intro/#overview-of-big-data)
+2. [ビッグデータ技術の使い方](/big_data/intro/#usage-of-big-data-techniques)
+3. [Hadoopの進化](/big_data/evolution/)
+4. [Hadoopのアーキテクチャ](/big_data/evolution/#architecture-of-hadoop)
     1. HDFS
     2. Yarn
-5. [MapReduce framework](https://linkedin.github.io/school-of-sre/big_data/evolution/#mapreduce-framework)
-6. [Other tooling around hadoop](https://linkedin.github.io/school-of-sre/big_data/evolution/#other-tooling-around-hadoop)
+5. [MapReduceフレームワーク](/big_data/evolution/#mapreduce-framework)
+6. [その他のHadoop周辺ツール](/big_data/evolution/#other-tooling-around-hadoop)
     1. Hive
     2. Pig
     3. Spark
     4. Presto
-7. [Data Serialisation and storage](https://linkedin.github.io/school-of-sre/big_data/evolution/#data-serialisation-and-storage)
+7. [データのシリアライズとストレージ](/big_data/evolution/#data-serialisation-and-storage)
 
 
-# Overview of Big Data
+# ビッグデータの概要
 
-1. Big Data is a collection of large datasets that cannot be processed using traditional computing techniques. It is not a single technique or a tool, rather it has become a complete subject, which involves various tools, techniques, and frameworks.
-2. Big Data could consist of
-    1. Structured data
-    2. Unstructured data
-    3. Semi-structured data
-3. Characteristics of Big Data:
-    1. Volume
-    2. Variety
-    3. Velocity
-    4. Variability
-4. Examples of Big Data generation include stock exchanges, social media sites, jet engines, etc.
+1. ビッグデータとは、従来のコンピューティング技術では処理できない大規模なデータセットの集合体です。単一の技術やツールではなく、むしろ様々なツールや技術、フレームワークを含む完全なテーマとなっています。
+2. ビッグデータには以下のようなものがあります。
+    1. 構造化データ
+    2. 非構造化データ
+    3. 半構造化データ
+3. ビッグデータの特徴
+    1. 量（Volume）
+    2. 多様性（Variety）
+    3. 速度（Velocity）
+    4. 変動性（Variability）
+4. ビッグデータ生成の例としては、証券取引所、SNS、ジェットエンジンなどがあります。
 
 
-# Usage of Big Data Techniques
+# ビッグデータ技術の利用
 
-1. Take the example of the traffic lights problem.
-    1. There are more than 300,000 traffic lights in the US as of 2018.
-    2. Let us assume that we placed a device on each of them to collect metrics and send it to a central metrics collection system.
-    3. If each of the IoT devices sends 10 events per minute, we have 300000x10x60x24 = 432x10^7 events per day.
-    4. How would you go about processing that and telling me how many of the signals were “green” at 10:45 am on a particular day?
-2. Consider the next example on Unified Payments Interface (UPI) transactions:
-    1. We had about 1.15 billion UPI transactions in the month of October 2019 in India.
-    12. If we try to extrapolate this data to about a year and try to find out some common payments that were happening through a particular UPI ID, how do you suggest we go about that?
+1. 信号機の問題を例にとると
+    1. アメリカには、2018年現在、30万個以上の信号機があります。
+    2. それぞれにデバイスを置いてメトリクスを収集し、中央のメトリクス収集システムに送信したとします。
+    3. IoTデバイスがそれぞれ1分間に10イベントを送信すると、1日あたり300000x10x60x24 = 432x10^7イベントが発生します。
+    4. それをどのように処理して、特定の日の午前10時45分に「緑」だった信号の数を教えてくれるのでしょうか？
+2. 次の例では、UPI（Unified Payments Interface、インドのNational Payments Corporationによって開発された即時のリアルタイム支払いシステム）の取引について考えてみましょう。
+    1. インドでは2019年10月の1ヶ月間に約11億5000万件のUPI取引がありました。
+    2. このデータをもとに今後約1年間の取引を推定し、特定のUPI IDを介して行われた一般的な決済を見つけようとする場合、どのようにすればよいでしょうか？
