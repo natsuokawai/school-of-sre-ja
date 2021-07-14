@@ -1,49 +1,49 @@
-# Systems Design
+# システム設計
 
-## Prerequisites
+## 前提条件
 
-Fundamentals of common software system components:
+一般的なソフトウェアシステムコンポーネントの基礎知識
 
-- [Linux Basics](https://linkedin.github.io/school-of-sre/linux_basics/intro/)
-- [Linux Networking](https://linkedin.github.io/school-of-sre/linux_networking/intro/)
-- Databases RDBMS
-- [NoSQL Concepts](https://linkedin.github.io/school-of-sre/databases_nosql/intro/)
+- [Linuxの基礎](/linux_basics/intro/)
+- [Linuxネットワーク](/linux_networking/intro/)
+- データベース（RDBMS）
+- [NoSQL](/databases_nosql/intro/)
 
-## What to expect from this course
+## このコースで扱うこと
 
-Thinking about and designing for scalability, availability, and reliability of large scale software systems.
+大規模ソフトウェアシステムのスケーラビリティ、可用性、信頼性について考え、設計することができる。
 
-## What is not covered under this course
+## このコースでは扱わないこと
 
-Individual software components’ scalability and reliability concerns like e.g. Databases, while the same scalability principles and thinking can be applied, these individual components have their own specific nuances when scaling them and thinking about their reliability.
+スケーラビリティの原則や考え方は同じですが、データベースなどの個々のソフトウェアコンポーネントのスケーラビリティや信頼性については、それぞれのコンポーネントに固有のニュアンスがあります。
 
-More light will be shed on concepts rather than on setting up and configuring components like Loadbalancers to achieve scalability, availability, and reliability of systems
+本コースでは、システムのスケーラビリティ、可用性、信頼性を実現するために、ロードバランサーなどの個別のコンポーネントを設定する方法ではなく、概念に重点を置いて解説します。
 
-## Course Contents
+## コース内容
 
-- [Introduction](https://linkedin.github.io/school-of-sre/systems_design/intro/#backstory)
-- [Scalability](https://linkedin.github.io/school-of-sre/systems_design/scalability/)
-- [High Availability](https://linkedin.github.io/school-of-sre/systems_design/availability/)
-- [Fault Tolerance](https://linkedin.github.io/school-of-sre/systems_design/fault-tolerance/)
+- [はじめに](/systems_design/intro/#backstory)
+- [スケーラビリティ](/systems_design/scalability/)
+- [可用性](/systems_design/availability/)
+- [フォールトトレランス](/systems_design/fault-tolerance/)
 
 
-## Introduction
+## はじめに
 
-So, how do you go about learning to design a system?
+では、システム設計を学ぶにはどうすればいいのでしょうか？
 
-*” Like most great questions, it showed a level of naivety that was breathtaking. The only short answer I could give was, essentially, that you learned how to design a system by designing systems and finding out what works and what doesn’t work.”
-Jim Waldo, Sun Microsystems, On System Design*
+*「多くの素晴らしい質問と同様に、この質問は息を呑むほどの素朴さを示していました。私が言える唯一の短い答えは、基本的に、システムを設計し、何が機能して何が機能しないかを見つけることで、システムの設計方法を学ぶということでした。」
+Jim Waldo（サン・マイクロシステムズ）『On System Design』*
 
     
-As software and hardware systems have multiple moving parts, we need to think about how those parts will grow, their failure modes, their inter-dependencies, how it will impact the users and the business.
+ソフトウェアやハードウェアのシステムには複数の可動部品があり、それらの部品がどのように成長していくのか、その故障の仕方や相互依存関係、ユーザーやビジネスにどのような影響を与えるのかを考える必要があります。
 
-There is no one-shot method or way to learn or do system design, we only learn to design systems by designing and iterating on them.
+システム設計を学ぶ、あるいは行うための一発勝負の手法や方法はなく、システムを設計を繰り返していくことでしかシステム設計を学ぶことはできません。
 
-This course will be a starter to make one think about scalability, availability, and fault tolerance during systems design.
+本講座はシステム設計の際に、スケーラビリティ、可用性、フォールトトレランスについて考えるためのスタート地点となるでしょう。
 
-## Backstory
+## バックストーリー
 
-Let’s design a simple content sharing application where users can share photos, media in our application which can be liked by their friends. Let’s start with a simple design of the application and evolve it as we learn system design concepts
+シンプルなコンテンツ共有アプリケーションを設計してみましょう。ユーザーが写真やメディアをアプリケーション内で共有し、友人から「いいね！」とリアクションをもらうようなアプリケーションです。最初は簡単なアプリケーションの設計から始め、システム設計の概念を学びながら進化させていきましょう。
 
-![First architecture diagram](images/first-architecture.jpg)
+![最初のアーキテクチャ図](images/first-architecture.jpg)
 
