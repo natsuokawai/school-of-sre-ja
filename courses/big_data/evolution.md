@@ -1,62 +1,63 @@
-# Evolution of Hadoop
+# Hadoopの進化
 
-![Evolution of hadoop](images/hadoop_evolution.png)
+![Hadoopの進化](images/hadoop_evolution.png)
 
-# Architecture of Hadoop
+# Hadoopのアーキテクチャ
 
 1. **HDFS**
-    1. The Hadoop Distributed File System (HDFS) is a distributed file system designed to run on commodity hardware. It has many similarities with existing distributed file systems. However, the differences from other distributed file systems are significant.
-    2. HDFS is highly fault-tolerant and is designed to be deployed on low-cost hardware. HDFS provides high throughput access to application data and is suitable for applications that have large data sets.
-    3. HDFS is part of the [Apache Hadoop Core project](https://github.com/apache/hadoop).
+    1. Hadoop Distributed File System（HDFS）は、コモディティハードウェア上で動作するように設計された分散ファイルシステムです。既存の分散ファイルシステムと多くの類似点があります。しかし、他の分散型ファイルシステムとの違いは大きい。
+    2. HDFSは、耐障害性が高く、低コストのハードウェアに導入できるように設計されています。HDFSはアプリケーションデータへの高スループットのアクセスを提供し、大規模なデータセットを持つアプリケーションに適しています。
+    3. HDFSは、[Apache Hadoop Core project](https://github.com/apache/hadoop)の一部です。
 
-    ![HDFS Architecture](images/hdfs_architecture.png)
+    ![HDFSアーキテクチャ](images/hdfs_architecture.png)
 
-    1. NameNode: is the arbitrator and central repository of file namespace in the cluster. The NameNode executes the operations such as opening, closing, and renaming files and directories.
-    2. DataNode: manages the storage attached to the node on which it runs. It is responsible for serving all the read and writes requests. It performs operations on instructions on NameNode such as creation, deletion, and replications of blocks.
-    3. Client: Responsible for getting the required metadata from the namenode and then communicating with the datanodes for reads and writes. </br></br></br>
+    1. ネームノード：クラスタ内のファイル名前空間のアービトレーターおよび中央リポジトリです。NameNodeは、ファイルやディレクトリのオープン、クローズ、名前の変更などの操作を実行します。
+    2. データノード：動作するノードに接続されたストレージを管理します。すべての読み取りおよび書き込み要求に対応する責任を負います。ブロックの作成、削除、複製など、NameNodeの命令に対する操作を実行します。
+    3. クライアント：ネームノードから必要なメタデータを取得し、データノードと通信して読み取りと書き込みを行う責任があります。</br></br></br>
 
 2. **YARN**
-    1. YARN stands for “Yet Another Resource Negotiator“. It was introduced in Hadoop 2.0 to remove the bottleneck on Job Tracker which was present in Hadoop 1.0. YARN was described as a “Redesigned Resource Manager” at the time of its launching, but it has now evolved to be known as a large-scale distributed operating system used for Big Data processing.
-    2. The main components of YARN architecture include:
+    1. YARNとは「Yet Another Resource Negotiator」の略です。Hadoop 1.0で存在していたジョブトラッカーのボトルネックを解消するために、Hadoop 2.0で導入されました。発表当初は「再設計されたリソースマネージャー」と説明されていたが、現在ではビッグデータ処理に用いられる大規模分散型オペレーティングシステムとして知られるようになりました。
+    2. YARNアーキテクチャの主な構成要素は以下の通りです。
 
-    ![YARN Architecture](images/yarn_architecture.gif)
+    ![YARNアーキテクチャ](images/yarn_architecture.gif)
 
-    1. Client: It submits map-reduce(MR) jobs to the resource manager.
-    2. Resource Manager: It is the master daemon of YARN and is responsible for resource assignment and management among all the applications. Whenever it receives a processing request, it forwards it to the corresponding node manager and allocates resources for the completion of the request accordingly. It has two major components:
-    3. Scheduler: It performs scheduling based on the allocated application and available resources. It is a pure scheduler, which means that it does not perform other tasks such as monitoring or tracking and does not guarantee a restart if a task fails. The YARN scheduler supports plugins such as Capacity Scheduler and Fair Scheduler to partition the cluster resources.
-    4. Application manager: It is responsible for accepting the application and negotiating the first container from the resource manager. It also restarts the Application Manager container if a task fails.
-    5. Node Manager: It takes care of individual nodes on the Hadoop cluster and manages application and workflow and that particular node. Its primary job is to keep up with the Node Manager. It monitors resource usage, performs log management, and also kills a container based on directions from the resource manager. It is also responsible for creating the container process and starting it at the request of the Application master.
-    6. Application Master: An application is a single job submitted to a framework. The application manager is responsible for negotiating resources with the resource manager, tracking the status, and monitoring the progress of a single application. The application master requests the container from the node manager by sending a Container Launch Context(CLC) which includes everything an application needs to run. Once the application is started, it sends the health report to the resource manager from time-to-time.
-    7. Container: It is a collection of physical resources such as RAM, CPU cores, and disk on a single node. The containers are invoked by Container Launch Context(CLC) which is a record that contains information such as environment variables, security tokens, dependencies, etc. </br></br>
+    1. クライアント：リソースマネージャにMap-Reduce(MR)ジョブを投入します。
+    2. リソースマネージャー：YARNのマスターデーモンであり、すべてのアプリケーション間のリソースの割り当てと管理を行います。処理要求を受け取ると、それを対応するノードマネージャに転送し、要求を完了するためのリソースを適宜割り当てます。YARNには2つの主要コンポーネントがあります。
+    3. スケジューラー：割り当てられたアプリケーションと利用可能なリソースに基づいてスケジューリングを行います。純粋なスケジューラーであるため、モニタリングやトラッキングなどの他のタスクは実行せず、タスクが失敗した場合の再起動も保証しません。YARNのスケジューラーは、クラスターのリソースを分割するためのCapacity SchedulerやFair Schedulerなどのプラグインをサポートしています。
+    4. アプリケーションマネージャー：アプリケーションを受け付け、リソースマネージャから最初のコンテナをネゴシエートする役割を担います。また、タスクが失敗した場合、アプリケーション・マネージャ・コンテナを再起動します。
+    5. ノードマネージャー：Hadoopクラスター上の個々のノードを管理し、アプリケーションやワークフロー、その特定のノードを管理します。その主な仕事は、ノードマネージャーとの連携を保つことです。リソースの使用状況を監視し、ログ管理を行い、リソースマネージャからの指示に基づいてコンテナを強制終了させます。また、アプリケーション・マスターの要求に応じて、コンテナ・プロセスを作成し、起動する役割も担っています。
+    6. アプリケーションマスター：アプリケーションとは、フレームワークに投入される1つのジョブのことです。アプリケーション・マスターは、リソース・マネージャーとのリソースの交渉、ステータスの追跡、単一のアプリケーションの進捗状況の監視を担当します。アプリケーションマスターは、アプリケーションの実行に必要なものをすべて含んだContainer Launch Context(CLC)を送信することで、ノードマネージャーにコンテナを要求します。アプリケーションが起動すると、随時、リソースマネージャにヘルスレポートを送信します。
+    7. コンテナ：1つのノード上にRAM、CPUコア、ディスクなどの物理リソースを集めたものです。コンテナは、環境変数、セキュリティトークン、依存関係などの情報を含むレコードであるContainer Launch Context(CLC)によって起動されます。</br></br>
 
 
-# MapReduce framework
+# MapReduceフレームワーク
 
-![MapReduce Framework](images/map_reduce.jpg)
+![MapReduceフレームワーク](images/map_reduce.jpg)
 
-1. The term MapReduce represents two separate and distinct tasks Hadoop programs perform-Map Job and Reduce Job. Map jobs take data sets as input and process them to produce key-value pairs. Reduce job takes the output of the Map job i.e. the key-value pairs and aggregates them to produce desired results.
-2. Hadoop MapReduce (Hadoop Map/Reduce) is a software framework for distributed processing of large data sets on computing clusters. Mapreduce helps to split the input data set into a number of parts and run a program on all data parts parallel at once.
-3. Please find the below Word count example demonstrating the usage of the MapReduce framework:
+1. MapReduceという用語は、Hadoopプログラムが実行する2つの独立した異なるタスク-MapジョブとReduceジョブ-を表しています。Mapジョブは入力としてデータセットを受け取り、それらを処理してキーと値のペアを生成します。Reduceジョブは、Mapジョブの出力、すなわちキーバリューペアを受け取り、必要な結果を得るためにそれらを集約します。
+2. Hadoop MapReduce（Hadoop Map/Reduce）は、大規模なデータセットをコンピューティングクラスター上で分散処理するためのソフトウェアフレームワークです。MapReduceは入力されたデータセットをいくつかのパーツに分割し、すべてのデータパーツに対して一度に並列してプログラムを実行するのに役立ちます。
+3. MapReduceフレームワークの使用方法を示すワードカウントの例を以下に示します。
 
 ![Word Count Example](images/mapreduce_example.jpg)
 </br></br>
 
-# Other tooling around Hadoop
+# その他のHadoop周りのツール
 
 1. [**Hive**](https://hive.apache.org/)
-    1. Uses a language called HQL which is very SQL like.  Gives non-programmers the ability to query and analyze data in Hadoop.  Is basically an abstraction layer on top of map-reduce.
-    2. Ex. HQL query:
-        1. _SELECT pet.name, comment FROM pet JOIN event ON  (pet.name = event.name);_
-    3. In mysql:
-        1. _SELECT pet.name, comment FROM pet, event WHERE  pet.name = event.name;_
+    1. HQLと呼ばれるSQLライクな言語を使用します。プログラマーではない人でもHadoopのデータを照会・分析できるようにします。 基本的にはmap-reduceの上の抽象化レイヤーです。
+    2. 例：HQLクエリ
+        1. _SELECT pet.name, comment FROM pet JOIN event ON (pet.name = event.name);_
+    3. mysqlの場合：
+        1. _SELECT pet.name, comment FROM pet, event WHERE pet.name = event.name;_
 2. [**Pig**](https://pig.apache.org/)
-    1. Uses a scripting language called Pig Latin, which is more workflow driven.  Don't need to be an expert Java programmer but need a few coding skills.  Is also an abstraction layer on top of map-reduce.
-    2. Here is a quick question for you:
-    What is the output of running the pig queries in the right column against the data present in the left column in the below image?
+    1. Pig Latinと呼ばれるスクリプト言語を使用しており、よりワークフローを重視しています。 Javaプログラマーである必要はありませんが、多少のコーディングスキルは必要です。 map-reduceの上の抽象化レイヤーでもあります。
+    2. ここで簡単な質問です：
+    下の画像の左の列にあるデータに対して、右の列のPigクエリを実行すると、どのような出力になりますか？
 
     ![Pig Example](images/pig_example.png)
 
-    Output:
+    出力を見てみましょう：
+
     ```
     7,Komal,Nayak,24,9848022334,trivendram
     8,Bharathi,Nambiayar,24,9848022333,Chennai
@@ -65,11 +66,11 @@
     ```
 
 3. [**Spark**](https://spark.apache.org/)
-    1. Spark provides primitives for in-memory cluster computing that allows user programs to load data into a cluster’s memory and query it repeatedly, making it well suited to machine learning algorithms.
+    1. Sparkは、インメモリで分散コンピューティングを行うためのプリミティブを提供しており、ユーザープログラムがデータをクラスターのメモリにロードして繰り返しクエリを行うことができるため、機械学習アルゴリズムに適しています。
 4. [**Presto**](https://prestodb.io/)
-    1. Presto is a high performance, distributed SQL query engine for Big Data.
-    2. Its architecture allows users to query a variety of data sources such as Hadoop, AWS S3, Alluxio, MySQL, Cassandra, Kafka, and MongoDB.
-    3. Example presto query:
+    1. Prestoはビッグデータ用の高性能な分散型SQLクエリエンジンです。
+    2. そのアーキテクチャにより、ユーザーはHadoop、AWS S3、Alluxio、MySQL、Cassandra、Kafka、MongoDBなどの様々なデータソースにクエリを実行できます。
+    3. Prestoクエリの例：
     ```
     use studentDB;
     show tables;
@@ -77,8 +78,8 @@
     ```
 </br>
 
-# Data Serialisation and storage
+# データのシリアライズとストレージ
 
-1. In order to transport the data over the network or to store on some persistent storage, we use the process of translating data structures or objects state into binary or textual form. We call this process serialization..
-2. Avro data is stored in a container file (a .avro file) and its schema (the .avsc file) is stored with the data file.
-3. Apache Hive provides support to store a table as Avro and can also query data in this serialisation format.
+1. データをネットワークで転送したり、永続的なストレージに保存したりするために、データ構造やオブジェクトの状態をバイナリやテキストの形式に変換するプロセスを使用します。このプロセスをシリアライズと呼びます。
+2. Avroデータはコンテナファイル（.avro ファイル）に格納され、そのスキーマ（.avsc ファイル）はデータファイルと一緒に格納されます。
+3. Apache HiveはテーブルをAvro形式で保存する機能を備えており、このシリアライゼーションフォーマットのデータに対してクエリすることもできます。
